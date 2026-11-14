@@ -2,13 +2,11 @@ import '@testing-library/jest-dom/vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { curriculum, firstLesson } from '../content/lessons/index';
-import { freshProgress } from '../progress/schema';
+import { freshProgress, PROGRESS_VERSION, type Progress } from '../progress/schema';
 import { JourneyMap } from './JourneyMap';
 
-function renderMap(onOpen = vi.fn()) {
-  render(
-    <JourneyMap curriculum={curriculum} progress={freshProgress(firstLesson.id)} onOpen={onOpen} />,
-  );
+function renderMap(progress: Progress = freshProgress(firstLesson.id), onOpen = vi.fn()) {
+  render(<JourneyMap curriculum={curriculum} progress={progress} onOpen={onOpen} />);
   return onOpen;
 }
 
@@ -48,5 +46,17 @@ describe('JourneyMap', () => {
 
     expect(onOpen).toHaveBeenCalledTimes(1);
     expect(onOpen).toHaveBeenCalledWith(firstLesson.id);
+  });
+
+  it('shows a star on a finished node and opens the next one', () => {
+    renderMap({ version: PROGRESS_VERSION, completed: [firstLesson.id], current: 'repeat' });
+
+    const done = screen.getByRole('button', { name: /lesson 1/i });
+    const next = screen.getByRole('button', { name: /lesson 2/i });
+
+    expect(done).toHaveAttribute('data-state', 'done');
+    expect(done.querySelector('[data-marker]')).toHaveAttribute('data-marker', 'star');
+    expect(next).toBeEnabled();
+    expect(next.querySelector('[data-marker]')).toHaveAttribute('data-marker', 'play');
   });
 });

@@ -1,19 +1,34 @@
 import { useReducer, useState } from 'react';
 import { initialScreen, screenReducer } from './app/screen';
-import { curriculum, findLesson, firstLesson } from './content/lessons/index';
+import { curriculum, findLesson } from './content/lessons/index';
 import { JourneyMap } from './journey/JourneyMap';
 import { LessonScreen } from './lesson/LessonScreen';
-import { freshProgress } from './progress/schema';
+import type { Progress } from './progress/schema';
+import { createStore, type ProgressStore } from './progress/store';
+
+type AppProps = {
+  /** Supplied by tests; the app builds its own store from the device storage. */
+  readonly store?: ProgressStore;
+};
 
 /**
- * The shell: it owns the screen state and the progress value, and nothing else.
- * Progress is in memory for now; phase 5 swaps it for the persisted store.
+ * The shell: it owns the screen, the store and the progress value, and nothing else.
+ *
+ * Progress is read once from the store and written back when a lesson is finished, so the star and
+ * the newly opened stop survive a reload (FR-6, FR-7). Finishing a lesson both records it and
+ * returns to the map, which is the "way back" in D4's flow.
  */
-export function App() {
+export function App({ store }: AppProps = {}) {
+  const [progressStore] = useState<ProgressStore>(() => store ?? createStore());
+  const [progress, setProgress] = useState<Progress>(() => progressStore.load());
   const [screen, dispatch] = useReducer(screenReducer, initialScreen);
-  const [progress] = useState(() => freshProgress(firstLesson.id));
 
   const close = () => dispatch({ type: 'closeLesson' });
+
+  const finish = (lessonId: string) => {
+    setProgress(progressStore.completeLesson(lessonId));
+    dispatch({ type: 'closeLesson' });
+  };
 
   if (screen.kind === 'lesson') {
     const lesson = findLesson(screen.lessonId);
@@ -30,7 +45,7 @@ export function App() {
       );
     }
 
-    return <LessonScreen lesson={lesson} onClose={close} onComplete={close} />;
+    return <LessonScreen lesson={lesson} onClose={close} onComplete={() => finish(lesson.id)} />;
   }
 
   return (
