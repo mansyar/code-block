@@ -18,9 +18,11 @@ type LessonScreenProps = {
 /**
  * The lesson screen: play the game, then hear the concept.
  *
- * The game reports completion into the flow, the flow opens the concept beat and speaks its line,
- * and the concept beat's "done" hands the lesson back to the shell. Until a lesson names a
- * registered game, the cards are shown in their display order instead of a blank screen.
+ * The game reports completion into the flow, which opens the concept beat and speaks its line.
+ * The lesson is reported to the shell at that same moment, so the star is earned by finishing the
+ * game however the child leaves — by "done" or by the back control (FR-6, FR-7). "Done" only
+ * leaves the screen. Until a lesson names a registered game, the cards are shown in their display
+ * order instead of a blank screen.
  */
 export function LessonScreen({ lesson, onClose, onComplete, narration }: LessonScreenProps) {
   const [fallbackNarration] = useState<Narration>(() => createNarration());
@@ -28,6 +30,11 @@ export function LessonScreen({ lesson, onClose, onComplete, narration }: LessonS
 
   const gameKind = lesson.game.gameKind;
   const Game = gameKind === undefined ? undefined : findGame(gameKind);
+
+  const finishGame = () => {
+    flow.complete();
+    onComplete();
+  };
 
   return (
     <section className={styles.lesson} aria-labelledby="lesson-title">
@@ -44,11 +51,11 @@ export function LessonScreen({ lesson, onClose, onComplete, narration }: LessonS
       </header>
 
       {flow.phase === 'concept' ? (
-        <ConceptScreen lesson={lesson} onReplay={flow.replay} onDone={onComplete} />
+        <ConceptScreen lesson={lesson} onReplay={flow.replay} onDone={onClose} />
       ) : Game === undefined ? (
         <GamePending lesson={lesson} />
       ) : (
-        <Game lesson={lesson} onComplete={flow.complete} />
+        <Game lesson={lesson} onComplete={finishGame} />
       )}
     </section>
   );

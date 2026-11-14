@@ -104,12 +104,21 @@ describe('LessonScreen', () => {
     expect(screen.getByRole('button', { name: /play it again/i })).toBeInTheDocument();
   });
 
-  it('finishes the lesson from the done control', () => {
+  it('reports the lesson complete as soon as the game is finished', () => {
     const { onComplete } = renderLesson();
+
+    playTheGame();
+
+    expect(onComplete).toHaveBeenCalledTimes(1);
+  });
+
+  it('leaves the screen from the done control without reporting twice', () => {
+    const { onClose, onComplete } = renderLesson();
 
     playTheGame();
     fireEvent.click(screen.getByRole('button', { name: /done/i }));
 
+    expect(onClose).toHaveBeenCalledTimes(1);
     expect(onComplete).toHaveBeenCalledTimes(1);
   });
 

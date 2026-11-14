@@ -14,9 +14,9 @@ type AppProps = {
 /**
  * The shell: it owns the screen, the store and the progress value, and nothing else.
  *
- * Progress is read once from the store and written back when a lesson is finished, so the star and
- * the newly opened stop survive a reload (FR-6, FR-7). Finishing a lesson both records it and
- * returns to the map, which is the "way back" in D4's flow.
+ * Progress is read once from the store and written back the moment a lesson's game is finished, so
+ * the star and the newly opened stop survive a reload (FR-6) and are on the map whichever way the
+ * child leaves the lesson (FR-7). Leaving is the screen reducer's job, not this one's.
  */
 export function App({ store }: AppProps = {}) {
   const [progressStore] = useState<ProgressStore>(() => store ?? createStore());
@@ -25,9 +25,8 @@ export function App({ store }: AppProps = {}) {
 
   const close = () => dispatch({ type: 'closeLesson' });
 
-  const finish = (lessonId: string) => {
+  const record = (lessonId: string) => {
     setProgress(progressStore.completeLesson(lessonId));
-    dispatch({ type: 'closeLesson' });
   };
 
   if (screen.kind === 'lesson') {
@@ -45,7 +44,7 @@ export function App({ store }: AppProps = {}) {
       );
     }
 
-    return <LessonScreen lesson={lesson} onClose={close} onComplete={() => finish(lesson.id)} />;
+    return <LessonScreen lesson={lesson} onClose={close} onComplete={() => record(lesson.id)} />;
   }
 
   return (

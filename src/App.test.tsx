@@ -5,7 +5,7 @@ import { App } from './App';
 import { curriculum, findLesson, firstLesson } from './content/lessons/index';
 import { PROGRESS_KEY } from './progress/schema';
 
-function playLessonOne() {
+function solveLessonOne() {
   const lesson = findLesson(firstLesson.id);
 
   if (lesson === undefined) {
@@ -17,7 +17,10 @@ function playLessonOne() {
   for (const card of lesson.game.solution) {
     fireEvent.click(screen.getByRole('button', { name: new RegExp(card, 'i') }));
   }
+}
 
+function playLessonOne() {
+  solveLessonOne();
   fireEvent.click(screen.getByRole('button', { name: /^done$/i }));
 }
 
@@ -65,6 +68,16 @@ describe('App', () => {
     expect(screen.getByRole('button', { name: /lesson 1.*done/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /lesson 2/i })).toBeEnabled();
     expect(screen.getByRole('button', { name: /lesson 3/i })).toBeDisabled();
+  });
+
+  it('keeps the star when the child leaves by the back control instead of done', () => {
+    render(<App />);
+
+    solveLessonOne();
+    fireEvent.click(screen.getByRole('button', { name: /back/i }));
+
+    expect(screen.getByRole('button', { name: /lesson 1.*done/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /lesson 2/i })).toBeEnabled();
   });
 
   it('keeps the star and the open stop across a remount', () => {
