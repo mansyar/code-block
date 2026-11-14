@@ -20,21 +20,21 @@ pictures, so consecutive cells are joined by an unbroken band.
 **Decisions:** D1, D2, D3, D4, D6
 **Verification:** `bun run verify`
 
-- [ ] **P1.T1: Answer connections per cell** — `ribbon.ts` exports the directions leaving a cell
+- [x] **P1.T1: Answer connections per cell** — `ribbon.ts` exports the directions leaving a cell
   (`up`/`right`/`down`/`left`) for a route and an index, deriving them from the previous and next
   cell; `at()` and the segment type stay only if something still uses them. — covers: FR-4, FR-5
-- [ ] **P1.T2: Draw the bands inside the cell** — `Track.tsx` renders one `data-link` element per
+- [x] **P1.T2: Draw the bands inside the cell** — `Track.tsx` renders one `data-link` element per
   connection inside each cell, before the pictures, and drops the global road layer. — covers: FR-1, FR-2
-- [ ] **P1.T3: Style the band** — `.link` is `--road: 10px` thick, `calc(var(--cell) / 2 + var(--gap))`
+- [x] **P1.T3: Style the band** — `.link` is `--road: 10px` thick, `calc(var(--cell) / 2 + var(--gap))`
   long from the centre in its direction, at `z-index: 0`, with the pictures at `z-index: 1`; `--cell`,
   `--gap` and the cell-size formula are unchanged. — covers: FR-1, FR-2, FR-3, FR-6
-- [ ] **P1.T4: Test the connections** — unit tests assert, for lessons 1–3, that interior cells report
+- [x] **P1.T4: Test the connections** — unit tests assert, for lessons 1–3, that interior cells report
   two connections and end cells one, in the route's actual directions, and that no connection exists
   between cells that are adjacent but not consecutive. — covers: FR-4, FR-5
-- [ ] **P1.T5: Prove nothing resized** — the tap-target, cell-size and lesson tests pass unchanged;
+- [x] **P1.T5: Prove nothing resized** — the tap-target, cell-size and lesson tests pass unchanged;
   the bundle stays under budget. — covers: FR-6, NFR-2, NFR-3
 
-**Status:** pending
+**Status:** verified
 
 ---
 

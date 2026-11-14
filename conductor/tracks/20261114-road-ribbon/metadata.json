@@ -2,13 +2,13 @@
   "id": "20261114-road-ribbon",
   "title": "A road that reads as a road",
   "type": "bug",
-  "status": "new",
+  "status": "in_progress",
   "priority": "medium",
   "depends_on": [
     "20261114-lesson-three-make-it-move"
   ],
   "created_at": "2026-11-14T23:05:00Z",
-  "updated_at": "2026-11-14T23:05:00Z",
+  "updated_at": "2026-11-14T23:40:00Z",
   "spec": "spec.md",
   "plan": "plan.md",
   "mission": "mission.md",
@@ -20,8 +20,8 @@
   "progress": {
     "phases_total": 2,
     "tasks_total": 10,
-    "phases_verified": 0,
-    "tasks_done": 0
+    "phases_verified": 1,
+    "tasks_done": 5
   },
   "last_checkpoint": null,
   "review_verdict": null,

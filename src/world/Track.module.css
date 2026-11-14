@@ -9,20 +9,50 @@
 .track {
   --cell: var(--tap-target);
   --gap: var(--space-3);
-  --road: 12px;
+  --road: 10px;
 
   position: relative;
   display: grid;
   gap: var(--gap);
 }
 
-/* The ribbon. Only consecutive road cells get one, so the drawn line is the whole rule about where
-   the walker may go. */
-.road {
+/* The road. Each cell draws its own half of every stretch — from its centre outward, far enough to
+   meet its neighbour's half out in the gap — so the road crosses the tiles instead of sitting in the
+   gaps as a row of dots. Only consecutive cells have halves to draw, so the drawn line is still the
+   whole rule about where the walker may go. */
+.link {
   position: absolute;
   z-index: 0;
   border-radius: 999px;
   background: var(--colour-lock);
+}
+
+.link[data-link="up"] {
+  left: calc(50% - var(--road) / 2);
+  bottom: 50%;
+  width: var(--road);
+  height: calc(var(--cell) / 2 + var(--gap));
+}
+
+.link[data-link="down"] {
+  left: calc(50% - var(--road) / 2);
+  top: 50%;
+  width: var(--road);
+  height: calc(var(--cell) / 2 + var(--gap));
+}
+
+.link[data-link="left"] {
+  right: 50%;
+  top: calc(50% - var(--road) / 2);
+  width: calc(var(--cell) / 2 + var(--gap));
+  height: var(--road);
+}
+
+.link[data-link="right"] {
+  left: 50%;
+  top: calc(50% - var(--road) / 2);
+  width: calc(var(--cell) / 2 + var(--gap));
+  height: var(--road);
 }
 
 .cell {
@@ -62,6 +92,7 @@
 /* The flag sits at a corner of its pad so it stays visible when the walker arrives. */
 .goal {
   position: absolute;
+  z-index: 1;
   top: -0.35rem;
   right: -0.2rem;
   width: 1.75rem;
@@ -78,6 +109,12 @@
 .walker {
   width: 2.5rem;
   height: 2.5rem;
+}
+
+/* The pictures sit on the road, never under it. */
+.step {
+  position: relative;
+  z-index: 1;
 }
 
 /* A planned step is the plan: it is tappable so the child can take it back, and it fills its cell

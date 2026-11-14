@@ -1,19 +1,14 @@
-import type { CSSProperties } from 'react';
 import type { Cell } from './path';
 
 /**
- * The road's geometry: where a cell sits, and the ribbon that joins two cells that are neighbours.
+ * The road's geometry: where a cell sits, and which of its sides a connection leaves by.
  *
  * Kept out of `Track.tsx` because a component and its arithmetic want separate files — and because
  * structure rule 2 caps a source file at 200 lines, which the two together had just passed.
  */
 
-/** One stretch of road between two consecutive cells. */
-export type Segment = {
-  readonly key: string;
-  readonly vertical: boolean;
-  readonly style: CSSProperties;
-};
+/** A side of a cell that the road leaves by. */
+export type Link = 'up' | 'right' | 'down' | 'left';
 
 /** Where a cell's corner sits on one axis, one cell plus one gap per step. */
 export function at(index: number): string {
@@ -21,40 +16,47 @@ export function at(index: number): string {
 }
 
 /**
- * The ribbon between consecutive cells: it, and only it, says which cells are joined.
+ * The connections leaving one cell, as the sides the road is drawn toward.
  *
- * A tiled block of four cells reads as an open arena — from the start, the flag looked one step to
- * the right, and nothing on screen contradicted it. Drawing the road only where the walker can
- * actually go removes that reading: the straight line to the flag is simply not drawn.
+ * Each cell draws its own half of every stretch — a band from its centre that meets its neighbour's
+ * half out in the gap — so the road runs *through* the tiles instead of appearing only between them.
+ * A cell the route passes through answers with two sides, a cell at either end with one, and a cell
+ * the route does not join with none, which is the whole rule about where the walker may go.
  */
-export function ribbon(route: readonly Cell[], minCol: number, minRow: number): readonly Segment[] {
-  const segments: Segment[] = [];
+export function links(route: readonly Cell[], index: number): readonly Link[] {
+  const cell = route[index];
 
-  for (let index = 1; index < route.length; index += 1) {
-    const from = route[index - 1] as Cell;
-    const to = route[index] as Cell;
-    const col = Math.min(from.col, to.col) - minCol;
-    const row = Math.min(from.row, to.row) - minRow;
-    const vertical = from.col === to.col;
-
-    segments.push({
-      key: `${index}:${from.col}:${from.row}-${to.col}:${to.row}`,
-      vertical,
-      style: vertical
-        ? {
-            left: `calc(${at(col)} + var(--cell) / 2 - var(--road) / 2)`,
-            top: `calc(${at(row)} + var(--cell))`,
-            width: 'var(--road)',
-            height: 'var(--gap)',
-          }
-        : {
-            left: `calc(${at(col)} + var(--cell))`,
-            top: `calc(${at(row)} + var(--cell) / 2 - var(--road) / 2)`,
-            width: 'var(--gap)',
-            height: 'var(--road)',
-          },
-    });
+  if (cell === undefined) {
+    return [];
   }
 
-  return segments;
+  const sides: Link[] = [];
+
+  for (const neighbour of [route[index - 1], route[index + 1]]) {
+    if (neighbour === undefined) {
+      continue;
+    }
+
+    const side = sideOf(cell, neighbour);
+
+    // A road that doubles back over itself leaves the same side twice, and that is one band.
+    if (!sides.includes(side)) {
+      sides.push(side);
+    }
+  }
+
+  return sides;
+}
+
+/** The side of `from` that `to` lies on. Consecutive route cells are always grid neighbours. */
+function sideOf(from: Cell, to: Cell): Link {
+  if (to.col > from.col) {
+    return 'right';
+  }
+
+  if (to.col < from.col) {
+    return 'left';
+  }
+
+  return to.row > from.row ? 'down' : 'up';
 }

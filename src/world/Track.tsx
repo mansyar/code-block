@@ -4,7 +4,7 @@ import { pictureRegistry } from '../ui/pictures/registry';
 import { Walker } from '../ui/pictures/Walker';
 import { Goal } from './Goal';
 import type { Cell } from './path';
-import { at, ribbon } from './ribbon';
+import { at, links } from './ribbon';
 import styles from './Track.module.css';
 
 type TrackProps = {
@@ -46,13 +46,13 @@ type TrackProps = {
 const SPARK_ANGLES = [0, 60, 120, 180, 240, 300] as const;
 
 /**
- * The road every lesson is played along: a ribbon joining the cells the walker can actually walk,
- * his own cell, and a flag wherever a leg of the plan ends — one flag for a single-leg lesson, two
- * for a lesson written in two legs.
+ * The road every lesson is played along: a band joining the cells the walker can actually walk, his
+ * own cell, and a flag wherever a leg of the plan ends — one flag for a single-leg lesson, two for a
+ * lesson written in two legs.
  *
  * The start is a pad and the finish is a pad, drawn differently from the road between them, so a
- * child sees two places rather than four interchangeable tiles. The ribbon is the instruction:
- * where it runs, he may go; where it does not, he may not. No sentence says so and none is spoken.
+ * child sees two places rather than four interchangeable tiles. The road is the instruction: where
+ * it runs, he may go; where it does not, he may not. No sentence says so and none is spoken.
  */
 export function Track({
   route,
@@ -94,15 +94,6 @@ export function Track({
           } as CSSProperties
         }
       >
-        {ribbon(route, minCol, minRow).map((segment) => (
-          <span
-            key={segment.key}
-            className={styles.road}
-            data-road={segment.vertical ? 'vertical' : 'horizontal'}
-            style={segment.style}
-          />
-        ))}
-
         {celebrating ? (
           <span
             className={styles.sparks}
@@ -142,6 +133,9 @@ export function Track({
               data-goal={flags.includes(index) ? 'true' : 'false'}
               data-wave={index === wave ? 'true' : 'false'}
             >
+              {links(route, index).map((link) => (
+                <span key={link} className={styles.link} data-link={link} aria-hidden="true" />
+              ))}
               {Step === undefined ? null : onClear === undefined ? (
                 <Step className={styles.step} />
               ) : (
