@@ -244,10 +244,13 @@ continues — it never adds a package that is not named in the phase.
 - **Dependencies:** none
 - **Decisions:** none
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** a62d605
+**Evidence:** conductor/tracks/20261114-minimum-vertical-slice/verification/phase-7.md
 
-- [ ] **P7.T1: Earn the star when the game is finished** — covers: R1-1
-  - [ ] **P7.T1.1:** the lesson reports completion from the game, and the concept beat's done only
+- [x] **P7.T1: Earn the star when the game is finished** — covers: R1-1
+  - [x] **P7.T1.1:** the lesson reports completion from the game, and the concept beat's done only
     leaves the screen, so leaving by the back control keeps the star
-- [ ] **P7.T2: Give the locked node's number ink** — covers: R1-2
-  - [ ] **P7.T2.1:** `--colour-ink` on the locked node, 7.35:1 instead of 3.58:1
+- [x] **P7.T2: Give the locked node's number ink** — covers: R1-2
+  - [x] **P7.T2.1:** `--colour-ink` on the locked node, 7.35:1 instead of 3.58:1
