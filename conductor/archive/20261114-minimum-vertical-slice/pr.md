@@ -17,12 +17,12 @@ before five more are authored. It is the first track of the project, so it also 
 structure: ports for narration and progress, lessons as data, games registered by kind, and six
 structural rules enforced by tests.
 
-- Spec: `conductor/tracks/20261114-minimum-vertical-slice/spec.md`
-- Plan: `conductor/tracks/20261114-minimum-vertical-slice/plan.md`
+- Spec: `conductor/archive/20261114-minimum-vertical-slice/spec.md`
+- Plan: `conductor/archive/20261114-minimum-vertical-slice/plan.md`
 
 ## Evidence
 
-- Phase reports: `conductor/tracks/20261114-minimum-vertical-slice/verification/` (phases 1–7)
+- Phase reports: `conductor/archive/20261114-minimum-vertical-slice/verification/` (phases 1–7)
 - Review: `review.md` — verdict **PASS**, round 2, independence cold-read, pinned `0f1526f`
 - Verification: `bun run verify` → typecheck, Biome, build, 92 tests in 14 files, exit 0
 - Build: 230.52 kB JS / **72.24 kB gzip**; 10 precached entries (237.13 KiB)

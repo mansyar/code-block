@@ -33,7 +33,7 @@ continues — it never adds a package that is not named in the phase.
 - **Status:** verified
 **Result:** verified
 **Checkpoint:** 941880d
-**Evidence:** conductor/tracks/20261114-minimum-vertical-slice/verification/phase-1.md
+**Evidence:** conductor/archive/20261114-minimum-vertical-slice/verification/phase-1.md
 
 - [x] **P1.T1: `package.json` with the script surface** — covers: NFR-4
   - [x] **P1.T1.1:** scripts `dev`, `build`, `preview`, `test`, `typecheck`, `lint`, `format`,
@@ -74,7 +74,7 @@ continues — it never adds a package that is not named in the phase.
 - **Status:** verified
 **Result:** verified
 **Checkpoint:** 7474416
-**Evidence:** conductor/tracks/20261114-minimum-vertical-slice/verification/phase-2.md
+**Evidence:** conductor/archive/20261114-minimum-vertical-slice/verification/phase-2.md
 
 - [x] **P2.T1: the `Lesson` contract** — covers: FR-3
   - [x] **P2.T1.1:** `Lesson`, `ScriptLine`, `GameSpec`, `PictureId` types in `content/lesson.ts`
@@ -119,7 +119,7 @@ continues — it never adds a package that is not named in the phase.
 - **Status:** verified
 **Result:** verified
 **Checkpoint:** 962fd45
-**Evidence:** conductor/tracks/20261114-minimum-vertical-slice/verification/phase-3.md
+**Evidence:** conductor/archive/20261114-minimum-vertical-slice/verification/phase-3.md
 
 - [x] **P3.T1: the three pictures as inline SVG components** — covers: FR-3
   - [x] **P3.T1.1:** `ui/pictures/` bread, cheese and top-slice components plus a `PictureId`
@@ -151,7 +151,7 @@ continues — it never adds a package that is not named in the phase.
 - **Status:** verified
 **Result:** verified
 **Checkpoint:** d276c67
-**Evidence:** conductor/tracks/20261114-minimum-vertical-slice/verification/phase-4.md
+**Evidence:** conductor/archive/20261114-minimum-vertical-slice/verification/phase-4.md
 
 - [x] **P4.T1: the narration port and its silent adapter** — covers: FR-5
   - [x] **P4.T1.1:** `narration/port.ts` — `speak(line: ScriptLine): void`, `stop(): void`
@@ -183,7 +183,7 @@ continues — it never adds a package that is not named in the phase.
 - **Status:** verified
 **Result:** verified
 **Checkpoint:** 0b7b84e
-**Evidence:** conductor/tracks/20261114-minimum-vertical-slice/verification/phase-5.md
+**Evidence:** conductor/archive/20261114-minimum-vertical-slice/verification/phase-5.md
 
 - [x] **P5.T1: the progress store port and its in-memory adapter** — covers: FR-6
   - [x] **P5.T1.1:** `progress/store.ts` with `load`, `completeLesson`, `starsFor`; in-memory
@@ -213,7 +213,7 @@ continues — it never adds a package that is not named in the phase.
 - **Status:** verified
 **Result:** verified
 **Checkpoint:** 0aed52e
-**Evidence:** conductor/tracks/20261114-minimum-vertical-slice/verification/phase-6.md
+**Evidence:** conductor/archive/20261114-minimum-vertical-slice/verification/phase-6.md
 
 - [x] **P6.T1: the icon generator** — covers: FR-8, D8
   - [x] **P6.T1.1:** `scripts/generate-icons.ts` writing 192 and 512 PNGs with node `zlib`, wired
@@ -247,7 +247,7 @@ continues — it never adds a package that is not named in the phase.
 - **Status:** verified
 **Result:** verified
 **Checkpoint:** a62d605
-**Evidence:** conductor/tracks/20261114-minimum-vertical-slice/verification/phase-7.md
+**Evidence:** conductor/archive/20261114-minimum-vertical-slice/verification/phase-7.md
 
 - [x] **P7.T1: Earn the star when the game is finished** — covers: R1-1
   - [x] **P7.T1.1:** the lesson reports completion from the game, and the concept beat's done only

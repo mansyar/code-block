@@ -34,6 +34,6 @@ lines are never removed.
 
 ## Current focus
 
-[20261114-minimum-vertical-slice](./tracks/20261114-minimum-vertical-slice/index.md) — the minimum
+[20261114-minimum-vertical-slice](./archive/20261114-minimum-vertical-slice/index.md) — the minimum
 vertical slice: one lesson the child can complete end to end — open the app, play a game, hear the
 concept explained, keep a star.
