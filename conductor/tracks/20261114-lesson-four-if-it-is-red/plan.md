@@ -110,11 +110,16 @@ browser, and the three documents describe the rule.
   six cells, the one red pad and its silhouette, the walk's beats (`0 → 1 → 2 → 3 → 4 → 5`, the pad's
   step taking two), the cell size against the 72 px floor, and the visible text (`←`, "If it is red");
   keep screenshots under `.conductor/evidence/`. — covers: AC-6, AC-8
-- [ ] **P3.T4: update the docs** — `src/MAP.md`'s add-a-lesson recipe mentions the repeat rule and
+- [ ] **P3.T4: prove nothing is printed** — a jsdom test on lesson 4 asserts the lesson subtree's
+  text is exactly `←` and "If it is red", with no sprite id (`step-`, `walker`), no arrow name and no
+  instruction in it, and that the road and the pad add nothing to the accessibility tree (FR-9); the
+  browser measurement in P3.T3 is the independent second check of the same rule. — covers: FR-9,
+  AC-8
+- [ ] **P3.T5: update the docs** — `src/MAP.md`'s add-a-lesson recipe mentions the repeat rule and
   `src/games/condition/`; `conductor/product.md` adds lesson 4 to the shipped-lessons sentence;
   `conductor/product-guidelines.md` states the red-pad rule (raised diamond, colour plus shape, never
   a tap target). — covers: FR-5, FR-9
-- [ ] **P3.T5: write the evidence file** — `verification/phase-3.md` holds the browser table, the
+- [ ] **P3.T6: write the evidence file** — `verification/phase-3.md` holds the browser table, the
   screenshot paths, the files changed and the AC mapping. — covers: AC-6, AC-8, AC-10
 
 **Status:** pending
@@ -132,8 +137,8 @@ browser, and the three documents describe the rule.
 | AC-5 | 2 | P2.T2, P2.T4 beat assertions with injected `stepMs` |
 | AC-6 | 3 | P3.T3 browser measurements and screenshots |
 | AC-7 | 3 | P3.T2 app test |
-| AC-8 | 3 | P3.T3 visible text and accessibility tree |
+| AC-8 | 3 | P3.T3 browser text and tree, P3.T4 jsdom text and tree |
 | AC-9 | 1 | P1.T4 shipped-route assertions |
 | AC-10 | 1, 2, 3 | `bun run verify` in every phase; structure rules inside it |
 
-**Total:** 3 phases, 13 tasks.
+**Total:** 3 phases, 14 tasks.
