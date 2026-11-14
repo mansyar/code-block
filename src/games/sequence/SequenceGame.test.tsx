@@ -2,18 +2,29 @@ import '@testing-library/jest-dom/vitest';
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { lessonOne } from '../../content/lessons/0001-order';
+import { cellsFor } from '../../world/walk';
 import { SequenceGame } from './SequenceGame';
 
 function renderGame() {
   const onComplete = vi.fn();
-
-  render(<SequenceGame lesson={lessonOne} onComplete={onComplete} />);
+  const { container } = render(<SequenceGame lesson={lessonOne} onComplete={onComplete} />);
 
   return {
     onComplete,
+    container,
     card: (name: string) => screen.getByRole('button', { name: new RegExp(name, 'i') }),
     tray: () => within(screen.getByRole('list', { name: /cards to tap/i })),
-    plate: () => within(screen.getByRole('list', { name: /placed cards/i })),
+    /** Which cell the walker stands in, or -1 if he is drawn nowhere. */
+    walkerCell: () => {
+      const cell = container.querySelector('[data-walker="true"]');
+
+      return cell === null ? -1 : Number(cell.getAttribute('data-cell'));
+    },
+    /** The steps shown on the path, in cell order. */
+    placedSteps: () =>
+      Array.from(container.querySelectorAll('[data-step]'))
+        .map((cell) => cell.getAttribute('data-step'))
+        .filter((step) => step !== 'none'),
   };
 }
 
@@ -28,31 +39,52 @@ describe('SequenceGame', () => {
     expect(cards).toEqual([...lessonOne.game.cards]);
   });
 
+  it('draws one cell per step plus the start, and begins with the walker on the start', () => {
+    const { container, walkerCell, placedSteps } = renderGame();
+
+    expect(container.querySelectorAll('[data-cell]')).toHaveLength(cellsFor(lessonOne));
+    expect(cellsFor(lessonOne)).toBe(lessonOne.game.solution.length + 1);
+    expect(walkerCell()).toBe(0);
+    expect(placedSteps()).toEqual([]);
+  });
+
+  it('moves the walker exactly one cell for each correct tap', () => {
+    const { card, walkerCell } = renderGame();
+
+    for (const [index, step] of lessonOne.game.solution.entries()) {
+      fireEvent.click(card(step));
+
+      expect(walkerCell()).toBe(index + 1);
+    }
+  });
+
   it('completes once when the cards are tapped in the solution order', () => {
-    const { card, plate, onComplete } = renderGame();
+    const { card, walkerCell, placedSteps, onComplete } = renderGame();
 
     for (const step of lessonOne.game.solution) {
       fireEvent.click(card(step));
     }
 
     expect(onComplete).toHaveBeenCalledTimes(1);
-    expect(plate().getAllByRole('listitem')).toHaveLength(lessonOne.game.solution.length);
+    expect(walkerCell()).toBe(lessonOne.game.solution.length);
+    expect(placedSteps()).toEqual([...lessonOne.game.solution]);
   });
 
   it('wobbles a wrong card and advances nothing', () => {
-    const { card, plate, onComplete } = renderGame();
+    const { card, walkerCell, placedSteps, onComplete } = renderGame();
 
     const wrongStep = lessonOne.game.solution[1] as string;
     fireEvent.click(card(wrongStep));
 
     expect(card(wrongStep)).toHaveAttribute('data-wrong', 'true');
     expect(card(wrongStep)).toHaveAttribute('data-placed', 'false');
-    expect(plate().queryAllByRole('listitem')).toHaveLength(0);
+    expect(walkerCell()).toBe(0);
+    expect(placedSteps()).toEqual([]);
     expect(onComplete).not.toHaveBeenCalled();
   });
 
   it('keeps a placed card placed and refuses a second tap', () => {
-    const { card, plate, onComplete } = renderGame();
+    const { card, walkerCell, onComplete } = renderGame();
 
     const first = lessonOne.game.solution[0] as string;
     fireEvent.click(card(first));
@@ -64,7 +96,7 @@ describe('SequenceGame', () => {
 
     fireEvent.click(placedCard);
 
-    expect(plate().getAllByRole('listitem')).toHaveLength(1);
+    expect(walkerCell()).toBe(1);
     expect(onComplete).not.toHaveBeenCalled();
   });
 

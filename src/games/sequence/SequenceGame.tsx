@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import type { PictureId } from '../../content/lesson';
 import { pictureRegistry } from '../../ui/pictures/registry';
+import { Track } from '../../world/Track';
+import { cellsFor } from '../../world/walk';
 import type { GameProps } from '../registry';
 import styles from './SequenceGame.module.css';
 
@@ -9,9 +11,9 @@ const WRONG_FLASH_MS = 500;
 /**
  * The order game: tap the cards in the lesson's solution order.
  *
- * A correct tap moves the card to the plate and locks it. A wrong tap wobbles the card and
- * changes nothing — no penalty, no lost progress (FR-4). Completion is reported once, however
- * many times the last card is tapped.
+ * A correct tap moves the walker one cell along the path and locks the card he obeyed. A wrong tap
+ * wobbles the card and moves nothing — no penalty, no lost progress (FR-4). Completion is reported
+ * once, however many times the last card is tapped.
  */
 export function SequenceGame({ lesson, onComplete }: GameProps) {
   const [placed, setPlaced] = useState<readonly PictureId[]>([]);
@@ -52,17 +54,7 @@ export function SequenceGame({ lesson, onComplete }: GameProps) {
 
   return (
     <div className={styles.game}>
-      <ol className={styles.plate} aria-label="Placed cards">
-        {placed.map((card) => {
-          const Picture = pictureRegistry[card];
-
-          return (
-            <li key={card} className={styles.placedCard} data-placed-card={card}>
-              <Picture className={styles.picture} />
-            </li>
-          );
-        })}
-      </ol>
+      <Track cells={cellsFor(lesson)} position={placed.length} placed={placed} />
 
       <ol className={styles.tray} aria-label="Cards to tap">
         {cards.map((card) => {

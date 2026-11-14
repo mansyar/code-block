@@ -20,6 +20,9 @@ later phases add.
 - `src/progress/` — `schema.ts` (shape and defensive parse) and `selectors.ts` (stars, unlock).
 - `src/ui/` — shared presentation: `pictures/` holds one SVG per `PictureId` and the registry that
   maps ids to components.
+- `src/world/` — the one world every lesson is played in: `Track.tsx` draws the path and the
+  walker, `walk.ts` owns the cell count and the per-cell timing. A new game reuses this instead of
+  drawing its own path.
 - `src/styles/` — design tokens (`tokens.css`, every colour, space, radius, timing and
   `--tap-target`) and element-level base styles. To restyle the app, edit `tokens.css`.
 

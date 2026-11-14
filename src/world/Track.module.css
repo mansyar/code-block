@@ -1,0 +1,61 @@
+.track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 26rem;
+  padding: var(--space-3);
+  border: var(--stroke-width) dashed var(--colour-outline);
+  border-radius: var(--radius-lg);
+  background: var(--colour-surface);
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 0;
+  min-width: calc(var(--tap-target) * 0.75);
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  background: var(--colour-surface-raised);
+}
+
+/* The cell the walker stands in is marked by shape as well as colour: it is where he is. */
+.cell[data-walker="true"] {
+  background: var(--colour-grass);
+}
+
+.step,
+.walker {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+/* He arrives from the cell behind, which is the whole point of the game. */
+.walker {
+  animation: arrive var(--duration-settle) var(--ease-tap);
+}
+
+@keyframes arrive {
+  from {
+    transform: translateX(-45%);
+    opacity: 0.4;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* Reduced motion: the cell changes colour, he does not travel into it. */
+@media (prefers-reduced-motion: reduce) {
+  .walker {
+    animation: none;
+  }
+
+  .cell[data-walker="true"] {
+    background: var(--colour-sun);
+  }
+}
