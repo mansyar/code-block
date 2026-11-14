@@ -10,6 +10,17 @@ export default defineConfig({
       registerType: 'autoUpdate',
       injectRegister: 'script-defer',
       includeAssets: ['icons/*.png'],
+      workbox: {
+        // The app shell and everything the first screen needs, so a cold offline launch renders
+        // the map (FR-8). The second pattern is the audio directory: `public/audio/` is empty in
+        // this track, and the later Chatterbox clips are precached by adding files alone.
+        globPatterns: [
+          '**/*.{js,css,html,webmanifest,png,svg,ico,json,woff2}',
+          '**/*.{mp3,m4a,ogg}',
+        ],
+        navigateFallback: '/index.html',
+        cleanupOutdatedCaches: true,
+      },
       manifest: {
         name: 'Code Block',
         short_name: 'Code Block',
