@@ -8,7 +8,10 @@ The curriculum now has a single visual world and its second playable lesson.
   obey, and each arrow means the direction it points: `up` moves him up, `right` right, `down` down,
   in every lesson. The road is drawn in full before the first tap — its route is the lesson's own
   solution read as directions — with a flag where it ends, so the *shape* of the road is the
-  instruction. No sentence to read, none spoken: the child copies what he can see.
+  instruction. The road is drawn as a **ribbon** joining only consecutive cells, and the start and
+  the goal are pads of their own — four equal tiles read as an open arena, and the flag sat one
+  `right` away from the start, so the drawn line is what rules that move out. No sentence to read,
+  none spoken: the child copies what he can see.
 - **Lesson 1 rebuilt inside it.** Same id and file, new words: "Walk the path". Cards are shown
   `step-down, step-up, step-right` and solved `step-up, step-right, step-down`, so the display
   order is still never the solution order. The road goes up, then right, then down, and starts and
@@ -41,9 +44,9 @@ it makes each later lesson cost a mechanic instead of a sprite set. See
   · [phase-5](./conductor/archive/20261114-one-world-lesson-two/verification/phase-5.md)
   · [phase-6](./conductor/archive/20261114-one-world-lesson-two/verification/phase-6.md)
 - Review: [review.md](./conductor/archive/20261114-one-world-lesson-two/review.md) — verdict **PASS**,
-  pinned to `f6fd6fa` (round 3, after the grid world; rounds 1 and 2 are kept in the file).
-- Integrated verification: `bun run verify` exit 0 — typecheck, Biome (70 files), build, **119 tests
-  in 18 files** (92 before this track). Build `233.28 kB / 73.15 kB gzip`, under the 200 kB budget.
+  pinned to `2873962` (round 3, after the grid world and its ribbon; rounds 1 and 2 kept in the file).
+- Integrated verification: `bun run verify` exit 0 — typecheck, Biome (71 files), build, **123 tests
+  in 19 files** (92 before this track). Build `234.21 kB / 73.51 kB gzip`, under the 200 kB budget.
 - Visual: none. No browser is in the phase path; the reduced-motion behaviour was checked in the
   built stylesheet instead (`._walker_…{animation:none}` and `data-walker` colour flash are present).
 
@@ -64,7 +67,8 @@ it makes each later lesson cost a mechanic instead of a sprite set. See
 | FR-9 an arrow is its direction | `src/world/path.test.ts`, `SequenceGame.test.tsx` | phase-6 |
 | FR-10 the road is visible, with a goal | `SequenceGame.test.tsx` (coordinates, goal, arrival) | phase-6 |
 | FR-11 lesson 2 on the same grid | `RepeatGame.test.tsx` (one row, `col` 0–3) | phase-6 |
-| AC-1…AC-11 | the rows above, one per criterion | all phases |
+| FR-12 the ribbon and the two pads | `src/world/Track.test.tsx` | phase-6 |
+| AC-1…AC-12 | the rows above, one per criterion | all phases |
 
 ## Debt and follow-ups
 
@@ -96,6 +100,7 @@ Three Low findings from the review, none blocking, all recorded in
 | D12 | The route is derived from the lesson's solution, so road and answer cannot disagree | spec D12 |
 | D13 | A wrong direction moves him nowhere — no dead end, no reset | spec D13 |
 | D14 | The goal flag is scenery in `world/Goal.tsx`, never a `PictureId` | spec D14 |
+| D15 | The road is a ribbon joining consecutive cells only; start and goal are their own pads | spec D15 |
 
 ## Notes
 

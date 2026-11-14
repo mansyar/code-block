@@ -13,12 +13,13 @@ flag are visible before the first tap, and both lessons play on that grid.
 |---|---|
 | `src/world/path.ts` | new — `Cell {col,row}`, `DELTA` for the three arrows, `tracePath`, `routeFor(lesson)`, `repeatRoute(step, times)`, `isStep` |
 | `src/world/Goal.tsx` | new — the flag that marks the last cell; scenery, not a `PictureId` |
-| `src/world/Track.tsx` | rewritten — lays the route out on a CSS grid, marks one goal, keeps `data-cell`/`data-step`/`data-walker` and adds `data-col`/`data-row`/`data-goal` |
-| `src/world/Track.module.css` | rewritten — grid container, road cells, corner-mounted flag, direction-neutral arrival |
+| `src/world/Track.tsx` | rewritten twice — lays the route out on a CSS grid, marks one goal, keeps `data-cell`/`data-step`/`data-walker`, adds `data-col`/`data-row`/`data-goal`, then draws the road as a ribbon with `data-start` / `data-goal` pads and adds `data-road` per segment |
+| `src/world/Track.module.css` | rewritten — framed grid, ribbon segments, start pad (sky), goal pad (sun), corner-mounted flag, direction-neutral arrival |
 | `src/world/walk.ts` | reduced to `STEP_MS`; `cellsFor` is gone, the route owns the cell list |
 | `src/games/sequence/SequenceGame.tsx` | draws `routeFor(lesson)`; a correct tap walks him one cell **along the road** |
 | `src/games/repeat/RepeatGame.tsx` | draws `repeatRoute(card, 3)`; the road runs three cells in the arrow's own direction |
 | `src/world/path.test.ts` | new — 5 tests |
+| `src/world/Track.test.tsx` | new — 4 tests for the ribbon and the pads |
 | `src/games/sequence/SequenceGame.test.tsx` | +3 tests, and the cell count now reads from the route |
 | `src/games/repeat/RepeatGame.test.tsx` | +1 test |
 | `src/MAP.md`, `conductor/tech-stack.md`, `conductor/product.md` | the world is now a grid whose steps are directions |
@@ -66,8 +67,8 @@ Command: `bun run verify` (typecheck → lint → build → test)
 |---|---|
 | typecheck | clean |
 | Biome | 70 files, no fixes applied |
-| build | `dist/assets/index-m0LuHt_d.js` — 233.28 kB / **73.15 kB gzip** (NFR-3 budget 200 kB) |
-| tests | **119 passed, 18 files** (110 before this phase; +9 here) |
+| build | `dist/assets/index-ZYZBtbDK.js` — 234.21 kB / **73.51 kB gzip** (NFR-3 budget 200 kB) |
+| tests | **123 passed, 19 files** (110 before this phase; +13 here) |
 
 `FR-7` still holds through the change: the road is drawn, never described. The repeat game's whole
 subtree is asserted to have empty `textContent` before, during and after the walk, and the sequence
@@ -81,3 +82,25 @@ game's ids appear only in `data-*` attributes.
   phases and no grid.
 - `src/world/walk.ts` no longer exports `cellsFor`. Inside `Touches`, and its only consumer was the
   sequence game, which now reads the route's length.
+
+## The ribbon, and why the tiles were not enough
+
+The first version of the grid rendered four equal cells that tiled into a solid 2×2 block. Lesson 1's
+endpoint is always exactly one column right of its start — that is arithmetic, not a layout choice —
+so the flag landed next to the start pad and the shortest move looked legal. A child was right to
+read it that way: nothing on screen said which cells were joined.
+
+The fix is what the product needed all along: the road is *drawn*. One ribbon per consecutive pair,
+and no ribbon anywhere else, so the line the child can see is the only line he may walk. The two ends
+are pads of their own — the start in sky, the goal in sun with the flag — so "where I began" and
+"where I am going" are places rather than two more tiles.
+
+Measured in `Track.test.tsx`: lesson 1 renders exactly 3 ribbons (`vertical, horizontal, vertical`),
+one start pad at cell 0, one goal pad at cell 3, and the two pads are different elements. A straight
+road (lesson 2) renders only `horizontal` ribbons and a one-row grid.
+
+## Deviations (continued)
+
+- **The ribbon was added after the phase's first verify**, at the parent's request, after looking at
+  the rendered grid. Same phase, second commit — not a new phase, because it changes presentation of
+  the same mechanic and no requirement changed shape (`FR-12` was added to record the rule).

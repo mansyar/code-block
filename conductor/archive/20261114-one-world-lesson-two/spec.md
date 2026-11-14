@@ -230,3 +230,21 @@ the one thing this product does not do. So the world had to carry the meaning in
   a wall.
 - **D14 — The goal flag** → `world/Goal.tsx`, deliberately not a `PictureId`: it is scenery, never a
   card, so the picture registry still holds exactly the four things a lesson may name.
+
+### Added after the first honest render (same revision)
+
+The grid shipped tiled four equal cells into a solid 2×2 arena, and the parent caught what that
+communicates: with lesson 1's endpoint always exactly one column right of its start, the flag sat one
+`right` away, so the shortest move looked legal and the real road looked like a detour around open
+ground. Nothing on screen said which cells were joined.
+
+- **FR-12** — The road is one ribbon joining consecutive route cells and nothing else, drawn so that
+  no line connects two cells that are not consecutive — even when they are adjacent on the grid. The
+  start and the goal are pads of their own, visually distinct from the road between them.
+- **AC-12** — `Track` renders exactly `route.length - 1` ribbons, one per consecutive pair, exactly
+  one start pad at cell 0 and one goal pad at the last cell, and no ribbon between the start and the
+  goal of lesson 1 although those two cells are adjacent (covers FR-12).
+- **D15 — Why a ribbon** → the ribbon *is* the rule about where the walker may go, drawn once, in
+  the place the child is already looking. The pads separate the two ends of the road from the road
+  itself, so "where I started" and "where I am going" are places rather than two more tiles. The
+  picture registry is untouched and no dependency is added.

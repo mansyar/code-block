@@ -1,8 +1,8 @@
 # Review — 20261114-one-world-lesson-two
 
 - Round: 3
-- Base / Head: c1b2b1c / f6fd6fa
-- Reviewed SHA: f6fd6fac08d055866ea258b2c3d9142c2831e069
+- Base / Head: c1b2b1c / 2873962
+- Reviewed SHA: 2873962ee3c2295e5eb44878939f774a49a5d712
 - Rounds 1–2: PASS at `44c4e18` and `bcd3c3f` — kept below, unchanged
 - Independence: cold-read for rounds 1–2; round 3 reviews a mechanic the same agent implemented in
   the same session, and says so rather than claiming independence it does not have
@@ -12,7 +12,7 @@
 
 | Check | Result |
 |---|---|
-| Commands pass on a clean run | pass — round 3, re-run on `f6fd6fa`: `bun run verify` exit 0, typecheck, Biome (70 files), build `dist/assets/index-m0LuHt_d.js` `233.28 kB / 73.15 kB` gzip, **119 tests in 18 files**. Log: `.conductor/evidence/20261114-one-world-lesson-two/phase-6-verify.log` |
+| Commands pass on a clean run | pass — round 3, re-run on `2873962`: `bun run verify` exit 0, typecheck, Biome (71 files), build `dist/assets/index-ZYZBtbDK.js` `234.21 kB / 73.51 kB` gzip, **123 tests in 19 files**. Log: `.conductor/evidence/20261114-one-world-lesson-two/ribbon-verify.log` |
 | Evidence exists | pass — `verification/phase-1.md` … `phase-5.md` present for all five verified phases |
 | State honest | pass — plan `Result: verified` ×5, checkpoints `7149e4f, 3aaa4f1, 32c825f, 8b180f0, fb30e5f`; `metadata.json` reports 5/5 phases, 20/20 tasks, `last_checkpoint: fb30e5f` |
 | Decisions authorized | pass — every `## Decisions` row in the evidence files names a `D<n>` that exists in `spec.md` (D1–D10 all present) |
@@ -99,8 +99,9 @@ the same code and still hold; the coverage table was not rewritten because nothi
 round did not touch `src/`, so there was nothing for a Review Fixes phase to act on and none was
 opened. Nothing was weakened or deleted to reach this verdict.
 
-**Pin.** `Reviewed SHA: bcd3c3fc17159dc5a1de685734a9f553c4e303f3`. The commit that carries this file is state only — review, metadata and
-the archive bookkeeping — so `git diff bcd3c3f..HEAD -- src` is empty.
+**Pin.** `Reviewed SHA: bcd3c3fc17159dc5a1de685734a9f553c4e303f3`. The commit that then carried this file (`d7bea90`) was state
+only — review, metadata and the archive bookkeeping — and `git diff bcd3c3f..d7bea90 -- src` is empty. That claim is scoped to
+round 2: round 3 deliberately changed `src/` for the grid world, which is why it re-pins in the section below.
 
 ## Round 3 — the grid world (Phase 6)
 
@@ -112,13 +113,13 @@ of its own rather than an amended verdict.
 
 **What changed.** `src/world/path.ts` (new) owns the grid — `Cell {col,row}`, the three deltas,
 `tracePath`, `routeFor(lesson)`, `repeatRoute`. `src/world/Goal.tsx` (new) marks the last cell.
-`Track.tsx` and its stylesheet were rewritten to lay the route out on a CSS grid. Both games now
+`Track.tsx` and its stylesheet were rewritten to lay the route out on a CSS grid, and then again to draw the road as a ribbon with distinct start and goal pads (`FR-12`). Both games now
 draw `routeFor(lesson)` / `repeatRoute(card, 3)`. `walk.ts` lost `cellsFor`, whose only consumer was
 the sequence game. Spec gained FR-9–11, AC-9–11 and D11–D14; `MAP.md`, `tech-stack.md` and
 `product.md` describe the grid.
 
-**Verification, re-run at `f6fd6fa`.** `bun run verify` exit 0: 70 files linted, 119 tests in 18
-files, build `233.28 kB / 73.15 kB` gzip — 73.15 kB against a 200 kB budget.
+**Verification, re-run at `2873962`.** `bun run verify` exit 0: 71 files linted, 123 tests in 19
+files, build `234.21 kB / 73.51 kB` gzip — 73.51 kB against a 200 kB budget.
 
 **Requirements traced.** FR-9 (an arrow is its direction) and FR-10 (the road is visible and has a
 goal) are asserted on the DOM in `SequenceGame.test.tsx`: the four cells carry `data-col`/`data-row`
@@ -127,10 +128,10 @@ his index along that route. FR-11 is asserted in `RepeatGame.test.tsx`: `row` 0 
 goal, three cells from one tap. FR-7 still holds — the road is drawn, never described; the repeat
 game's subtree is asserted to have empty `textContent` before, during and after the walk.
 
-**Tests were not weakened.** The suite went 110 → 119. One assertion was *replaced*, not deleted:
+**Tests were not weakened.** The suite went 110 → 123. One assertion was *replaced*, not deleted:
 `expect(cellsFor(lessonOne)).toBe(solution.length + 1)` became
 `expect(routeFor(lessonOne)).toHaveLength(solution.length + 1)` plus the explicit coordinate list,
-which is strictly stronger. No `skip`, `only` or `todo` was added.
+which is strictly stronger. No `skip`, `only` or `todo` was added. `Track.test.tsx` is new and additive.
 
 **Findings.** No new finding. R1-1, R1-2 and R1-3 remain open Low debt, unchanged — Phase 6 did not
 touch the concept screen or the tap-target rule. The nearest thing to a new observation is
@@ -142,4 +143,19 @@ clearly at 72 px, whether the flag is legible under the walker — is unverified
 DOM structure and the stylesheet's rules are what was reviewed. This is the same limitation R1-2
 records.
 
-**Pin.** `Reviewed SHA: f6fd6fac08d055866ea258b2c3d9142c2831e069`.
+**Pin (moved once inside this round).** `Reviewed SHA: 2873962c08d055866ea258b2c3d9142c2831e069`.
+
+### Round 3, second pass — the ribbon
+
+The pin moved from `f6fd6fa` to `2873962` inside this round rather than opening a round 4, because the
+round had not been reported or shipped when the change landed. What changed: `Track` now draws one
+ribbon per *consecutive* pair of route cells and nothing else, and marks the first and last cells as
+`data-start` / `data-goal` pads with their own styling; cells are sized from the road's width so the
+widest lesson does not overflow. `src/world/Track.test.tsx` (4 tests) asserts the ribbon count and
+orientations, one start pad, one goal pad, the pads being distinct elements, and the one-row grid of a
+straight road.
+
+Why it matters for the verdict rather than being cosmetic: the review of `f6fd6fa` traced FR-9 to a
+grid, but the rendered grid put the flag one step from the start with no line saying otherwise, so the
+world still *implied* a move the game refuses. FR-12 records the rule that closes that gap, and AC-12
+asserts it. Verdict unchanged: **PASS**.

@@ -169,15 +169,15 @@ vocabulary change and lesson 1's rewrite cannot be separated without leaving the
 - **Goal:** every arrow moves the walker one cell in the direction it points, the whole road and its
   flag are visible before the first tap, and both lessons play on that grid.
 - **Depends on:** Phase 5
-- **Covers:** FR-9, FR-10, FR-11, AC-9, AC-10, AC-11, NFR-1
+- **Covers:** FR-9, FR-10, FR-11, FR-12, AC-9, AC-10, AC-11, AC-12, NFR-1
 - **Touches:** `src/world/`, `src/games/sequence/`, `src/games/repeat/`, `src/MAP.md`,
   `conductor/tech-stack.md`, `conductor/product.md`
 - **Dependencies:** none
-- **Decisions:** D11, D12, D13, D14
+- **Decisions:** D11, D12, D13, D14, D15
 - **Verification:** `bun run verify`
 - **Status:** verified
 **Result:** verified
-**Checkpoint:** f6fd6fa
+**Checkpoint:** 2873962
 **Evidence:** conductor/archive/20261114-one-world-lesson-two/verification/phase-6.md
 
 - [x] **P6.T1: the grid** — covers: FR-9
@@ -195,3 +195,8 @@ vocabulary change and lesson 1's rewrite cannot be separated without leaving the
 - [x] **P6.T5: tests and docs** — covers: AC-9, AC-10, AC-11
   - [x] **P6.T5.1:** 9 new tests across the grid, the sequence game and the repeat road
   - [x] **P6.T5.2:** `MAP.md`, `tech-stack.md` and `product.md` describe the grid
+- [x] **P6.T6: the road is a ribbon, and its ends are places** — covers: FR-12, AC-12
+  - [x] **P6.T6.1:** `Track` draws one ribbon per consecutive pair and joins nothing else; the start
+    and goal pads are marked `data-start` / `data-goal` and styled differently from the road
+  - [x] **P6.T6.2:** `Track.test.tsx` asserts 3 ribbons for lesson 1 (`vertical, horizontal,
+    vertical`), a start pad at cell 0, a goal pad at the last cell, and that the two pads differ

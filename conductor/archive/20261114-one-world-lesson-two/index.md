@@ -37,7 +37,7 @@ they need before their mechanics are designed.
 | 6 | The world becomes a grid, so an arrow can be true | verified — `d7bea90` |
 
 Each phase's evidence is in [`verification/phase-<n>.md`](./verification), and the whole track was
-reviewed in [review.md](./review.md) — verdict **PASS**, pinned to `f6fd6fa` (round 3).
+reviewed in [review.md](./review.md) — verdict **PASS**, pinned to `2873962` (round 3).
 
 ## Delivery
 
