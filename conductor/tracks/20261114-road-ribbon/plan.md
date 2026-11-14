@@ -80,3 +80,27 @@ pictures, so consecutive cells are joined by an unbroken band.
 | AC-7 | 2 | P2.T2 |
 
 **Total:** 2 phases, 10 tasks.
+
+---
+
+## Phase 3 — Review Fixes (R1)
+
+**Goal:** The road is decoration and never takes a tap: a tap that lands on a band over a planned
+step still removes that step.
+
+**Depends on:** Phase 2
+**Covers:** FR-2, NFR-2, R1-1
+**Touches:** `src/world/Track.module.css`, `src/world/ribbon.test.ts`, `conductor/tracks/20261114-road-ribbon/verification/phase-3.md`
+**Dependencies:** none
+**Decisions:** none
+**Verification:** `bun run verify`
+
+- [ ] **P3.T1: let taps through the band** — `.link` declares `pointer-events: none`, so the road is
+  never the topmost target over a cell's own control. — covers: R1-1
+- [ ] **P3.T2: guard it** — a test reads `Track.module.css` and fails if the `.link` rule stops
+  declining pointer events, so the dead tap cannot come back unnoticed. — covers: R1-1
+- [ ] **P3.T3: prove it in the browser** — on lesson 3 with two steps planned, the point on the band
+  inside a planned cell now hit-tests to that step's button, and clicking it there removes the step.
+  — covers: R1-1
+
+**Status:** pending
