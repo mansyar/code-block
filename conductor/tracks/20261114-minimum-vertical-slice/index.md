@@ -9,7 +9,7 @@
 | Base | `main` @ `ebfafe3` |
 | Effort | 3 |
 | Autonomy | ready |
-| Status | in_progress — phases 1–4 verified |
+| Status | in_progress — phases 1–5 verified |
 
 ## Artifacts
 
@@ -32,11 +32,12 @@ content files rather than engineering.
 | 2 | Content contract and the journey map | verified |
 | 3 | The order game | verified |
 | 4 | Narration and the concept beat | verified |
-| 5 | Progress, the star and the way back | pending |
+| 5 | Progress, the star and the way back | verified |
 | 6 | Installable and offline | pending |
 
 Evidence files land in `verification/phase-<n>.md`. Phase 1 is recorded in
 [verification/phase-1.md](./verification/phase-1.md), phase 2 in
 [verification/phase-2.md](./verification/phase-2.md) and phase 3 in
 [verification/phase-3.md](./verification/phase-3.md) and phase 4 in
-[verification/phase-4.md](./verification/phase-4.md).
+[verification/phase-4.md](./verification/phase-4.md) and phase 5 in
+[verification/phase-5.md](./verification/phase-5.md).

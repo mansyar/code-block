@@ -180,22 +180,25 @@ continues — it never adds a package that is not named in the phase.
 - **Dependencies:** none
 - **Decisions:** D4
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** 0b7b84e
+**Evidence:** conductor/tracks/20261114-minimum-vertical-slice/verification/phase-5.md
 
-- [ ] **P5.T1: the progress store port and its in-memory adapter** — covers: FR-6
-  - [ ] **P5.T1.1:** `progress/store.ts` with `load`, `completeLesson`, `starsFor`; in-memory
+- [x] **P5.T1: the progress store port and its in-memory adapter** — covers: FR-6
+  - [x] **P5.T1.1:** `progress/store.ts` with `load`, `completeLesson`, `starsFor`; in-memory
     adapter used by default in tests
-- [ ] **P5.T2: the localStorage adapter** — covers: FR-6, FR-9
-  - [ ] **P5.T2.1:** namespaced key, JSON round-trip through `parseProgress`, silent fallback to a
+- [x] **P5.T2: the localStorage adapter** — covers: FR-6, FR-9
+  - [x] **P5.T2.1:** namespaced key, JSON round-trip through `parseProgress`, silent fallback to a
     fresh profile on corrupt data or a throwing `localStorage`
-- [ ] **P5.T3: star and unlock on the map** — covers: FR-6, FR-7
-  - [ ] **P5.T3.1:** completion writes once, however many times the win screen is entered
-  - [ ] **P5.T3.2:** node 1 shows a star and node 2 becomes activatable
-- [ ] **P5.T4: the back control** — covers: FR-7
-  - [ ] **P5.T4.1:** returning to the map preserves the star and clears lesson-local state
-- [ ] **P5.T5: integration test across a remount** — covers: AC-6, AC-7, AC-9
-  - [ ] **P5.T5.1:** play → complete → unmount → remount → star and unlock present
-  - [ ] **P5.T5.2:** corrupt and future-version blobs both yield a fresh profile and a rendered map
+- [x] **P5.T3: star and unlock on the map** — covers: FR-6, FR-7
+  - [x] **P5.T3.1:** completion writes once, however many times the win screen is entered
+  - [x] **P5.T3.2:** node 1 shows a star and node 2 becomes activatable
+- [x] **P5.T4: the back control** — covers: FR-7
+  - [x] **P5.T4.1:** returning to the map preserves the star and clears lesson-local state
+- [x] **P5.T5: integration test across a remount** — covers: AC-6, AC-7, AC-9
+  - [x] **P5.T5.1:** play → complete → unmount → remount → star and unlock present
+  - [x] **P5.T5.2:** corrupt and future-version blobs both yield a fresh profile and a rendered map
 
 ## Phase 6: Installable and offline
 
