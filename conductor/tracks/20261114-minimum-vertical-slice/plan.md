@@ -116,24 +116,27 @@ continues — it never adds a package that is not named in the phase.
 - **Dependencies:** none
 - **Decisions:** D7
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** 962fd45
+**Evidence:** conductor/tracks/20261114-minimum-vertical-slice/verification/phase-3.md
 
-- [ ] **P3.T1: the three pictures as inline SVG components** — covers: FR-3
-  - [ ] **P3.T1.1:** `ui/pictures/` bread, cheese and top-slice components plus a `PictureId`
+- [x] **P3.T1: the three pictures as inline SVG components** — covers: FR-3
+  - [x] **P3.T1.1:** `ui/pictures/` bread, cheese and top-slice components plus a `PictureId`
     registry; no emoji, no external asset
-- [ ] **P3.T2: the sequence game** — covers: FR-4
-  - [ ] **P3.T2.1:** `games/sequence/SequenceGame.tsx` holding placed-card state and reporting
+- [x] **P3.T2: the sequence game** — covers: FR-4
+  - [x] **P3.T2.1:** `games/sequence/SequenceGame.tsx` holding placed-card state and reporting
     completion through `onComplete`
-  - [ ] **P3.T2.2:** placed cards stay placed, are not tappable again, and are announced as placed
-- [ ] **P3.T3: wrong-tap feedback** — covers: NFR-7
-  - [ ] **P3.T3.1:** a wobble keyframe on the tapped card, replaced by a colour flash under
+  - [x] **P3.T2.2:** placed cards stay placed, are not tappable again, and are announced as placed
+- [x] **P3.T3: wrong-tap feedback** — covers: NFR-7
+  - [x] **P3.T3.1:** a wobble keyframe on the tapped card, replaced by a colour flash under
     `prefers-reduced-motion: reduce`
-- [ ] **P3.T4: register the game kind** — covers: FR-3
-  - [ ] **P3.T4.1:** one entry in `games/registry.ts` mapping `sequence` to the component
-- [ ] **P3.T5: game tests** — covers: AC-4, NFR-2
-  - [ ] **P3.T5.1:** solution order completes; wrong tap leaves the placed count unchanged;
+- [x] **P3.T4: register the game kind** — covers: FR-3
+  - [x] **P3.T4.1:** one entry in `games/registry.ts` mapping `sequence` to the component
+- [x] **P3.T5: game tests** — covers: AC-4, NFR-2
+  - [x] **P3.T5.1:** solution order completes; wrong tap leaves the placed count unchanged;
     placing the same card twice is a no-op
-  - [ ] **P3.T5.2:** every rendered card meets the 72 px minimum from the token
+  - [x] **P3.T5.2:** every rendered card meets the 72 px minimum from the token
 
 ## Phase 4: Narration and the concept beat
 
