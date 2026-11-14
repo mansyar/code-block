@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import type { PictureId } from '../../content/lesson';
 import { pictureRegistry } from './registry';
 
-const ids: readonly PictureId[] = ['bread', 'cheese', 'top'];
+const ids: readonly PictureId[] = ['walker', 'step-up', 'step-right', 'step-down'];
 
 describe('pictureRegistry', () => {
   it.each(ids)('renders an svg for %s', (id) => {

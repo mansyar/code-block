@@ -5,29 +5,6 @@
   align-items: center;
 }
 
-.plate {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: var(--space-2);
-  width: 100%;
-  max-width: 26rem;
-  min-height: calc(var(--tap-target) + var(--space-4));
-  margin: 0;
-  padding: var(--space-3);
-  border: var(--stroke-width) dashed var(--colour-outline);
-  border-radius: var(--radius-lg);
-  background: var(--colour-surface);
-  list-style: none;
-}
-
-.placedCard {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .tray {
   display: flex;
   flex-wrap: wrap;

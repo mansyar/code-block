@@ -1,0 +1,41 @@
+{
+  "id": "20261114-one-world-lesson-two",
+  "title": "One world, lesson two",
+  "type": "feature",
+  "status": "complete",
+  "priority": "high",
+  "depends_on": [
+    "20261114-minimum-vertical-slice"
+  ],
+  "created_at": "2026-11-14T12:10:00Z",
+  "updated_at": "2026-11-14T19:40:00Z",
+  "spec": "spec.md",
+  "plan": "plan.md",
+  "mission": "mission.md",
+  "branch": "feat/20261114-one-world-lesson-two",
+  "base_branch": "main",
+  "base_sha": "c1b2b1c",
+  "autonomy": "ready",
+  "effort": 3,
+  "progress": {
+    "phases_total": 7,
+    "tasks_total": 29,
+    "phases_verified": 7,
+    "tasks_done": 29
+  },
+  "last_checkpoint": "bb33099",
+  "review_verdict": "pass",
+  "review_rounds": 4,
+  "reviewed_head_sha": "bb33099b32a1efbd51e862eef94eae38be9700f6",
+  "doc_sync": "done",
+  "pr_url": "https://github.com/mansyar/code-block/pull/4",
+  "pr_state": "open",
+  "decisions_open": 0,
+  "blocked_reason": null,
+  "reverted_at": null,
+  "revert_commit": null,
+  "revert_pr_url": null,
+  "phase": 7,
+  "archived_at": "2026-11-14T19:40:00Z",
+  "archive_path": "conductor/archive/20261114-one-world-lesson-two"
+}

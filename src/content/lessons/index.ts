@@ -1,12 +1,13 @@
 import type { Lesson, LessonCard } from '../lesson';
 import { lessonOne } from './0001-order';
+import { lessonTwo } from './0002-repeat';
 
 /**
- * The curriculum: every stop on the journey map, in order. Lessons 2–6 are planned and appear as
- * locked stops; only lesson 1 has content in this slice.
+ * The curriculum: every stop on the journey map, in order. Lessons 3–6 are planned and appear as
+ * locked stops; lessons 1 and 2 have content.
  */
 export const curriculum: readonly LessonCard[] = [
-  { id: 'order', title: 'Make a sandwich', order: 1 },
+  { id: 'order', title: 'Walk the path', order: 1 },
   { id: 'repeat', title: 'Do it again', order: 2 },
   { id: 'cause', title: 'Make it move', order: 3 },
   { id: 'condition', title: 'If it is red', order: 4 },
@@ -15,7 +16,7 @@ export const curriculum: readonly LessonCard[] = [
 ];
 
 /** Lessons that actually have content. Grows one entry per lesson track. */
-export const lessons: readonly Lesson[] = [lessonOne];
+export const lessons: readonly Lesson[] = [lessonOne, lessonTwo];
 
 const first = curriculum[0];
 

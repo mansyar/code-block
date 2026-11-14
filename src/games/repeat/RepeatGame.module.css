@@ -1,0 +1,44 @@
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: calc(var(--tap-target) * 1.25);
+  min-height: calc(var(--tap-target) * 1.25);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--colour-surface-raised);
+  transition: transform var(--duration-tap) var(--ease-tap);
+}
+
+/* While he is walking, the button reads as spent without becoming a colour-only signal. */
+.card[data-walking="true"] {
+  border-style: dashed;
+  background: var(--colour-grass);
+}
+
+.card:active {
+  transform: scale(0.94);
+}
+
+.arrow {
+  width: 3.25rem;
+  height: 3.25rem;
+}
+
+/* Reduced motion: no press movement at all; the walk itself is handled in Track.module.css. */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+
+  .card:active {
+    transform: none;
+  }
+}

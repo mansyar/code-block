@@ -32,11 +32,6 @@
   align-items: center;
 }
 
-.note {
-  margin: 0;
-  color: var(--colour-ink-muted);
-}
-
 .cards {
   display: flex;
   flex-wrap: wrap;
@@ -57,6 +52,9 @@
   border: var(--stroke-width) solid var(--colour-outline);
   border-radius: var(--radius-md);
   background: var(--colour-surface-raised);
-  font-weight: 600;
-  text-transform: capitalize;
+}
+
+.cardPicture {
+  width: 3.25rem;
+  height: 3.25rem;
 }

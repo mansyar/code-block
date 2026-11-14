@@ -1,0 +1,185 @@
+.frame {
+  display: inline-flex;
+  padding: var(--space-3);
+  border: var(--stroke-width) dashed var(--colour-outline);
+  border-radius: var(--radius-lg);
+  background: var(--colour-surface);
+}
+
+.track {
+  --cell: var(--tap-target);
+  --gap: var(--space-3);
+  --road: 12px;
+
+  position: relative;
+  display: grid;
+  gap: var(--gap);
+}
+
+/* The ribbon. Only consecutive road cells get one, so the drawn line is the whole rule about where
+   the walker may go. */
+.road {
+  position: absolute;
+  z-index: 0;
+  border-radius: 999px;
+  background: var(--colour-lock);
+}
+
+.cell {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cell);
+  height: var(--cell);
+  border-radius: var(--radius-md);
+  background: var(--colour-surface-raised);
+}
+
+/* Where he started: its own pad, so the two ends of the road are two places, not two tiles. */
+.cell[data-start="true"] {
+  background: var(--colour-sky);
+  box-shadow: inset 0 0 0 var(--stroke-width) var(--colour-outline);
+}
+
+/* Where the road ends. */
+.cell[data-goal="true"] {
+  background: var(--colour-sun);
+}
+
+/* The cell the walker stands in is marked by shape as well as colour: it is where he is. */
+.cell[data-walker="true"] {
+  background: var(--colour-grass);
+  box-shadow: inset 0 0 0 var(--stroke-width) var(--colour-outline);
+}
+
+/* A cell behind him with the step he took in it. */
+.cell[data-step]:not([data-step="none"]) {
+  background: var(--colour-surface-raised);
+}
+
+/* The flag sits at a corner of its pad so it stays visible when the walker arrives. */
+.goal {
+  position: absolute;
+  top: -0.35rem;
+  right: -0.2rem;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.step,
+.walker {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.walker {
+  position: relative;
+  z-index: 1;
+}
+
+/* He arrives from wherever he was, which is the whole point of the game. Direction-neutral on
+   purpose: a sideways travel animation would contradict a step up or down. */
+.walker {
+  animation: arrive var(--duration-settle) var(--ease-tap);
+}
+
+@keyframes arrive {
+  from {
+    transform: scale(0.7);
+    opacity: 0.4;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* Reduced motion: the cell changes colour, he does not animate into it. */
+@media (prefers-reduced-motion: reduce) {
+  .walker {
+    animation: none;
+  }
+}
+
+/* ---- The arrival ----
+   He reached the end of a road he worked out himself. The screen holds still for this beat so the
+   child sees that he arrived, instead of being cut to the next screen on the same frame. */
+
+.track[data-celebrate="true"] .walker {
+  animation: hop 600ms var(--ease-tap) 2;
+}
+
+.track[data-celebrate="true"] .goal {
+  animation: wave 500ms var(--ease-tap) 2;
+  transform-origin: 50% 90%;
+}
+
+@keyframes hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-14px);
+  }
+  70% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  35% {
+    transform: rotate(-12deg);
+  }
+  70% {
+    transform: rotate(9deg);
+  }
+}
+
+.sparks {
+  position: absolute;
+  z-index: 2;
+  width: 0;
+  height: 0;
+}
+
+.spark {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 999px;
+  background: var(--colour-berry);
+  animation: spark 700ms var(--ease-tap) forwards;
+}
+
+@keyframes spark {
+  from {
+    transform: rotate(var(--angle)) translateY(4px) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: rotate(var(--angle)) translateY(-38px) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* Reduced motion: nothing travels. The goal pad brightens and the sparks simply appear. */
+@media (prefers-reduced-motion: reduce) {
+  .track[data-celebrate="true"] .walker,
+  .track[data-celebrate="true"] .goal {
+    animation: none;
+  }
+
+  .spark {
+    animation: none;
+    transform: rotate(var(--angle)) translateY(-20px);
+    opacity: 0.9;
+  }
+}

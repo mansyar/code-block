@@ -1,9 +1,10 @@
 import '@testing-library/jest-dom/vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
-import type { ScriptLine } from '../content/lesson';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { Lesson, ScriptLine } from '../content/lesson';
 import { lessonOne } from '../content/lessons/0001-order';
 import type { Narration } from '../narration/port';
+import { CELEBRATE_MS } from '../world/walk';
 import { LessonScreen } from './LessonScreen';
 
 function fakeNarration() {
@@ -32,7 +33,22 @@ function playTheGame() {
   }
 }
 
+/** Let the arrival celebration finish, so the concept beat opens. */
+function arrive() {
+  act(() => {
+    vi.advanceTimersByTime(CELEBRATE_MS);
+  });
+}
+
 describe('LessonScreen', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('names the lesson', () => {
     renderLesson();
 
@@ -61,6 +77,7 @@ describe('LessonScreen', () => {
     renderLesson(narration);
 
     playTheGame();
+    arrive();
 
     expect(narration.speak).toHaveBeenCalledTimes(1);
     expect(narration.speak).toHaveBeenCalledWith(lessonOne.concept);
@@ -71,6 +88,7 @@ describe('LessonScreen', () => {
     renderLesson();
 
     playTheGame();
+    arrive();
 
     const finished = screen
       .getAllByRole('listitem')
@@ -84,6 +102,7 @@ describe('LessonScreen', () => {
     renderLesson(narration);
 
     playTheGame();
+    arrive();
     fireEvent.click(screen.getByRole('button', { name: /play it again/i }));
 
     expect(narration.speak).toHaveBeenCalledTimes(2);
@@ -99,6 +118,7 @@ describe('LessonScreen', () => {
 
     renderLesson(broken);
     playTheGame();
+    arrive();
 
     expect(screen.getByText(lessonOne.concept.text)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /play it again/i })).toBeInTheDocument();
@@ -116,6 +136,7 @@ describe('LessonScreen', () => {
     const { onClose, onComplete } = renderLesson();
 
     playTheGame();
+    arrive();
     fireEvent.click(screen.getByRole('button', { name: /done/i }));
 
     expect(onClose).toHaveBeenCalledTimes(1);
@@ -136,5 +157,43 @@ describe('LessonScreen', () => {
     unmount();
 
     expect(narration.stop).toHaveBeenCalled();
+  });
+
+  it('draws pictures, never sprite ids, as text', () => {
+    const { container } = render(
+      <LessonScreen
+        lesson={lessonOne}
+        onClose={vi.fn()}
+        onComplete={vi.fn()}
+        narration={fakeNarration()}
+      />,
+    );
+
+    expect(container.textContent).not.toMatch(/step-|walker/);
+    expect(container.querySelectorAll('svg').length).toBeGreaterThanOrEqual(
+      lessonOne.game.cards.length,
+    );
+  });
+
+  it('draws the sprites of a lesson whose game is not built yet, and says nothing', () => {
+    const pending: Lesson = {
+      id: 'pending',
+      title: 'Not built',
+      order: 9,
+      game: { cards: ['step-up', 'step-right'], solution: ['step-up', 'step-right'] },
+      concept: { id: 'concept-pending', text: 'Nothing to hear yet.' },
+    };
+
+    const { container } = render(
+      <LessonScreen
+        lesson={pending}
+        onClose={vi.fn()}
+        onComplete={vi.fn()}
+        narration={fakeNarration()}
+      />,
+    );
+
+    expect(container.textContent).not.toMatch(/step-|walker|still being built/);
+    expect(container.querySelectorAll('svg')).toHaveLength(pending.game.cards.length);
   });
 });

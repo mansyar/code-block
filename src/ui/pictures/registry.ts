@@ -1,18 +1,20 @@
 import type { ComponentType } from 'react';
 import type { PictureId } from '../../content/lesson';
-import { Bread } from './Bread';
-import { Cheese } from './Cheese';
 import type { PictureProps } from './picture';
-import { TopSlice } from './TopSlice';
+import { StepDown } from './StepDown';
+import { StepRight } from './StepRight';
+import { StepUp } from './StepUp';
+import { Walker } from './Walker';
 
 /**
- * Picture id → component. A `Record` keyed by `PictureId`, so adding a picture to the content
+ * Picture id → component. A `Record` keyed by `PictureId`, so adding a sprite to the content
  * contract without drawing it is a type error rather than a blank card.
  */
 export const pictureRegistry: Readonly<Record<PictureId, ComponentType<PictureProps>>> = {
-  bread: Bread,
-  cheese: Cheese,
-  top: TopSlice,
+  walker: Walker,
+  'step-up': StepUp,
+  'step-right': StepRight,
+  'step-down': StepDown,
 };
 
 export function findPicture(id: PictureId): ComponentType<PictureProps> {
