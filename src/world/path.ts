@@ -63,16 +63,40 @@ export function tracePath(steps: readonly StepId[]): readonly Cell[] {
  *
  * Lesson 1's three cards are therefore also its road — up, right, down — and the same data drives
  * both what the child taps and where the road goes, so they cannot disagree.
+ *
+ * A lesson may name plan positions whose step is taken twice (`twice`); the road then carries that
+ * step's cell twice. The road is the walk, so the extra cell is inserted here rather than invented
+ * by the game — a child who reads the road has already read what will happen.
  */
 export function routeFor(lesson: Lesson): readonly Cell[] {
-  const { solution } = lesson.game;
+  const { solution, twice } = lesson.game;
   const steps = solution.filter(isStep);
 
   if (steps.length !== solution.length) {
     throw new Error(`${lesson.id}: a route step cannot be the walker`);
   }
 
-  return tracePath(steps);
+  return tracePath(withRepeats(steps, twice));
+}
+
+/** The plan's steps with each repeated position's step appearing twice, in plan order. */
+function withRepeats(steps: readonly StepId[], twice: readonly number[] | undefined): StepId[] {
+  if (twice === undefined) {
+    return [...steps];
+  }
+
+  const repeats = new Set(twice);
+  const walked: StepId[] = [];
+
+  steps.forEach((step, index) => {
+    walked.push(step);
+
+    if (repeats.has(index + 1)) {
+      walked.push(step);
+    }
+  });
+
+  return walked;
 }
 
 /** The route for a lesson that repeats one direction: the same step, `times` cells in a row. */
