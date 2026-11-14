@@ -34,6 +34,10 @@ lines are never removed.
 
 ## Current focus
 
+[20261114-road-ribbon](./tracks/20261114-road-ribbon/index.md) — the road the whole curriculum is
+read from, drawn through the tiles instead of in the gaps between them.
+
+In flight, awaiting its merge:
 [20261114-lesson-three-make-it-move](./tracks/20261114-lesson-three-make-it-move/index.md) — the
 cause-and-effect lesson: a plan of arrows built on the road, run in full by one press of GO.
 

@@ -8,19 +8,37 @@ import { Track } from './Track';
 /** Lesson 3's road — up, right, right, up — five cells, two legs, flags at cells 2 and 4 (D3). */
 const TWO_LEG_ROUTE = tracePath(['step-up', 'step-right', 'step-right', 'step-up']);
 
+/** The sides cell `index` draws the road toward, in the order the cell renders them. */
+function sidesFrom(container: HTMLElement, index: number): (string | null)[] {
+  const cell = container.querySelector(`[data-cell="${index}"]`);
+
+  return Array.from(cell?.querySelectorAll('[data-link]') ?? []).map((link) =>
+    link.getAttribute('data-link'),
+  );
+}
+
 describe('the road', () => {
-  it('joins only consecutive cells with a ribbon, so no shortcut is drawn', () => {
+  it('joins consecutive cells with a band each cell draws half of, so the road crosses the tiles', () => {
     const { container } = render(<Track route={routeFor(lessonOne)} position={0} placed={[]} />);
 
-    const roads = Array.from(container.querySelectorAll('[data-road]'));
-    const cells = container.querySelectorAll('[data-cell]');
-
-    expect(roads).toHaveLength(cells.length - 1);
-    expect(roads.map((road) => road.getAttribute('data-road'))).toEqual([
-      'vertical',
-      'horizontal',
-      'vertical',
+    // Lesson 1 is up, right, down: the two ends leave by one side, the cells between by two, so no
+    // cell can get away with a band that stops in the gap.
+    expect([0, 1, 2, 3].map((index) => sidesFrom(container, index))).toEqual([
+      ['up'],
+      ['down', 'right'],
+      ['left', 'down'],
+      ['up'],
     ]);
+    expect(container.querySelectorAll('[data-link]')).toHaveLength(6);
+  });
+
+  it('leaves cells that touch but are not consecutive unjoined, so no shortcut is drawn', () => {
+    const { container } = render(<Track route={routeFor(lessonOne)} position={0} placed={[]} />);
+
+    // The last cell sits directly right of the first one on the grid: a shortcut the child could
+    // think he may take, and the one the ribbon existed to rule out.
+    expect(sidesFrom(container, 0)).not.toContain('right');
+    expect(sidesFrom(container, 3)).not.toContain('left');
   });
 
   it('draws the start and the goal as different pads', () => {
@@ -37,16 +55,30 @@ describe('the road', () => {
     expect(starts[0]).not.toBe(goals[0]);
   });
 
-  it('runs a straight road with only horizontal ribbons', () => {
+  it('gives a straight road two sides to the middle cell and one to each end', () => {
     const route = tracePath(['step-right', 'step-right']);
     const { container } = render(<Track route={route} position={0} placed={[]} />);
 
-    expect(
-      Array.from(container.querySelectorAll('[data-road]')).map((road) =>
-        road.getAttribute('data-road'),
-      ),
-    ).toEqual(['horizontal', 'horizontal']);
+    expect([0, 1, 2].map((index) => sidesFrom(container, index))).toEqual([
+      ['right'],
+      ['left', 'right'],
+      ['left'],
+    ]);
     expect(container.querySelector('[data-rows]')).toHaveAttribute('data-rows', '1');
+  });
+
+  it('joins both legs of a two-flag road, not just the leg the walker is on', () => {
+    const { container } = render(
+      <Track route={TWO_LEG_ROUTE} position={0} placed={[]} goals={[2, 4]} />,
+    );
+
+    expect([0, 1, 2, 3, 4].map((index) => sidesFrom(container, index))).toEqual([
+      ['up'],
+      ['down', 'right'],
+      ['left', 'right'],
+      ['left', 'up'],
+      ['down'],
+    ]);
   });
 
   it('keeps the walker on the cell his index names', () => {
