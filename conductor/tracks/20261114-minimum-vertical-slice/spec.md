@@ -88,8 +88,8 @@ Out of scope:
   (covers FR-1).
 - **AC-2** — Nodes 2–6 carry a locked state that is not activatable, and their locked marker is a
   different shape from the unlocked node's (covers FR-2).
-- **AC-3** — Activating node 1 renders three cards in an order that is not the solution (covers
-  FR-3).
+- **AC-3** — Activating node 1 renders three cards in an order that is not the solution
+  (covers FR-3).
 - **AC-4** — Tapping the solution order completes the game; tapping a wrong card leaves the
   placed count unchanged; tapping a placed card changes nothing (covers FR-4).
 - **AC-5** — On completion the narration port receives the concept line exactly once, and
