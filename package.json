@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "biome check .",
     "format": "biome format --write .",
+    "icons": "bun scripts/generate-icons.ts",
     "verify": "bun run typecheck && bun run lint && bun run build && bun run test"
   },
   "dependencies": {
@@ -27,6 +28,7 @@
     "jsdom": "^31.0.1",
     "typescript": "^7.0.2",
     "vite": "^8.3.8",
+    "vite-plugin-pwa": "^2.0.0",
     "vitest": "^5.1.0"
   }
 }
