@@ -9,7 +9,7 @@
 | Base | `main` @ `ebfafe3` |
 | Effort | 3 |
 | Autonomy | ready |
-| Status | new — no phase started |
+| Status | in_progress — phase 1 verified |
 
 ## Artifacts
 
@@ -28,11 +28,12 @@ content files rather than engineering.
 
 | Phase | Name | Status |
 |---|---|---|
-| 1 | Scaffold and the verify loop | pending |
+| 1 | Scaffold and the verify loop | verified |
 | 2 | Content contract and the journey map | pending |
 | 3 | The order game | pending |
 | 4 | Narration and the concept beat | pending |
 | 5 | Progress, the star and the way back | pending |
 | 6 | Installable and offline | pending |
 
-Evidence files land in `verification/phase-<n>.md`; none exist yet.
+Evidence files land in `verification/phase-<n>.md`. Phase 1 is recorded in
+[verification/phase-1.md](./verification/phase-1.md).

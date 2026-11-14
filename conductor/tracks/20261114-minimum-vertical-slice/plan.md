@@ -29,31 +29,34 @@ continues — it never adds a package that is not named in the phase.
   `@biomejs/biome`, `vitest`, `jsdom`, `@testing-library/react`, `@testing-library/jest-dom`
 - **Decisions:** none
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** 941880d
+**Evidence:** conductor/tracks/20261114-minimum-vertical-slice/verification/phase-1.md
 
-- [ ] **P1.T1: `package.json` with the script surface** — covers: NFR-4
-  - [ ] **P1.T1.1:** scripts `dev`, `build`, `preview`, `test`, `typecheck`, `lint`, `format`,
+- [x] **P1.T1: `package.json` with the script surface** — covers: NFR-4
+  - [x] **P1.T1.1:** scripts `dev`, `build`, `preview`, `test`, `typecheck`, `lint`, `format`,
     `verify`, `icons`; `verify` = typecheck → lint → build → test
-  - [ ] **P1.T1.2:** `private: true`, `type: "module"`, no publish metadata
-- [ ] **P1.T2: strict TypeScript configuration** — covers: NFR-4
-  - [ ] **P1.T2.1:** `strict`, `noUncheckedIndexedAccess`, `noImplicitOverride`,
+  - [x] **P1.T1.2:** `private: true`, `type: "module"`, no publish metadata
+- [x] **P1.T2: strict TypeScript configuration** — covers: NFR-4
+  - [x] **P1.T2.1:** `strict`, `noUncheckedIndexedAccess`, `noImplicitOverride`,
     `exactOptionalPropertyTypes`, `noEmit`
-- [ ] **P1.T3: Vite and React entry point** — covers: FR-1
-  - [ ] **P1.T3.1:** `index.html` with the app title, viewport and theme colour
-  - [ ] **P1.T3.2:** `src/main.tsx` mounts `<App />` into `#root`
-  - [ ] **P1.T3.3:** `src/styles/tokens.css` defines the colour, spacing, type and `--tap-target`
+- [x] **P1.T3: Vite and React entry point** — covers: FR-1
+  - [x] **P1.T3.1:** `index.html` with the app title, viewport and theme colour
+  - [x] **P1.T3.2:** `src/main.tsx` mounts `<App />` into `#root`
+  - [x] **P1.T3.3:** `src/styles/tokens.css` defines the colour, spacing, type and `--tap-target`
     tokens, including the 72 px minimum
-- [ ] **P1.T4: Biome configuration** — covers: NFR-4
-  - [ ] **P1.T4.1:** `biome.json` with recommended rules, 2-space indent, single quotes, and
+- [x] **P1.T4: Biome configuration** — covers: NFR-4
+  - [x] **P1.T4.1:** `biome.json` with recommended rules, 2-space indent, single quotes, and
     import organisation enabled
-  - [ ] **P1.T4.2:** `bun run lint` fails on a deliberate violation and passes once it is reverted
-- [ ] **P1.T5: Vitest with jsdom and the first test** — covers: AC-1
-  - [ ] **P1.T5.1:** `src/App.test.tsx` renders the shell and asserts the start screen heading
-- [ ] **P1.T6: `src/MAP.md`** — covers: NFR-4
-  - [ ] **P1.T6.1:** one line per directory, plus "to add a lesson / a game / a screen, touch X"
-- [ ] **P1.T7: `src/structure.test.ts` with the six navigation rules** — covers: NFR-4
-  - [ ] **P1.T7.1:** rules 1–3 (no catch-all filenames, 200-line ceiling, no stray barrels) active
-  - [ ] **P1.T7.2:** rules 4–6 (lesson ids and audio, registry resolution, `MAP.md` coverage)
+  - [x] **P1.T4.2:** `bun run lint` fails on a deliberate violation and passes once it is reverted
+- [x] **P1.T5: Vitest with jsdom and the first test** — covers: AC-1
+  - [x] **P1.T5.1:** `src/App.test.tsx` renders the shell and asserts the start screen heading
+- [x] **P1.T6: `src/MAP.md`** — covers: NFR-4
+  - [x] **P1.T6.1:** one line per directory, plus "to add a lesson / a game / a screen, touch X"
+- [x] **P1.T7: `src/structure.test.ts` with the six navigation rules** — covers: NFR-4
+  - [x] **P1.T7.1:** rules 1–3 (no catch-all filenames, 200-line ceiling, no stray barrels) active
+  - [x] **P1.T7.2:** rules 4–6 (lesson ids and audio, registry resolution, `MAP.md` coverage)
     written and passing vacuously while `src/content/` is still empty
 
 ## Phase 2: Content contract and the journey map
