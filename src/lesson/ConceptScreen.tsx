@@ -15,7 +15,7 @@ type ConceptScreenProps = {
 export function ConceptScreen({ lesson, onReplay, onDone }: ConceptScreenProps) {
   return (
     <div className={styles.concept}>
-      <ol className={styles.finished} aria-label="Your sandwich">
+      <ol className={styles.finished} aria-label="The steps you placed">
         {lesson.game.solution.map((card) => {
           const Picture = pictureRegistry[card];
 

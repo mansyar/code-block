@@ -3,6 +3,7 @@ import type { Lesson } from '../content/lesson';
 import { findGame } from '../games/registry';
 import { createNarration } from '../narration/index';
 import type { Narration } from '../narration/port';
+import { pictureRegistry } from '../ui/pictures/registry';
 import { ConceptScreen } from './ConceptScreen';
 import styles from './LessonScreen.module.css';
 import { useLessonFlow } from './useLessonFlow';
@@ -61,16 +62,26 @@ export function LessonScreen({ lesson, onClose, onComplete, narration }: LessonS
   );
 }
 
+/**
+ * What a lesson shows before its game exists: its pictures, in order, and no words.
+ *
+ * Drawing the sprites rather than their ids keeps the promise that no lesson screen prints a
+ * sprite id or an instruction as text (FR-7) — the child sees pictures he can recognise even on
+ * a lesson whose game is not written yet.
+ */
 function GamePending({ lesson }: { readonly lesson: Lesson }) {
   return (
     <div className={styles.pending}>
-      <p className={styles.note}>This game is still being built.</p>
-      <ol className={styles.cards}>
-        {lesson.game.cards.map((card) => (
-          <li key={card} className={styles.card} data-card={card}>
-            {card}
-          </li>
-        ))}
+      <ol className={styles.cards} aria-label="This lesson's steps">
+        {lesson.game.cards.map((card) => {
+          const Picture = pictureRegistry[card];
+
+          return (
+            <li key={card} className={styles.card} data-card={card}>
+              <Picture className={styles.cardPicture} />
+            </li>
+          );
+        })}
       </ol>
     </div>
   );

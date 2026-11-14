@@ -113,7 +113,8 @@ describe('App', () => {
 
     expect(screen.getAllByRole('listitem')).toHaveLength(3);
     expect(screen.queryByText(/you made it/i)).toBeNull();
-    expect(screen.getByRole('button', { name: /bread/i })).toBeInTheDocument();
+    const firstCard = findLesson(firstLesson.id)?.game.cards[0] ?? '';
+    expect(screen.getByRole('button', { name: new RegExp(firstCard, 'i') })).toBeInTheDocument();
   });
 
   it('starts fresh from an unparseable saved profile and still shows the map', () => {
