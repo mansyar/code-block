@@ -36,7 +36,7 @@ they need before their mechanics are designed.
 | 5 | The docs catch up with the world | verified — `fb30e5f` |
 
 Each phase's evidence is in [`verification/phase-<n>.md`](./verification), and the whole track was
-reviewed cold in [review.md](./review.md) — verdict **PASS**, pinned to `44c4e18`.
+reviewed cold in [review.md](./review.md) — verdict **PASS**, pinned to `bcd3c3f` (round 2).
 
 ## Delivery
 

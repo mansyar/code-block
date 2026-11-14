@@ -35,7 +35,7 @@ it makes each later lesson cost a mechanic instead of a sprite set. See
   · [phase-4](./conductor/archive/20261114-one-world-lesson-two/verification/phase-4.md)
   · [phase-5](./conductor/archive/20261114-one-world-lesson-two/verification/phase-5.md)
 - Review: [review.md](./conductor/archive/20261114-one-world-lesson-two/review.md) — verdict **PASS**,
-  independence cold-read, pinned to `44c4e18`.
+  independence cold-read, pinned to `bcd3c3f` (round 2 re-pin after the pre-merge archive).
 - Integrated verification: `bun run verify` exit 0 — typecheck, Biome, build, **110 tests in 17
   files** (92 before this track). Build `232.00 kB / 72.73 kB gzip`.
 - Visual: none. No browser is in the phase path; the reduced-motion behaviour was checked in the

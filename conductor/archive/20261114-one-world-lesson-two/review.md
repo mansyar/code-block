@@ -1,8 +1,9 @@
 # Review — 20261114-one-world-lesson-two
 
-- Round: 1
-- Base / Head: c1b2b1c / 44c4e18
-- Reviewed SHA: 44c4e1812a45b4a739b4c41f09f35c4a5be8522b
+- Round: 2
+- Base / Head: c1b2b1c / bcd3c3f
+- Reviewed SHA: bcd3c3fc17159dc5a1de685734a9f553c4e303f3
+- Round 1: PASS at `44c4e18` — kept below, unchanged
 - Independence: cold-read
 - Verdict: PASS
 
@@ -10,7 +11,7 @@
 
 | Check | Result |
 |---|---|
-| Commands pass on a clean run | pass — `bun run verify` exit 0 on `44c4e18`: typecheck, Biome (66 files), build `232.00 kB / 72.73 kB` gzip, **110 tests in 17 files**. Log: `.conductor/evidence/20261114-one-world-lesson-two/review-r1-verify.log`. Worktree clean afterwards |
+| Commands pass on a clean run | pass — round 2, re-run on `bcd3c3f`: `bun run verify` exit 0, typecheck, Biome (67 files), build `dist/assets/index-DhfsC7ck.js` `232.00 kB / 72.73 kB` gzip — **the same asset hash as the round-1 build** — **110 tests in 17 files**. Log: `.conductor/evidence/20261114-one-world-lesson-two/review-r2-verify.log`. Worktree clean afterwards |
 | Evidence exists | pass — `verification/phase-1.md` … `phase-5.md` present for all five verified phases |
 | State honest | pass — plan `Result: verified` ×5, checkpoints `7149e4f, 3aaa4f1, 32c825f, 8b180f0, fb30e5f`; `metadata.json` reports 5/5 phases, 20/20 tasks, `last_checkpoint: fb30e5f` |
 | Decisions authorized | pass — every `## Decisions` row in the evidence files names a `D<n>` that exists in `spec.md` (D1–D10 all present) |
@@ -66,4 +67,36 @@ Two edges were checked rather than assumed:
 1. **A double tap on the repeat arrow.** `react.md` requires a play call to be safe twice. A throwaway probe (two `fireEvent.click` in the same tick, then all timers advanced) showed exactly one completion, the walker on cell 3 and three steps on the path. The probe was deleted; the tree was clean before and after.
 2. **The "Coming soon" branch in `App.tsx`** prints a sentence for a lesson id with no content. It is unreachable in this track — nodes 3–6 are locked — and this track did not change it. Noted so the next track that unlocks node 3 remembers node 3 has no lesson yet.
 
-`metadata.json` carries `review_verdict: pass`, `review_rounds: 1` and this SHA. The commit that follows this file is state only (this review plus those three fields), so `git diff 44c4e18..HEAD -- src` is empty when ship runs.
+`metadata.json` carries `review_verdict: pass`, `review_rounds: 2` and this SHA.
+
+## Round 2 — re-pin after the pre-merge archive
+
+**Why this round exists.** Round 1 pinned `44c4e18`. After it, the parent asked for the track to be
+archived *before* the merge, so the branch head moved to `bcd3c3f`. A verdict pinned to a commit that
+is no longer the head is not a verdict about what the PR would merge, so the review was re-run rather
+than carried over on assertion alone.
+
+**What actually changed between the two pins.** `git diff --name-status 44c4e18..bcd3c3f` is 13 paths,
+and every one is under `conductor/`:
+
+| Change | Paths |
+|---|---|
+| Renamed, unchanged content (R100) | `spec.md`, `mission.md`, and `verification/phase-1.md` … `phase-5.md` — files moved from `tracks/` to `archive/` |
+| Renamed, content edited (R055, R094) | `index.md` (status, phase table, Delivery section), `plan.md` (links rewritten to the archive path) |
+| Rewritten | `metadata.json` (`status: complete`, `archived_at`, `archive_path`; `pr_state` still `open`), `pr.md` (links), plus `conductor/index.md` and `conductor/tracks.md` outside the track |
+| **Application code** | **none — `src/` differs in 0 files; `package.json` and `bun.lock` differ in 0 files** |
+
+**Verification re-run, not assumed.** `bun run verify` exited 0 on `bcd3c3f` at review time: 67 files
+linted, 110 tests in 17 files, worktree clean. The build produced `index-DhfsC7ck.js` at
+`232.00 kB / 72.73 kB` gzip — the identical asset hash R1 recorded, which is stronger evidence than
+"the diff is empty" that the shipped bundle is the reviewed one.
+
+**Verdict.** Unchanged: **PASS**. All eight FR, five NFR and eight AC rows above were re-traced against
+the same code and still hold; the coverage table was not rewritten because nothing it cites changed.
+
+**Findings.** No new finding. R1-1, R1-2 and R1-3 remain open Low debt, recorded as they were — this
+round did not touch `src/`, so there was nothing for a Review Fixes phase to act on and none was
+opened. Nothing was weakened or deleted to reach this verdict.
+
+**Pin.** `Reviewed SHA: bcd3c3fc17159dc5a1de685734a9f553c4e303f3`. The commit that carries this file is state only — review, metadata and
+the archive bookkeeping — so `git diff bcd3c3f..HEAD -- src` is empty.
