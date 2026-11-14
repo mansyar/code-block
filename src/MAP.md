@@ -16,13 +16,14 @@ later phases add.
 - `src/lesson/` — the lesson screen shell: resolves the lesson's game, hosts it, owns the back
   control.
 - `src/progress/` — `schema.ts` (shape and defensive parse) and `selectors.ts` (stars, unlock).
+- `src/ui/` — shared presentation: `pictures/` holds one SVG per `PictureId` and the registry that
+  maps ids to components.
 - `src/styles/` — design tokens (`tokens.css`, every colour, space, radius, timing and
   `--tap-target`) and element-level base styles. To restyle the app, edit `tokens.css`.
 
 ## Planned
 
 - `src/narration/` — the narration port and its adapters (silent, system voice, later audio files).
-- `src/ui/` — small shared components and the picture registry.
 
 ## Recipes
 

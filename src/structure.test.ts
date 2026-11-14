@@ -130,10 +130,14 @@ describe('structure rule 5 — game kinds resolve', () => {
 
     for (const lesson of lessons) {
       for (const [, kind] of lesson.text.matchAll(/gameKind:\s*'([^']+)'/g)) {
+        if (kind === undefined) continue;
+
+        // Matches the registry entry whether or not the key is quoted, since the formatter
+        // strips quotes from plain keys.
         expect(
           registry?.text,
-          `src/games/registry.ts is missing for game kind '${kind}'`,
-        ).toContain(`'${kind}'`);
+          `src/games/registry.ts has no entry for game kind '${kind}'`,
+        ).toMatch(new RegExp(`(?:^|[\\s{,])'?${kind}'?\\s*:`));
       }
     }
   });
