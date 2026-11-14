@@ -40,6 +40,87 @@ recorded here before the implementation depends on it.
   resets to a fresh profile rather than throwing.
 - No database, no network calls, no cookies, no analytics.
 
+## Architecture
+
+The app is cut into small files with one stable seam per kind of change, so any task — human or
+agent — opens the files it needs and nothing else. Files are the unit of navigation: the filename
+names the thing it exports, and the import path names the file.
+
+### Layout
+
+```text
+src/
+  main.tsx                    entry: mount the app, register the service worker
+  App.tsx                     shell only: current screen → journey map | lesson
+  MAP.md                      router: one line per directory, "to add X, touch Y"
+  app/screen.ts               discriminated union + reducer (map | lesson)
+  content/
+    lesson.ts                 Lesson / GameSpec types — the data contract
+    lessons/0001-order.ts     one lesson per file, self-contained
+    lessons/index.ts          the only ordered list of lessons
+    audio-manifest.ts         generated — marked do not edit
+  games/
+    registry.ts               gameKind → component: the one place a game is added
+    sequence/                 SequenceGame.tsx, .module.css, .test.tsx
+  lesson/LessonScreen.tsx     game → beat → narration → star
+  narration/                  port.ts, audio-narration.ts, silence-narration.ts
+  progress/                   schema.ts, store.ts, selectors.ts
+  ui/                         dumb components: Button, Star
+  styles/tokens.css           every colour, space and --tap-target
+```
+
+### Seams
+
+| Seam | File | The only place that changes… |
+|---|---|---|
+| Lesson data contract | `content/lesson.ts` | what a lesson may contain |
+| Game registry | `games/registry.ts` | which game kinds exist |
+| Narration port | `narration/port.ts` | how the app speaks (audio files today, anything later) |
+| Progress port | `progress/store.ts` | how progress is read and written |
+| Screen reducer | `app/screen.ts` | which screens exist and how they follow each other |
+| Design tokens | `styles/tokens.css` | every visual value |
+
+Ports carry two adapters each: the real one and a silent or in-memory one. Tests use the dummy
+adapter, so jsdom never touches audio or `localStorage`, and replacing the renderer is a swap
+behind an unchanged interface.
+
+### Dependency direction
+
+`main.tsx → App.tsx → lesson/ → games/ → {content/, ui/, narration/, progress/} → styles/`.
+One way only. `content/` imports nothing but its own types; nothing imports from `app/` or
+`lesson/` except `App.tsx`.
+
+### Navigation rules
+
+These are conventions, but they are enforced by `src/structure.test.ts`, which runs inside
+`bun run test` and therefore inside `bun run verify`. Each failure names the file and the rule,
+so the next turn does not have to explore.
+
+1. No `utils`, `helpers`, `common`, `shared` or `misc` files — catch-alls hide their contents.
+2. No source file over 200 lines; a read is bounded and predictable.
+3. No barrel `index.ts` except `content/lessons/index.ts` and `games/registry.ts`, and `content/`
+   imports only its own types.
+4. A lesson's `id` matches its filename, and every audio clip id it names exists in
+   `audio-manifest.ts`.
+5. Every `gameKind` a lesson uses resolves in `games/registry.ts`.
+6. `MAP.md` lists every directory under `src/`, and names no directory that no longer exists.
+
+Maximum nesting is three levels below `src/`. Lesson content is TypeScript data, not JSON, so
+the compiler catches a game kind that does not exist before a test has to.
+
+### What this buys
+
+- Adding a lesson touches one new file plus `lessons/index.ts` and the audio folder.
+- Adding a game touches one new directory plus one line in `games/registry.ts`.
+- Changing the look touches `styles/tokens.css` and, for a specific screen, its `.module.css`.
+- A phase's `Touches` is one narrow glob, so scope stays mechanically checkable.
+
+### Accepted costs
+
+- More files and more import lines than a monolithic screen would need.
+- Indirection at the narration and progress ports.
+- No router library, so no deep link into a specific lesson; navigation is the reducer.
+
 ## Content and narration
 
 - Lesson content is authored in TypeScript data files (`src/content/lessons/*.ts`): id, order,
@@ -107,3 +188,13 @@ setup deliberately did not invent a scaffold.
   server rendering and server routes would be unused weight.
 - **D-TS4 — CSS Modules over a utility framework or UI kit** → the visual language is bespoke
   and tiny; a component library would fight the design rules rather than express them.
+- **D-TS5 — Full ports for narration and progress** → each gets a port plus a real and a dummy
+  adapter, so tests never touch audio or storage and the renderer stays replaceable. Accepts one
+  layer of indirection in exchange for deterministic tests.
+- **D-TS6 — Conventions are enforced by one structural test, six rules** → the rules live in
+  `src/structure.test.ts` inside `bun run verify`; a violation names the file and the rule, which
+  costs less than a codebase read. Not a linter rule, because content-level checks (missing audio,
+  unregistered game kind, stale `MAP.md`) are not lint-shaped.
+- **D-TS7 — Lessons are TypeScript data files** → typed, compile-checked against the game
+  registry and the audio manifest, with comments allowed. JSON would need a hand-written
+  validation layer that the compiler already provides.
