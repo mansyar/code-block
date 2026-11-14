@@ -26,25 +26,28 @@ its star and the docs adopt it (phase 4).
 - **Dependencies:** none
 - **Decisions:** D2, D3, D4
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** 566821ed7b03785ac48fa1ac9dde7e3b8eb7fc70
+**Evidence:** conductor/tracks/20261114-lesson-three-make-it-move/verification/phase-1.md
 
-- [ ] **P1.T1: palette vs plan** — covers: FR-2
-  - [ ] **P1.T1.1:** `GameSpec.solution` documents itself as the whole road and may be longer than
+- [x] **P1.T1: palette vs plan** — covers: FR-2
+  - [x] **P1.T1.1:** `GameSpec.solution` documents itself as the whole road and may be longer than
     `cards`; `cards` documents itself as the palette
-  - [ ] **P1.T1.2:** `assertLesson` keeps rejecting a duplicate card, an empty plan and a plan step
+  - [x] **P1.T1.2:** `assertLesson` keeps rejecting a duplicate card, an empty plan and a plan step
     outside the palette, and stops requiring the plan to match the palette's length
-- [ ] **P1.T2: legs** — covers: FR-3
-  - [ ] **P1.T2.1:** `GameSpec.flags?: readonly number[]` — optional plan positions where a leg ends;
+- [x] **P1.T2: legs** — covers: FR-3
+  - [x] **P1.T2.1:** `GameSpec.flags?: readonly number[]` — optional plan positions where a leg ends;
     absent means one leg ending at the end of the plan
-  - [ ] **P1.T2.2:** `assertLesson` rejects an empty list, a repeated or descending position, a
+  - [x] **P1.T2.2:** `assertLesson` rejects an empty list, a repeated or descending position, a
     position past the end, and a last position that is not the end of the plan
-- [ ] **P1.T3: the existing lessons still say what they mean** — covers: FR-2, FR-3
-  - [ ] **P1.T3.1:** lessons 1 and 2 are unchanged in behaviour and declare no `flags`; their
+- [x] **P1.T3: the existing lessons still say what they mean** — covers: FR-2, FR-3
+  - [x] **P1.T3.1:** lessons 1 and 2 are unchanged in behaviour and declare no `flags`; their
     comments name palette and plan where they used to say "solution"
-- [ ] **P1.T4: tests for the new rules** — covers: AC-2, AC-3
-  - [ ] **P1.T4.1:** a four-step plan over a two-card palette is accepted; duplicate card, empty
+- [x] **P1.T4: tests for the new rules** — covers: AC-2, AC-3
+  - [x] **P1.T4.1:** a four-step plan over a two-card palette is accepted; duplicate card, empty
     plan and unknown step each throw with the lesson's id
-  - [ ] **P1.T4.2:** `[2, 4]` is accepted for a four-step plan; `[]`, `[2, 2]`, `[4, 2]`, `[2, 5]`
+  - [x] **P1.T4.2:** `[2, 4]` is accepted for a four-step plan; `[]`, `[2, 2]`, `[4, 2]`, `[2, 5]`
     and `[2]` each throw; a lesson with no `flags` is accepted, and every shipped lesson passes
     `assertLesson` through the curriculum list
 
