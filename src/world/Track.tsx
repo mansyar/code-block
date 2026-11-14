@@ -40,6 +40,13 @@ type TrackProps = {
   readonly wave?: number | undefined;
   /** True while the arrival is being celebrated: the walker hops, the flag waves, sparks fly. */
   readonly celebrating?: boolean | undefined;
+  /**
+   * Route indices that carry a repeat: the tiles where one arrow takes him two cells.
+   *
+   * Drawn as a raised diamond, so the rule reads from shape and colour together and a child who
+   * cannot tell red from green still sees which tile is different.
+   */
+  readonly pads?: readonly number[] | undefined;
 };
 
 /** Where the arrival's sparks fly. Six of them, one every 60°, so the burst reads as a burst. */
@@ -62,6 +69,7 @@ export function Track({
   onClear,
   wave,
   celebrating = false,
+  pads,
 }: TrackProps) {
   const columns = route.map((cell) => cell.col);
   const rows = route.map((cell) => cell.row);
@@ -132,6 +140,7 @@ export function Track({
               data-step={step ?? 'none'}
               data-goal={flags.includes(index) ? 'true' : 'false'}
               data-wave={index === wave ? 'true' : 'false'}
+              data-pad={pads?.includes(index) === true ? 'red' : 'false'}
             >
               {links(route, index).map((link) => (
                 <span
@@ -157,6 +166,9 @@ export function Track({
                   <Step className={styles.step} />
                 </button>
               )}
+              {pads?.includes(index) === true ? (
+                <span className={styles.pad} aria-hidden="true" data-repeat="true" />
+              ) : null}
               {flags.includes(index) ? <Goal className={styles.goal} /> : null}
               {hasWalker ? <Walker className={styles.walker} /> : null}
             </span>

@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react';
 import type { GameKind, Lesson } from '../content/lesson';
+import { ConditionGame } from './condition/ConditionGame';
 import { PlanGame } from './plan/PlanGame';
 import { RepeatGame } from './repeat/RepeatGame';
 import { SequenceGame } from './sequence/SequenceGame';
@@ -19,6 +20,7 @@ export const gameRegistry: Readonly<Partial<Record<GameKind, ComponentType<GameP
   sequence: SequenceGame,
   repeat: RepeatGame,
   plan: PlanGame,
+  condition: ConditionGame,
 };
 
 export function findGame(kind: GameKind): ComponentType<GameProps> | undefined {

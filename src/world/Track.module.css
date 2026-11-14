@@ -89,6 +89,20 @@
   background: var(--colour-surface-raised);
 }
 
+/* A tile where one arrow takes the walker two cells. A raised diamond, so the rule is carried by
+   shape as well as hue, and it never takes a tap: the step's own button owns the cell. */
+.pad {
+  position: absolute;
+  z-index: 0;
+  width: 62%;
+  height: 62%;
+  border-radius: 16%;
+  background: var(--colour-berry);
+  box-shadow: inset 0 calc(var(--stroke-width) * -1) 0 rgb(0 0 0 / 18%);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
 /* The flag sits at a corner of its pad so it stays visible when the walker arrives. */
 .goal {
   position: absolute;
