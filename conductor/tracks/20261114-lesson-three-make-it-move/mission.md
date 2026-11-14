@@ -6,7 +6,7 @@ Ship Conductor track 20261114-lesson-three-make-it-move.
 
 Source of truth: conductor/tracks/20261114-lesson-three-make-it-move/{spec.md,plan.md}. Branch
 feat/20261114-lesson-three-make-it-move, base main @ ab08c1a.
-Do not ask me anything; every decision is in the plan. Take its pre-authorized defaults (D1-D8) and
+Do not ask me anything; every decision is in the plan. Take its pre-authorized defaults (D1-D10) and
 log each one in .conductor/runs/20261114-lesson-three-make-it-move/freebuff/decisions.md.
 
 Loop, in this order:
@@ -22,7 +22,7 @@ Loop, in this order:
    set pr_state to "unavailable", and stop for me.
 
 Two rules carry over from the previous tracks: no lesson screen may print a sprite id or an
-instruction as text (spec FR-9), and no phase may add a dependency (spec NFR-4).
+instruction as text (spec FR-11), and no phase may add a dependency (spec NFR-4).
 
 Done when: every phase in plan.md is verified, review.md verdict is PASS pinned to HEAD, and the PR
 URL is in metadata.json. Then stop — I merge myself.
