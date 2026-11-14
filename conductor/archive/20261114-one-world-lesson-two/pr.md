@@ -36,19 +36,19 @@ The slice shipped one lesson with its own objects, which gave lessons 2–6 noth
 every new concept would have needed its own art and its own world. A single actor on a single path
 makes the child's screen familiar, so the only new thing at each node is the concept itself — and
 it makes each later lesson cost a mechanic instead of a sprite set. See
-[spec.md](./conductor/tracks/20261114-one-world-lesson-two/spec.md) and
-[the plan](./conductor/tracks/20261114-one-world-lesson-two/plan.md).
+[spec.md](./conductor/archive/20261114-one-world-lesson-two/spec.md) and
+[the plan](./conductor/archive/20261114-one-world-lesson-two/plan.md).
 
 ## Evidence
 
-- Phase reports: [phase-1](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-1.md)
-  · [phase-2](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-2.md)
-  · [phase-3](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-3.md)
-  · [phase-4](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-4.md)
-  · [phase-5](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-5.md)
-  · [phase-6](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-6.md)
-  · [phase-7](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-7.md)
-- Review: [review.md](./conductor/tracks/20261114-one-world-lesson-two/review.md) — verdict **PASS**,
+- Phase reports: [phase-1](./conductor/archive/20261114-one-world-lesson-two/verification/phase-1.md)
+  · [phase-2](./conductor/archive/20261114-one-world-lesson-two/verification/phase-2.md)
+  · [phase-3](./conductor/archive/20261114-one-world-lesson-two/verification/phase-3.md)
+  · [phase-4](./conductor/archive/20261114-one-world-lesson-two/verification/phase-4.md)
+  · [phase-5](./conductor/archive/20261114-one-world-lesson-two/verification/phase-5.md)
+  · [phase-6](./conductor/archive/20261114-one-world-lesson-two/verification/phase-6.md)
+  · [phase-7](./conductor/archive/20261114-one-world-lesson-two/verification/phase-7.md)
+- Review: [review.md](./conductor/archive/20261114-one-world-lesson-two/review.md) — verdict **PASS**,
   pinned to `bb33099` (round 4, after the arrival celebration; rounds 1–3 kept in the file).
 - Integrated verification: `bun run verify` exit 0 — typecheck, Biome (72 files), build, **127 tests
   in 20 files** (92 before this track). Build `234.87 kB / 73.73 kB gzip`, under the 200 kB budget.
@@ -79,7 +79,7 @@ it makes each later lesson cost a mechanic instead of a sprite set. See
 ## Debt and follow-ups
 
 Three Low findings from the review, none blocking, all recorded in
-[review.md](./conductor/tracks/20261114-one-world-lesson-two/review.md):
+[review.md](./conductor/archive/20261114-one-world-lesson-two/review.md):
 
 - **R1-1** — the concept screen draws `lesson.game.solution`, so lesson 2's payoff shows one arrow
   for a walk that took three. Fixing it honestly means the game reports what it did, which is a
