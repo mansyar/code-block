@@ -1,0 +1,59 @@
+/*
+ * Design tokens. Every colour, space, radius and timing in the app comes from here,
+ * so restyling is one file. Contrast is chosen for a four-year-old on a tablet in
+ * daylight: ink on surface is well past 4.5:1, and every state-bearing shape is
+ * paired with a shape change, never colour alone.
+ */
+:root {
+  color-scheme: light;
+
+  /* Ink and surfaces */
+  --colour-ink: #1c2130;
+  --colour-ink-muted: #4a5265;
+  --colour-surface: #fdf8ef;
+  --colour-surface-raised: #ffffff;
+  --colour-outline: #2b3140;
+
+  /* Play colours */
+  --colour-sky: #d7ecff;
+  --colour-grass: #c9e9b8;
+  --colour-sun: #f6c445;
+  --colour-sun-deep: #9a6a02;
+  --colour-berry: #e2668a;
+  --colour-lock: #b6afa0;
+
+  /* Space */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+
+  /* Shape */
+  --radius-sm: 0.75rem;
+  --radius-md: 1.25rem;
+  --radius-lg: 2rem;
+  --stroke-width: 3px;
+
+  /* The child-facing minimum. Every interactive element uses this. */
+  --tap-target: 72px;
+  --tap-gap: 16px;
+
+  /* Type */
+  --font-display: ui-rounded, "SF Pro Rounded", "Segoe UI", system-ui, sans-serif;
+  --font-size-heading: clamp(1.75rem, 5vmin, 2.5rem);
+  --font-size-body: clamp(1rem, 3.5vmin, 1.25rem);
+
+  /* Motion. Short enough to read as instant response, not decoration. */
+  --duration-tap: 90ms;
+  --duration-settle: 240ms;
+  --ease-tap: cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-tap: 1ms;
+    --duration-settle: 1ms;
+  }
+}

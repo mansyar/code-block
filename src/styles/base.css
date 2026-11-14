@@ -1,0 +1,59 @@
+/* Element-level reset and page frame. No component styles live here. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--colour-sky);
+  color: var(--colour-ink);
+  font-family: var(--font-display);
+  font-size: var(--font-size-body);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  margin: 0;
+  font-size: var(--font-size-heading);
+  line-height: 1.1;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: var(--space-5) var(--space-4);
+  text-align: center;
+}
+
+button {
+  min-width: var(--tap-target);
+  min-height: var(--tap-target);
+  border: var(--stroke-width) solid var(--colour-outline);
+  border-radius: var(--radius-md);
+  background: var(--colour-surface-raised);
+  color: var(--colour-ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+:focus-visible {
+  outline: var(--stroke-width) solid var(--colour-outline);
+  outline-offset: 3px;
+}
