@@ -34,7 +34,7 @@ Never merge, never force-push, never weaken or delete a test to make a check pas
 
 ## Effort
 
-**3** — three phases with tests, one of which changes a content contract that two shipped lessons
+**3** — four phases with tests, one of which changes a content contract that two shipped lessons
 already obey. That is more than a two-phase patch (2) and less than a migration with integration
 surfaces (4).
 
