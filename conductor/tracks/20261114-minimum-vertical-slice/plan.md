@@ -210,23 +210,26 @@ continues — it never adds a package that is not named in the phase.
 - **Dependencies:** `vite-plugin-pwa`
 - **Decisions:** D8
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** 0aed52e
+**Evidence:** conductor/tracks/20261114-minimum-vertical-slice/verification/phase-6.md
 
-- [ ] **P6.T1: the icon generator** — covers: FR-8, D8
-  - [ ] **P6.T1.1:** `scripts/generate-icons.ts` writing 192 and 512 PNGs with node `zlib`, wired
+- [x] **P6.T1: the icon generator** — covers: FR-8, D8
+  - [x] **P6.T1.1:** `scripts/generate-icons.ts` writing 192 and 512 PNGs with node `zlib`, wired
     to `bun run icons`
-  - [ ] **P6.T1.2:** the generated PNGs committed under `public/icons/`
-- [ ] **P6.T2: the manifest** — covers: FR-8
-  - [ ] **P6.T2.1:** `vite-plugin-pwa` configured with name, short name, theme and background
+  - [x] **P6.T1.2:** the generated PNGs committed under `public/icons/`
+- [x] **P6.T2: the manifest** — covers: FR-8
+  - [x] **P6.T2.1:** `vite-plugin-pwa` configured with name, short name, theme and background
     colours, `display: standalone`, both icons, and `orientation: any`
-- [ ] **P6.T3: the precache** — covers: FR-8
-  - [ ] **P6.T3.1:** the shell and built assets precached; the audio directory pattern listed so
+- [x] **P6.T3: the precache** — covers: FR-8
+  - [x] **P6.T3.1:** the shell and built assets precached; the audio directory pattern listed so
     the later Chatterbox clips drop in without a config change
-- [ ] **P6.T4: the built-output test** — covers: AC-8, NFR-5
-  - [ ] **P6.T4.1:** `src/pwa.test.ts` asserting `dist/` holds a web manifest naming both icons
+- [x] **P6.T4: the built-output test** — covers: AC-8, NFR-5
+  - [x] **P6.T4.1:** `src/pwa.test.ts` asserting `dist/` holds a web manifest naming both icons
     and a service worker, and that precached shell entries are listed
-- [ ] **P6.T5: offline behaviour confirmed in build output** — covers: FR-8
-  - [ ] **P6.T5.1:** the service worker registers from the entry point and the precache manifest
+- [x] **P6.T5: offline behaviour confirmed in build output** — covers: FR-8
+  - [x] **P6.T5.1:** the service worker registers from the entry point and the precache manifest
     contains `index.html`
-  - [ ] **P6.T5.2:** evidence records that offline behaviour was checked at the build level, and
+  - [x] **P6.T5.2:** evidence records that offline behaviour was checked at the build level, and
     names the tablet check the parent may do later
