@@ -233,3 +233,21 @@ continues — it never adds a package that is not named in the phase.
     contains `index.html`
   - [x] **P6.T5.2:** evidence records that offline behaviour was checked at the build level, and
     names the tablet check the parent may do later
+
+## Phase 7: Review Fixes (R1)
+
+- **Goal:** Resolve review findings R1-1 and R1-2
+- **Depends on:** Phase 6
+- **Covers:** review findings
+- **Touches:** `src/lesson/LessonScreen.tsx`, `src/lesson/LessonScreen.test.tsx`, `src/App.tsx`,
+  `src/App.test.tsx`, `src/journey/JourneyMap.module.css`
+- **Dependencies:** none
+- **Decisions:** none
+- **Verification:** `bun run verify`
+- **Status:** pending
+
+- [ ] **P7.T1: Earn the star when the game is finished** — covers: R1-1
+  - [ ] **P7.T1.1:** the lesson reports completion from the game, and the concept beat's done only
+    leaves the screen, so leaving by the back control keeps the star
+- [ ] **P7.T2: Give the locked node's number ink** — covers: R1-2
+  - [ ] **P7.T2.1:** `--colour-ink` on the locked node, 7.35:1 instead of 3.58:1
