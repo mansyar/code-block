@@ -133,5 +133,5 @@ its star and the docs adopt it (phase 4).
 - [ ] **P4.T4: nothing is printed, and the docs agree** — covers: FR-11, AC-10, NFR-4, NFR-5
   - [ ] **P4.T4.1:** the lesson subtree's text contains neither `step-` nor `walker`; GO is a button
     with an accessible name and no visible text
-  - [ ] **P4.T5.2:** `src/MAP.md`, `tech-stack.md` and `product.md` describe plan-then-run in legs,
+  - [ ] **P4.T4.2:** `src/MAP.md`, `tech-stack.md` and `product.md` describe plan-then-run in legs,
     the palette/plan split and the GO control
