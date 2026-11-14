@@ -103,32 +103,35 @@ browser, and the three documents describe the rule.
 - **Verification:** `bun run verify`
 - **Status:** pending
 
-- [ ] **P3.T1: the lesson data** — `0004-condition.ts` with id `condition` (structure rule 4 ties the id
+- [x] **P3.T1: the lesson data** — `0004-condition.ts` with id `condition` (structure rule 4 ties the id
   to the filename), order 4, title "If it is red", `gameKind: 'condition'`, palette
   `['step-up', 'step-right']`, plan `['step-right', 'step-up', 'step-right', 'step-right']`, `twice:
   [2]`, concept clip id `concept-condition` and D8's sentence; added to `lessons` in
   `content/lessons/index.ts`. — covers: FR-1, FR-10, D6, D8
-- [ ] **P3.T2: star, unlock and the celebration** — an app-level test completes lesson 4 and asserts its
+- [x] **P3.T2: star, unlock and the celebration** — an app-level test completes lesson 4 and asserts its
   star is recorded, lessons 1–3's stars survive, node 5 is unlocked, and that the arrival is
   celebrated before the concept beat; storage stays under `code-block.progress.v1`. — covers: FR-8,
   AC-7, D7
-- [ ] **P3.T3: prove it in the browser** — with the dev server on `0.0.0.0:3000`, record the road's
+- [x] **P3.T3: prove it in the browser** — with the dev server on `0.0.0.0:3000`, record the road's
   six cells, the one red pad and its silhouette, the walk's beats (`0 → 1 → 2 → 3 → 4 → 5`, the pad's
   step taking two), the cell size against the 72 px floor, and the visible text (`←`, "If it is red");
   keep screenshots under `.conductor/evidence/`. — covers: AC-6, AC-8
-- [ ] **P3.T4: prove nothing is printed** — a jsdom test on lesson 4 asserts the lesson subtree's
+- [x] **P3.T4: prove nothing is printed** — a jsdom test on lesson 4 asserts the lesson subtree's
   text is exactly `←` and "If it is red", with no sprite id (`step-`, `walker`), no arrow name and no
   instruction in it, and that the road and the pad add nothing to the accessibility tree (FR-9); the
   browser measurement in P3.T3 is the independent second check of the same rule. — covers: FR-9,
   AC-8
-- [ ] **P3.T5: update the docs** — `src/MAP.md`'s add-a-lesson recipe mentions the repeat rule and
+- [x] **P3.T5: update the docs** — `src/MAP.md`'s add-a-lesson recipe mentions the repeat rule and
   `src/games/condition/`; `conductor/product.md` adds lesson 4 to the shipped-lessons sentence;
   `conductor/product-guidelines.md` states the red-pad rule (raised diamond, colour plus shape, never
   a tap target). — covers: FR-5, FR-9
-- [ ] **P3.T6: write the evidence file** — `verification/phase-3.md` holds the browser table, the
+- [x] **P3.T6: write the evidence file** — `verification/phase-3.md` holds the browser table, the
   screenshot paths, the files changed and the AC mapping. — covers: AC-6, AC-8, AC-10
 
-**Status:** pending
+**Status:** verified
+**Result:** verified
+**Checkpoint:** a2a5d22
+**Evidence:** conductor/tracks/20261114-lesson-four-if-it-is-red/verification/phase-3.md
 
 ---
 
