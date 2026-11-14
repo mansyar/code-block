@@ -9,7 +9,7 @@
 | Base | `main` @ `c1b2b1c` |
 | Effort | 3 |
 | Autonomy | ready |
-| Status | complete — six phases verified, review PASS, PR open for merge |
+| Status | complete — seven phases verified, review PASS, PR open for merge |
 
 ## Artifacts
 
@@ -37,7 +37,7 @@ they need before their mechanics are designed.
 | 6 | The world becomes a grid, so an arrow can be true | verified — `d7bea90` |
 
 Each phase's evidence is in [`verification/phase-<n>.md`](./verification), and the whole track was
-reviewed in [review.md](./review.md) — verdict **PASS**, pinned to `2873962` (round 3).
+reviewed in [review.md](./review.md) — verdict **PASS**, pinned to `bb33099` (round 4).
 
 ## Delivery
 

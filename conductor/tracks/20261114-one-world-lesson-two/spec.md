@@ -248,3 +248,21 @@ ground. Nothing on screen said which cells were joined.
   the place the child is already looking. The pads separate the two ends of the road from the road
   itself, so "where I started" and "where I am going" are places rather than two more tiles. The
   picture registry is untouched and no dependency is added.
+
+### Revision R3 — the arrival is celebrated (Phase 7)
+
+The grid world made arriving visible, and that exposed the next gap: the screen swapped to the
+concept beat on the same frame the walker reached the flag, so the arrival was never seen.
+
+- **FR-13** — When the walker reaches the last cell, the screen holds on the road for `CELEBRATE_MS`
+  (900 ms) and the road celebrates — the walker hops, the flag waves, sparks fly at the goal — and
+  only then does the concept beat open. The star is earned at the moment of arrival, not after the
+  celebration, and the concept line is spoken with the concept beat, never over the celebration.
+  Leaving during the celebration keeps the star and skips the concept.
+- **AC-13** — On arrival `onComplete` has been called exactly once and the road carries
+  `data-celebrate="true"` with no concept text on screen; after `CELEBRATE_MS` the concept text is on
+  screen and the narration port has been sent the concept line once; leaving during the celebration
+  calls `onComplete` once and `onClose` once (covers FR-13).
+- **D16 — Celebrate in place** → no new screen and no modal. The road the child just walked is the
+  right place to say "you did it", and a celebration on the same screen cannot lose his place. The
+  star stays instant so a child who leaves immediately is not punished; only the screen change waits.

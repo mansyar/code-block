@@ -23,6 +23,10 @@ The curriculum now has a single visual world and its second playable lesson.
   the road behind him, and the narrator says *"You said it
   once, and it hopped again and again. Three times!"* One instruction, three repeats — a loop
   shown as a picture, with the word left to the parent.
+- **The arrival is celebrated.** Reaching the flag used to swap the screen on the same frame. The
+  road now holds for 900 ms — the walker hops, the flag waves, sparks fly — and only then does the
+  concept beat open. The star is still earned the instant he arrives, so leaving at that moment is
+  never punished.
 - **Progress unchanged.** `code-block.progress.v1` already held a list of completed lessons, so a
   second lesson is data, not a migration. Its star opens node 3 and both stars survive a reload.
 
@@ -43,10 +47,11 @@ it makes each later lesson cost a mechanic instead of a sprite set. See
   · [phase-4](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-4.md)
   · [phase-5](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-5.md)
   · [phase-6](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-6.md)
+  · [phase-7](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-7.md)
 - Review: [review.md](./conductor/tracks/20261114-one-world-lesson-two/review.md) — verdict **PASS**,
-  pinned to `2873962` (round 3, after the grid world and its ribbon; rounds 1 and 2 kept in the file).
-- Integrated verification: `bun run verify` exit 0 — typecheck, Biome (71 files), build, **123 tests
-  in 19 files** (92 before this track). Build `234.21 kB / 73.51 kB gzip`, under the 200 kB budget.
+  pinned to `bb33099` (round 4, after the arrival celebration; rounds 1–3 kept in the file).
+- Integrated verification: `bun run verify` exit 0 — typecheck, Biome (72 files), build, **127 tests
+  in 20 files** (92 before this track). Build `234.87 kB / 73.73 kB gzip`, under the 200 kB budget.
 - Visual: none. No browser is in the phase path; the reduced-motion behaviour was checked in the
   built stylesheet instead (`._walker_…{animation:none}` and `data-walker` colour flash are present).
 
@@ -68,7 +73,8 @@ it makes each later lesson cost a mechanic instead of a sprite set. See
 | FR-10 the road is visible, with a goal | `SequenceGame.test.tsx` (coordinates, goal, arrival) | phase-6 |
 | FR-11 lesson 2 on the same grid | `RepeatGame.test.tsx` (one row, `col` 0–3) | phase-6 |
 | FR-12 the ribbon and the two pads | `src/world/Track.test.tsx` | phase-6 |
-| AC-1…AC-12 | the rows above, one per criterion | all phases |
+| FR-13 the arrival is celebrated | `src/lesson/LessonScreen.celebrate.test.tsx`, `src/world/Track.test.tsx` | phase-7 |
+| AC-1…AC-13 | the rows above, one per criterion | all phases |
 
 ## Debt and follow-ups
 
@@ -101,6 +107,7 @@ Three Low findings from the review, none blocking, all recorded in
 | D13 | A wrong direction moves him nowhere — no dead end, no reset | spec D13 |
 | D14 | The goal flag is scenery in `world/Goal.tsx`, never a `PictureId` | spec D14 |
 | D15 | The road is a ribbon joining consecutive cells only; start and goal are their own pads | spec D15 |
+| D16 | Celebrate in place for 900 ms; star at arrival, concept beat and speech after it | spec D16 |
 
 ## Notes
 

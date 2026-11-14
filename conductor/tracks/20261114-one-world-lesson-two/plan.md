@@ -200,3 +200,28 @@ vocabulary change and lesson 1's rewrite cannot be separated without leaving the
     and goal pads are marked `data-start` / `data-goal` and styled differently from the road
   - [x] **P6.T6.2:** `Track.test.tsx` asserts 3 ribbons for lesson 1 (`vertical, horizontal,
     vertical`), a start pad at cell 0, a goal pad at the last cell, and that the two pads differ
+
+## Phase 7: The arrival is celebrated
+
+- **Goal:** finishing the walk is seen to happen — the road celebrates the arrival for 900 ms, then
+  the concept beat opens.
+- **Depends on:** Phase 6
+- **Covers:** FR-13, AC-13, NFR-1, NFR-5
+- **Touches:** `src/world/`, `src/games/`, `src/lesson/`, `src/App*.test.tsx`
+- **Dependencies:** none
+- **Decisions:** D16
+- **Verification:** `bun run verify`
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** bb33099
+**Evidence:** conductor/tracks/20261114-one-world-lesson-two/verification/phase-7.md
+
+- [x] **P7.T1: the beat** — covers: FR-13
+  - [x] **P7.T1.1:** `CELEBRATE_MS` in `world/walk.ts`; `LessonScreen` holds, then `complete()`
+  - [x] **P7.T1.2:** the star is reported at arrival; leaving during the beat keeps it
+- [x] **P7.T2: the celebration itself** — covers: FR-13, NFR-1
+  - [x] **P7.T2.1:** walker hop, flag wave, six sparks, driven by `data-celebrate`
+  - [x] **P7.T2.2:** reduced motion removes the travel, keeps the sparks static
+- [x] **P7.T3: tests** — covers: AC-13, NFR-5
+  - [x] **P7.T3.1:** arrival marks the road and shows no concept; after the beat the concept is there
+  - [x] **P7.T3.2:** no narration before the beat ends; leaving mid-celebration earns the star

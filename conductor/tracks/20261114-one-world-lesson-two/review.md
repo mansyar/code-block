@@ -1,9 +1,9 @@
 # Review — 20261114-one-world-lesson-two
 
-- Round: 3
-- Base / Head: c1b2b1c / 2873962
-- Reviewed SHA: 2873962ee3c2295e5eb44878939f774a49a5d712
-- Rounds 1–2: PASS at `44c4e18` and `bcd3c3f` — kept below, unchanged
+- Round: 4
+- Base / Head: c1b2b1c / bb33099
+- Reviewed SHA: bb33099b32a1efbd51e862eef94eae38be9700f6
+- Rounds 1–3: PASS at `44c4e18`, `bcd3c3f`, `2873962` — kept below, unchanged
 - Independence: cold-read for rounds 1–2; round 3 reviews a mechanic the same agent implemented in
   the same session, and says so rather than claiming independence it does not have
 - Verdict: PASS
@@ -12,7 +12,7 @@
 
 | Check | Result |
 |---|---|
-| Commands pass on a clean run | pass — round 3, re-run on `2873962`: `bun run verify` exit 0, typecheck, Biome (71 files), build `dist/assets/index-ZYZBtbDK.js` `234.21 kB / 73.51 kB` gzip, **123 tests in 19 files**. Log: `.conductor/evidence/20261114-one-world-lesson-two/ribbon-verify.log` |
+| Commands pass on a clean run | pass — round 4, re-run on `bb33099`: `bun run verify` exit 0, typecheck, Biome (72 files), build `dist/assets/index-xBJvcLtD.js` `234.87 kB / 73.73 kB` gzip, **127 tests in 20 files**. Log: `.conductor/evidence/20261114-one-world-lesson-two/celebrate2.log` |
 | Evidence exists | pass — `verification/phase-1.md` … `phase-5.md` present for all five verified phases |
 | State honest | pass — plan `Result: verified` ×5, checkpoints `7149e4f, 3aaa4f1, 32c825f, 8b180f0, fb30e5f`; `metadata.json` reports 5/5 phases, 20/20 tasks, `last_checkpoint: fb30e5f` |
 | Decisions authorized | pass — every `## Decisions` row in the evidence files names a `D<n>` that exists in `spec.md` (D1–D10 all present) |
@@ -68,7 +68,7 @@ Two edges were checked rather than assumed:
 1. **A double tap on the repeat arrow.** `react.md` requires a play call to be safe twice. A throwaway probe (two `fireEvent.click` in the same tick, then all timers advanced) showed exactly one completion, the walker on cell 3 and three steps on the path. The probe was deleted; the tree was clean before and after.
 2. **The "Coming soon" branch in `App.tsx`** prints a sentence for a lesson id with no content. It is unreachable in this track — nodes 3–6 are locked — and this track did not change it. Noted so the next track that unlocks node 3 remembers node 3 has no lesson yet.
 
-`metadata.json` carries `review_verdict: pass`, `review_rounds: 3` and this SHA.
+`metadata.json` carries `review_verdict: pass`, `review_rounds: 4` and this SHA.
 
 ## Round 2 — re-pin after the pre-merge archive
 
