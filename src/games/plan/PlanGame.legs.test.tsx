@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/vitest';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Lesson } from '../../content/lesson';
-import { STEP_MS } from '../../world/walk';
+import { FLAG_BEAT_MS, STEP_MS } from '../../world/walk';
 import { PlanGame } from './PlanGame';
 
 /**
@@ -34,6 +34,9 @@ function renderGame() {
     onComplete,
     palette: (card: string) => screen.getByRole('button', { name: new RegExp(`^${card}$`, 'i') }),
     go: () => screen.getByRole('button', { name: /^go$/i }),
+    paletteLive: () => !screen.getByRole('button', { name: /^step-up$/i }).hasAttribute('disabled'),
+    waving: () =>
+      Number(container.querySelector('[data-wave="true"]')?.getAttribute('data-cell') ?? -1),
     walker: () =>
       Number(container.querySelector('[data-walker="true"]')?.getAttribute('data-cell') ?? -1),
     planned: () =>
@@ -66,15 +69,27 @@ describe('PlanGame — two legs', () => {
     vi.useRealTimers();
   });
 
-  it('hands him a fresh plan at flag 1 and leaves the walker where he stopped', () => {
+  it('acknowledges flag 1 with a beat, then hands him a fresh plan there', () => {
     const g = renderGame();
 
     playFirstLeg(g);
 
     expect(g.walker()).toBe(2);
     expect(g.onComplete).not.toHaveBeenCalled();
-    expect(g.planned()).toEqual(['none', 'none', 'none', 'none', 'none']);
     expect(g.container.querySelectorAll('[data-goal="true"]')).toHaveLength(2);
+
+    // The beat: the flag he reached waves, the plan still stands, the palette waits (FR-7).
+    expect(g.waving()).toBe(2);
+    expect(g.planned()).toEqual(['step-up', 'step-right', 'none', 'none', 'none']);
+    expect(g.paletteLive()).toBe(false);
+
+    g.walk(FLAG_BEAT_MS);
+
+    // Then the plan is spent, the palette is his again, and the walker has not moved.
+    expect(g.waving()).toBe(-1);
+    expect(g.walker()).toBe(2);
+    expect(g.planned()).toEqual(['none', 'none', 'none', 'none', 'none']);
+    expect(g.paletteLive()).toBe(true);
 
     // The next plan is written from the flag, not from the start.
     fireEvent.click(g.palette('step-right'));
@@ -86,6 +101,7 @@ describe('PlanGame — two legs', () => {
     const g = renderGame();
 
     playFirstLeg(g);
+    g.walk(FLAG_BEAT_MS);
     fireEvent.click(g.palette('step-right'));
     fireEvent.click(g.palette('step-up'));
     fireEvent.click(g.go());
@@ -104,6 +120,7 @@ describe('PlanGame — two legs', () => {
     const g = renderGame();
 
     playFirstLeg(g);
+    g.walk(FLAG_BEAT_MS);
 
     // The clever mistake: press the same two arrows again. From flag 1 the road goes right, not up.
     fireEvent.click(g.palette('step-up'));
@@ -120,6 +137,7 @@ describe('PlanGame — two legs', () => {
     const g = renderGame();
 
     playFirstLeg(g);
+    g.walk(FLAG_BEAT_MS);
     fireEvent.click(g.palette('step-right'));
     fireEvent.click(g.palette('step-up'));
     fireEvent.click(g.go());

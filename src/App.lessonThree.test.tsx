@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { App } from './App';
 import { findLesson, firstLesson } from './content/lessons/index';
 import { PROGRESS_KEY } from './progress/schema';
-import { CELEBRATE_MS, STEP_MS } from './world/walk';
+import { CELEBRATE_MS, FLAG_BEAT_MS, STEP_MS } from './world/walk';
 
 /**
  * The third stop, played through the real app: two legs, its own star, the stop it opens, and all
@@ -59,14 +59,14 @@ function playLessonTwo() {
   fireEvent.click(screen.getByRole('button', { name: DONE }));
 }
 
-/** Plan a leg, press GO, and let it arrive. */
+/** Plan a leg, press GO, let it arrive, and let its beat play out. */
 function runLeg(steps: readonly string[]) {
   for (const step of steps) {
     tap(step);
   }
 
   fireEvent.click(screen.getByRole('button', { name: GO }));
-  advance(STEP_MS * steps.length);
+  advance(STEP_MS * steps.length + FLAG_BEAT_MS);
 }
 
 function playLessonThree() {

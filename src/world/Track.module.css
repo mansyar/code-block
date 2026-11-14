@@ -68,6 +68,12 @@
   height: 1.75rem;
 }
 
+/* The flag he just reached says so itself, while the screen holds for the beat (FR-7). */
+.cell[data-wave="true"] .goal {
+  animation: wave 500ms var(--ease-tap);
+  transform-origin: 50% 90%;
+}
+
 .step,
 .walker {
   width: 2.5rem;
@@ -191,7 +197,8 @@
 /* Reduced motion: nothing travels. The goal pad brightens and the sparks simply appear. */
 @media (prefers-reduced-motion: reduce) {
   .track[data-celebrate="true"] .walker,
-  .track[data-celebrate="true"] .goal {
+  .track[data-celebrate="true"] .goal,
+  .cell[data-wave="true"] .goal {
     animation: none;
   }
 

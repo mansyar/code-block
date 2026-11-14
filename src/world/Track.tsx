@@ -31,6 +31,13 @@ type TrackProps = {
    * after it, so the plan the child sees is the plan he can edit.
    */
   readonly onClear?: ((index: number) => void) | undefined;
+  /**
+   * The route index of the flag that is waving: the one he has just reached.
+   *
+   * Absent on every frame except a beat, so a lesson that reaches a flag can say so with the flag
+   * itself instead of with a word.
+   */
+  readonly wave?: number | undefined;
   /** True while the arrival is being celebrated: the walker hops, the flag waves, sparks fly. */
   readonly celebrating?: boolean | undefined;
 };
@@ -53,6 +60,7 @@ export function Track({
   placed,
   goals,
   onClear,
+  wave,
   celebrating = false,
 }: TrackProps) {
   const columns = route.map((cell) => cell.col);
@@ -132,6 +140,7 @@ export function Track({
               data-walker={hasWalker ? 'true' : 'false'}
               data-step={step ?? 'none'}
               data-goal={flags.includes(index) ? 'true' : 'false'}
+              data-wave={index === wave ? 'true' : 'false'}
             >
               {Step === undefined ? null : onClear === undefined ? (
                 <Step className={styles.step} />

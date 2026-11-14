@@ -4,6 +4,7 @@ import { pictureRegistry } from '../../ui/pictures/registry';
 import { isStep, routeFor, type StepId } from '../../world/path';
 import { runPlan } from '../../world/run';
 import { Track } from '../../world/Track';
+import { FLAG_BEAT_MS } from '../../world/walk';
 import type { GameProps } from '../registry';
 import { GoPad } from './GoPad';
 import styles from './PlanGame.module.css';
@@ -35,8 +36,11 @@ export function PlanGame({ lesson, onComplete, celebrating }: GameProps) {
   const [running, setRunning] = useState(false);
   const [stuck, setStuck] = useState(false);
   const [done, setDone] = useState(false);
+  /** The flag being acknowledged while the screen holds for the beat. */
+  const [waveAt, setWaveAt] = useState<number | undefined>(undefined);
   const finished = useRef(false);
   const cancel = useRef<(() => void) | null>(null);
+  const beat = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const legStart = legIndex === 0 ? 0 : (legs[legIndex - 1] as number);
   const legEnd = legs[legIndex] ?? route.length - 1;
@@ -45,6 +49,10 @@ export function PlanGame({ lesson, onComplete, celebrating }: GameProps) {
   useEffect(() => {
     return () => {
       cancel.current?.();
+
+      if (beat.current !== null) {
+        clearTimeout(beat.current);
+      }
     };
   }, []);
 
@@ -97,18 +105,23 @@ export function PlanGame({ lesson, onComplete, celebrating }: GameProps) {
         setStuck(true);
       },
       onArrive: () => {
-        setRunning(false);
-
         if (legIndex === legs.length - 1) {
           finished.current = true;
+          setRunning(false);
           setDone(true);
           onComplete();
           return;
         }
 
-        // A flag, not an ending: a new plan, the same walker, the cell he reached.
-        setLegIndex(legIndex + 1);
-        setPlan([]);
+        // A flag, and a beat: the flag waves, the plan still stands, and the palette waits. Only
+        // when the beat is over does the plan clear and the next leg open — the walker never moves.
+        setWaveAt(legEnd);
+        beat.current = setTimeout(() => {
+          setWaveAt(undefined);
+          setLegIndex(legIndex + 1);
+          setPlan([]);
+          setRunning(false);
+        }, FLAG_BEAT_MS);
       },
     });
   }
@@ -125,6 +138,7 @@ export function PlanGame({ lesson, onComplete, celebrating }: GameProps) {
         placed={placed}
         goals={legs}
         onClear={removeAt}
+        wave={waveAt}
         celebrating={celebrating}
       />
 

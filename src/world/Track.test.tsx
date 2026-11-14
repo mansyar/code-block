@@ -119,6 +119,22 @@ describe('a road written in legs', () => {
     expect(style).toContain('calc(0 * (var(--cell)');
   });
 
+  it('waves only the flag the walker has just reached', () => {
+    const { container } = render(
+      <Track route={TWO_LEG_ROUTE} position={2} placed={[]} goals={[2, 4]} wave={2} />,
+    );
+
+    const waving = Array.from(container.querySelectorAll('[data-wave="true"]'));
+
+    expect(waving).toHaveLength(1);
+    expect(waving[0]).toHaveAttribute('data-cell', '2');
+
+    const quiet = render(<Track route={TWO_LEG_ROUTE} position={2} placed={[]} goals={[2, 4]} />);
+
+    // No beat, no wave: an unacknowledged flag must not animate on its own.
+    expect(quiet.container.querySelector('[data-wave="true"]')).toBeNull();
+  });
+
   it('turns a planned step into a control when the game can take it back', () => {
     const onClear = vi.fn();
 

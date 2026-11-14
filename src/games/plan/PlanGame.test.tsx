@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/vitest';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Lesson } from '../../content/lesson';
-import { STEP_MS } from '../../world/walk';
+import { FLAG_BEAT_MS, STEP_MS } from '../../world/walk';
 import { PlanGame } from './PlanGame';
 
 /** Lesson 3 as the content file will declare it: two arrows, four steps, two legs (D3). */
@@ -117,8 +117,14 @@ describe('PlanGame — planning', () => {
 
     expect(g.walker()).toBe(2);
     expect(g.onComplete).not.toHaveBeenCalled();
-    // The plan that was run is gone; the walker is not.
+    // The plan is held through the flag's beat...
+    expect(g.planned()).toEqual(['step-up', 'step-right', 'none', 'none', 'none']);
+
+    g.walk(FLAG_BEAT_MS);
+
+    // ...and then the plan is spent; the walker is not.
     expect(g.planned()).toEqual(['none', 'none', 'none', 'none', 'none']);
+    expect(g.walker()).toBe(2);
   });
 
   it('ignores a second press while a run is in flight', () => {
