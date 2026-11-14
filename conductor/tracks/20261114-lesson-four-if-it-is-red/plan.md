@@ -64,23 +64,26 @@ those pads, and walks the plan with one cell per beat — two cells when the pad
 - **Verification:** `bun run verify`
 - **Status:** pending
 
-- [ ] **P2.T1: the pad on the tile** — `Track` takes `pads?: readonly number[]` as route indices and
+- [x] **P2.T1: the pad on the tile** — `Track` takes `pads?: readonly number[]` as route indices and
   marks each with `data-pad="red"`; `Track.module.css` draws it as a raised diamond in
   `--colour-berry`, above the band, below the walker, static and not a tap target. — covers: FR-5,
   NFR-2, NFR-4, D4
-- [ ] **P2.T2: a run that walks the road, not the plan** — `run.ts` gains `runRoad({ route, from, to,
+- [x] **P2.T2: a run that walks the road, not the plan** — `run.ts` gains `runRoad({ route, from, to,
   stepMs, onStep, onHalt, onArrive })`, which advances one route index per `STEP_MS` and is cancelable
   like `runPlan`; `runPlan` keeps its behaviour and its tests. — covers: FR-6
-- [ ] **P2.T3: the condition game** — `src/games/condition/ConditionGame.tsx` renders `Track` with the
+- [x] **P2.T3: the condition game** — `src/games/condition/ConditionGame.tsx` renders `Track` with the
   lesson's pads, a palette that appends, a tap-to-remove plan capped at its own length, and the GO pad;
   it maps each plan step to the one or two route cells it covers, halts honestly where the road stops,
   and reports completion once. — covers: FR-6, FR-7, D5
-- [ ] **P2.T4: register and test the kind** — one entry in `src/games/registry.ts`; jsdom tests assert
+- [x] **P2.T4: register and test the kind** — one entry in `src/games/registry.ts`; jsdom tests assert
   one pad per repeated position and none elsewhere, that a pad step advances two indices in two beats
   with an injected `stepMs`, that a plain step advances one, that removing a planned step truncates,
   and that GO is inert while the walk is running. — covers: AC-4, AC-5, NFR-5
 
-**Status:** pending
+**Status:** verified
+**Result:** verified
+**Checkpoint:** 9df492b
+**Evidence:** conductor/tracks/20261114-lesson-four-if-it-is-red/verification/phase-2.md
 
 ---
 
