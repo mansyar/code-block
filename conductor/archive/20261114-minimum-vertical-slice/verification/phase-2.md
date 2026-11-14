@@ -70,7 +70,7 @@ and in `pr.md` when the track ships.
 - `src/test-setup.ts` (new) and one line in `vite.config.ts` — React Testing Library cannot register
   its own cleanup without globals, so tests in the same file accumulated previous trees and role
   queries matched duplicates. The setup file calls `cleanup` after each test.
-- `conductor/tracks/20261114-minimum-vertical-slice/plan.md` — Phase 1's `Dependencies` now names
+- `conductor/archive/20261114-minimum-vertical-slice/plan.md` — Phase 1's `Dependencies` now names
   `@types/react` and `@types/react-dom`, reconciling the gap disclosed in phase 1's evidence.
 
 ## Notes
