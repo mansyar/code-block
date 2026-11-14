@@ -1,0 +1,38 @@
+{
+  "id": "20261114-road-ribbon",
+  "title": "A road that reads as a road",
+  "type": "bug",
+  "status": "new",
+  "priority": "medium",
+  "depends_on": [
+    "20261114-lesson-three-make-it-move"
+  ],
+  "created_at": "2026-11-14T23:05:00Z",
+  "updated_at": "2026-11-14T23:05:00Z",
+  "spec": "spec.md",
+  "plan": "plan.md",
+  "mission": "mission.md",
+  "branch": "feat/20261114-road-ribbon",
+  "base_branch": "feat/20261114-lesson-three-make-it-move",
+  "base_sha": "4fd0e62",
+  "autonomy": "ready",
+  "effort": 2,
+  "progress": {
+    "phases_total": 2,
+    "tasks_total": 10,
+    "phases_verified": 0,
+    "tasks_done": 0
+  },
+  "last_checkpoint": null,
+  "review_verdict": null,
+  "review_rounds": 0,
+  "reviewed_head_sha": null,
+  "doc_sync": "pending",
+  "pr_url": null,
+  "pr_state": null,
+  "decisions_open": 0,
+  "blocked_reason": null,
+  "reverted_at": null,
+  "revert_commit": null,
+  "revert_pr_url": null
+}
