@@ -61,24 +61,27 @@ vocabulary change and lesson 1's rewrite cannot be separated without leaving the
 - **Dependencies:** none
 - **Decisions:** D3, D4
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** 3aaa4f1
+**Evidence:** conductor/tracks/20261114-one-world-lesson-two/verification/phase-2.md
 
-- [ ] **P2.T1: the track** — covers: FR-3
-  - [ ] **P2.T1.1:** `world/Track.tsx` rendering `solution.length + 1` cells and the walker at a
+- [x] **P2.T1: the track** — covers: FR-3
+  - [x] **P2.T1.1:** `world/Track.tsx` rendering `solution.length + 1` cells and the walker at a
     given index, with the placed steps visible in the cells behind him
-  - [ ] **P2.T1.2:** `world/walk.ts` holding the cell count and the per-cell timing constant, so
+  - [x] **P2.T1.2:** `world/walk.ts` holding the cell count and the per-cell timing constant, so
     both games share one answer
-- [ ] **P2.T2: the sequence game walks him** — covers: FR-3, D4
-  - [ ] **P2.T2.1:** a correct tap advances the walker one cell and keeps the placed card; a wrong
+- [x] **P2.T2: the sequence game walks him** — covers: FR-3, D4
+  - [x] **P2.T2.1:** a correct tap advances the walker one cell and keeps the placed card; a wrong
     tap leaves the index unchanged and still wobbles
-  - [ ] **P2.T2.2:** completion fires once, when the walker reaches the last cell
-- [ ] **P2.T3: the walk respects motion settings** — covers: NFR-1
-  - [ ] **P2.T3.1:** the forward move is a CSS transition; under
+  - [x] **P2.T2.2:** completion fires once, when the walker reaches the last cell
+- [x] **P2.T3: the walk respects motion settings** — covers: NFR-1
+  - [x] **P2.T3.1:** the forward move is a CSS transition; under
     `prefers-reduced-motion: reduce` the walker changes cell with a colour flash instead
-- [ ] **P2.T4: tests and the map** — covers: AC-3
-  - [ ] **P2.T4.1:** cell index 0→1→2→3 on the solution order; a wrong tap keeps it; one
+- [x] **P2.T4: tests and the map** — covers: AC-3
+  - [x] **P2.T4.1:** cell index 0→1→2→3 on the solution order; a wrong tap keeps it; one
     `onComplete` for the whole game
-  - [ ] **P2.T4.2:** `src/MAP.md` lists `src/world/` in `## Directories` (structure rule 6)
+  - [x] **P2.T4.2:** `src/MAP.md` lists `src/world/` in `## Directories` (structure rule 6)
 
 ## Phase 3: The repeat game
 
