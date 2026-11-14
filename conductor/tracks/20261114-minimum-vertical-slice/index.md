@@ -42,3 +42,16 @@ Evidence files land in `verification/phase-<n>.md`. Phase 1 is recorded in
 [verification/phase-4.md](./verification/phase-4.md) and phase 5 in
 [verification/phase-5.md](./verification/phase-5.md); phase 6 in
 [verification/phase-6.md](./verification/phase-6.md).
+
+## Delivery
+
+The branch `feat/20261114-minimum-vertical-slice` is pushed at `9a768a7` and review round 2
+returned PASS, pinned at `0f1526f`. The pull request could not be opened from the sandbox: `gh`
+has no credentials, an unauthenticated `POST /repos/mansyar/code-block/pulls` returns **401
+Requires authentication**, shell git cannot authenticate for a push, `cloud_git` exposes only
+fetch/pull/push, and the cloud browser has no signed-in GitHub session. The exact invocations and
+responses are recorded in `.conductor/evidence/pr-creation-attempts.md`.
+
+`pr.md` is the PR body. Open it at
+<https://github.com/mansyar/code-block/pull/new/feat/20261114-minimum-vertical-slice>, or add a
+`GH_TOKEN` project secret and the next turn opens it with the same body.
