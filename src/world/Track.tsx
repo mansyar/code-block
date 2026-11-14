@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import type { PictureId } from '../content/lesson';
 import { pictureRegistry } from '../ui/pictures/registry';
 import { Walker } from '../ui/pictures/Walker';
@@ -14,16 +15,63 @@ type TrackProps = {
   readonly placed: readonly PictureId[];
 };
 
+type Segment = {
+  readonly key: string;
+  readonly vertical: boolean;
+  readonly style: CSSProperties;
+};
+
+/** Where a cell's corner sits on one axis, one cell plus one gap per step. */
+function at(index: number): string {
+  return `calc(${index} * (var(--cell) + var(--gap)))`;
+}
+
 /**
- * The road every lesson is played along: a route on a grid, the steps already taken, the walker
- * standing on the one he has reached, and a flag where the road ends.
+ * The ribbon between consecutive cells: it, and only it, says which cells are joined.
  *
- * The whole route is drawn from the first render, so the road's shape — up, then right, then down —
- * is readable before the child taps anything. That shape, plus arrows that mean the direction they
- * point, is the entire instruction; there is no sentence to read and none is spoken.
+ * A tiled block of four cells reads as an open arena — from the start, the flag looked one step to
+ * the right, and nothing on screen contradicted it. Drawing the road only where the walker can
+ * actually go removes that reading: the straight line to the flag is simply not drawn.
+ */
+function ribbon(route: readonly Cell[], minCol: number, minRow: number): readonly Segment[] {
+  const segments: Segment[] = [];
+
+  for (let index = 1; index < route.length; index += 1) {
+    const from = route[index - 1] as Cell;
+    const to = route[index] as Cell;
+    const col = Math.min(from.col, to.col) - minCol;
+    const row = Math.min(from.row, to.row) - minRow;
+    const vertical = from.col === to.col;
+
+    segments.push({
+      key: `${index}:${from.col}:${from.row}-${to.col}:${to.row}`,
+      vertical,
+      style: vertical
+        ? {
+            left: `calc(${at(col)} + var(--cell) / 2 - var(--road) / 2)`,
+            top: `calc(${at(row)} + var(--cell))`,
+            width: 'var(--road)',
+            height: 'var(--gap)',
+          }
+        : {
+            left: `calc(${at(col)} + var(--cell))`,
+            top: `calc(${at(row)} + var(--cell) / 2 - var(--road) / 2)`,
+            width: 'var(--gap)',
+            height: 'var(--road)',
+          },
+    });
+  }
+
+  return segments;
+}
+
+/**
+ * The road every lesson is played along: a ribbon joining the cells the walker can actually walk,
+ * his own cell, and a flag where the road ends.
  *
- * Deliberately not a list: a road is not a list of items to a child, and keeping it out of the
- * list-item count leaves "how many cards" meaning exactly that everywhere else.
+ * The start is a pad and the finish is a pad, drawn differently from the road between them, so a
+ * child sees two places rather than four interchangeable tiles. The ribbon is the instruction:
+ * where it runs, he may go; where it does not, he may not. No sentence says so and none is spoken.
  */
 export function Track({ route, position, placed }: TrackProps) {
   const columns = route.map((cell) => cell.col);
@@ -35,41 +83,57 @@ export function Track({ route, position, placed }: TrackProps) {
   const width = maxCol - minCol + 1;
   const height = maxRow - minRow + 1;
   const goal = route.length - 1;
+  // Big enough to read on a tablet, never so big that the widest lesson overflows the panel.
+  const cell = `min(calc(var(--tap-target) * 1.75), calc((26rem - 2 * var(--space-3) - ${width - 1} * var(--space-3)) / ${width}))`;
 
   return (
-    <section
-      className={styles.track}
-      aria-label="The path"
-      data-columns={width}
-      data-rows={height}
-      style={{
-        gridTemplateColumns: `repeat(${width}, minmax(0, 1fr))`,
-        gridTemplateRows: `repeat(${height}, minmax(0, 1fr))`,
-      }}
-    >
-      {route.map((cell, index) => {
-        const step = placed[index];
-        const Step = step === undefined ? undefined : pictureRegistry[step];
-        const hasWalker = index === position;
-
-        return (
+    <section className={styles.frame} aria-label="The path">
+      <div
+        className={styles.track}
+        data-columns={width}
+        data-rows={height}
+        style={
+          {
+            '--cell': cell,
+            gridTemplateColumns: `repeat(${width}, var(--cell))`,
+            gridTemplateRows: `repeat(${height}, var(--cell))`,
+          } as CSSProperties
+        }
+      >
+        {ribbon(route, minCol, minRow).map((segment) => (
           <span
-            key={`${cell.col}:${cell.row}`}
-            className={styles.cell}
-            style={{ gridColumn: cell.col - minCol + 1, gridRow: cell.row - minRow + 1 }}
-            data-cell={index}
-            data-col={cell.col}
-            data-row={cell.row}
-            data-walker={hasWalker ? 'true' : 'false'}
-            data-step={step ?? 'none'}
-            data-goal={index === goal ? 'true' : 'false'}
-          >
-            {Step === undefined ? null : <Step className={styles.step} />}
-            {index === goal ? <Goal className={styles.goal} /> : null}
-            {hasWalker ? <Walker className={styles.walker} /> : null}
-          </span>
-        );
-      })}
+            key={segment.key}
+            className={styles.road}
+            data-road={segment.vertical ? 'vertical' : 'horizontal'}
+            style={segment.style}
+          />
+        ))}
+
+        {route.map((cell, index) => {
+          const step = placed[index];
+          const Step = step === undefined ? undefined : pictureRegistry[step];
+          const hasWalker = index === position;
+
+          return (
+            <span
+              key={`${cell.col}:${cell.row}`}
+              className={styles.cell}
+              style={{ gridColumn: cell.col - minCol + 1, gridRow: cell.row - minRow + 1 }}
+              data-cell={index}
+              data-col={cell.col}
+              data-row={cell.row}
+              data-start={index === 0 ? 'true' : 'false'}
+              data-walker={hasWalker ? 'true' : 'false'}
+              data-step={step ?? 'none'}
+              data-goal={index === goal ? 'true' : 'false'}
+            >
+              {Step === undefined ? null : <Step className={styles.step} />}
+              {index === goal ? <Goal className={styles.goal} /> : null}
+              {hasWalker ? <Walker className={styles.walker} /> : null}
+            </span>
+          );
+        })}
+      </div>
     </section>
   );
 }

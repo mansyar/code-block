@@ -1,37 +1,65 @@
-.track {
-  display: grid;
-  gap: var(--space-2);
-  width: 100%;
-  max-width: 26rem;
+.frame {
+  display: inline-flex;
   padding: var(--space-3);
   border: var(--stroke-width) dashed var(--colour-outline);
   border-radius: var(--radius-lg);
   background: var(--colour-surface);
 }
 
+.track {
+  --cell: var(--tap-target);
+  --gap: var(--space-3);
+  --road: 12px;
+
+  position: relative;
+  display: grid;
+  gap: var(--gap);
+}
+
+/* The ribbon. Only consecutive road cells get one, so the drawn line is the whole rule about where
+   the walker may go. */
+.road {
+  position: absolute;
+  z-index: 0;
+  border-radius: 999px;
+  background: var(--colour-lock);
+}
+
 .cell {
   position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: calc(var(--tap-target) * 0.85);
-  min-height: calc(var(--tap-target) * 0.85);
-  aspect-ratio: 1;
+  width: var(--cell);
+  height: var(--cell);
   border-radius: var(--radius-md);
-  background: var(--colour-grass);
+  background: var(--colour-surface-raised);
 }
 
-/* A cell the child has already walked: the step he took stays on the road behind him. */
-.cell[data-step]:not([data-step="none"]) {
-  background: var(--colour-surface-raised);
+/* Where he started: its own pad, so the two ends of the road are two places, not two tiles. */
+.cell[data-start="true"] {
+  background: var(--colour-sky);
+  box-shadow: inset 0 0 0 var(--stroke-width) var(--colour-outline);
+}
+
+/* Where the road ends. */
+.cell[data-goal="true"] {
+  background: var(--colour-sun);
 }
 
 /* The cell the walker stands in is marked by shape as well as colour: it is where he is. */
 .cell[data-walker="true"] {
-  background: var(--colour-sun);
+  background: var(--colour-grass);
+  box-shadow: inset 0 0 0 var(--stroke-width) var(--colour-outline);
 }
 
-/* The end of the road, at a corner of its cell so it never hides the walker who arrives. */
+/* A cell behind him with the step he took in it. */
+.cell[data-step]:not([data-step="none"]) {
+  background: var(--colour-surface-raised);
+}
+
+/* The flag sits at a corner of its pad so it stays visible when the walker arrives. */
 .goal {
   position: absolute;
   top: -0.35rem;
