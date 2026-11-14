@@ -74,6 +74,24 @@
   height: 2.5rem;
 }
 
+/* A planned step is the plan: it is tappable so the child can take it back, and it fills its cell
+   so the whole step is the target rather than a 40 px arrow. */
+.unplan {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  border-radius: inherit;
+  background: none;
+}
+
+.unplan:active {
+  transform: scale(0.94);
+}
+
 .walker {
   position: relative;
   z-index: 1;

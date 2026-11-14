@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
-import { render } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { lessonOne } from '../content/lessons/0001-order';
 import { routeFor, tracePath } from './path';
 import { Track } from './Track';
@@ -117,6 +117,24 @@ describe('a road written in legs', () => {
     // Cell 4 sits two columns in and on the lowest row, which is where the burst is anchored.
     expect(style).toContain('calc(2 * (var(--cell)');
     expect(style).toContain('calc(0 * (var(--cell)');
+  });
+
+  it('turns a planned step into a control when the game can take it back', () => {
+    const onClear = vi.fn();
+
+    render(
+      <Track
+        route={TWO_LEG_ROUTE}
+        position={0}
+        placed={['step-up', 'step-right']}
+        goals={[2, 4]}
+        onClear={onClear}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /step-up, planned/i }));
+
+    expect(onClear).toHaveBeenCalledWith(0);
   });
 
   it('keeps a single flag at the end when a lesson declares no legs', () => {

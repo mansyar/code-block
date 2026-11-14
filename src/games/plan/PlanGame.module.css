@@ -1,0 +1,52 @@
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.palette {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--tap-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: calc(var(--tap-target) * 1.25);
+  min-height: calc(var(--tap-target) * 1.25);
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  background: var(--colour-surface-raised);
+}
+
+/* The leg is fully planned: the arrows still respond, but they can add nothing. A disabled card
+   would give no feedback at all, and the child would not know whether he had missed the tap. */
+.card[data-full="true"] {
+  opacity: 0.55;
+}
+
+.picture {
+  width: 3.25rem;
+  height: 3.25rem;
+}
+
+/* The plan no longer reaches the flag: the palette is outlined, so the thing to look at is the thing
+   that needs changing, and the child is never told so in words. */
+.game[data-stuck="true"] .palette {
+  outline: var(--stroke-width) dashed var(--colour-berry);
+  outline-offset: var(--space-2);
+  border-radius: var(--radius-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+}
