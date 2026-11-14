@@ -1,0 +1,59 @@
+.map {
+  width: 100%;
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4);
+}
+
+.title {
+  margin-bottom: var(--space-5);
+  text-align: center;
+}
+
+.path {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+  gap: var(--tap-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stop {
+  display: flex;
+  justify-content: center;
+}
+
+.node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  width: var(--tap-target);
+  height: var(--tap-target);
+  border-radius: 50%;
+  background: var(--colour-sun);
+}
+
+.node[data-state="locked"] {
+  border-style: dashed;
+  background: var(--colour-lock);
+  color: var(--colour-ink-muted);
+}
+
+.node[data-state="done"] {
+  background: var(--colour-grass);
+}
+
+.number {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.marker {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: currentColor;
+}
