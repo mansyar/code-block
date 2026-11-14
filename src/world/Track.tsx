@@ -13,6 +13,13 @@ type TrackProps = {
   readonly position: number;
   /** The steps already taken, in order. The step at index `i` is drawn in cell `i`. */
   readonly placed: readonly PictureId[];
+  /**
+   * Where the flags stand, as indices along the route: one per leg.
+   *
+   * Defaults to the last cell, which is the single-leg case every lesson before this one has. A
+   * two-leg lesson passes both boundaries, so the child sees two places to reach rather than one.
+   */
+  readonly goals?: readonly number[] | undefined;
   /** True while the arrival is being celebrated: the walker hops, the flag waves, sparks fly. */
   readonly celebrating?: boolean | undefined;
 };
@@ -72,13 +79,14 @@ function ribbon(route: readonly Cell[], minCol: number, minRow: number): readonl
 
 /**
  * The road every lesson is played along: a ribbon joining the cells the walker can actually walk,
- * his own cell, and a flag where the road ends.
+ * his own cell, and a flag wherever a leg of the plan ends — one flag for a single-leg lesson, two
+ * for a lesson written in two legs.
  *
  * The start is a pad and the finish is a pad, drawn differently from the road between them, so a
  * child sees two places rather than four interchangeable tiles. The ribbon is the instruction:
  * where it runs, he may go; where it does not, he may not. No sentence says so and none is spoken.
  */
-export function Track({ route, position, placed, celebrating = false }: TrackProps) {
+export function Track({ route, position, placed, goals, celebrating = false }: TrackProps) {
   const columns = route.map((cell) => cell.col);
   const rows = route.map((cell) => cell.row);
   const minCol = Math.min(...columns);
@@ -87,8 +95,11 @@ export function Track({ route, position, placed, celebrating = false }: TrackPro
   const maxRow = Math.max(...rows);
   const width = maxCol - minCol + 1;
   const height = maxRow - minRow + 1;
-  const goal = route.length - 1;
-  const finish = route[goal] as Cell;
+  // Every leg ends at a flag; a lesson that declares no legs has exactly one, at the end.
+  const flags = goals ?? [route.length - 1];
+  // The arrival the celebration belongs to: the last flag, never the intermediate one.
+  const lastFlag = flags[flags.length - 1] ?? route.length - 1;
+  const finish = route[lastFlag] as Cell;
   // Big enough to read on a tablet, never so big that the widest lesson overflows the panel.
   const cell = `min(calc(var(--tap-target) * 1.75), calc((26rem - 2 * var(--space-3) - ${width - 1} * var(--space-3)) / ${width}))`;
 
@@ -152,10 +163,10 @@ export function Track({ route, position, placed, celebrating = false }: TrackPro
               data-start={index === 0 ? 'true' : 'false'}
               data-walker={hasWalker ? 'true' : 'false'}
               data-step={step ?? 'none'}
-              data-goal={index === goal ? 'true' : 'false'}
+              data-goal={flags.includes(index) ? 'true' : 'false'}
             >
               {Step === undefined ? null : <Step className={styles.step} />}
-              {index === goal ? <Goal className={styles.goal} /> : null}
+              {flags.includes(index) ? <Goal className={styles.goal} /> : null}
               {hasWalker ? <Walker className={styles.walker} /> : null}
             </span>
           );
