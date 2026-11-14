@@ -61,7 +61,7 @@ Out of scope:
 
 - **FR-1** — Lesson 3 is content, not code: `src/content/lessons/0003-cause.ts`, id `cause`, order 3,
   title "Make it move", `gameKind: 'plan'`, palette `['step-up', 'step-right']`, plan
-  `['step-up', 'step-right', 'step-up', 'step-right']`, `flags: [2, 4]`, and a concept line in the
+  `['step-up', 'step-right', 'step-right', 'step-up']`, `flags: [2, 4]`, and a concept line in the
   child's words. The stop already exists on the map; this track gives it content.
 - **FR-2** — The contract separates a palette from a plan: `assertLesson` accepts a plan longer than
   the palette, and still rejects a duplicate card, an empty plan, and a plan step that is not one of
@@ -115,15 +115,15 @@ Out of scope:
   duplicate card, an empty plan and a plan step outside the palette (covers FR-2).
 - **AC-3** — `assertLesson` accepts `flags: [2, 4]` and rejects `[]`, `[2, 2]`, `[4, 2]`, `[2, 5]` and
   `[2]` for a four-step plan; a lesson without `flags` is accepted as a single leg (covers FR-3).
-- **AC-4** — The rendered road for lesson 3 has five cells at `(0,0) (0,-1) (1,-1) (1,-2) (2,-2)`
+- **AC-4** — The rendered road for lesson 3 has five cells at `(0,0) (0,-1) (1,-1) (2,-1) (2,-2)`
   with exactly two flags, on cells 2 and 4 (covers FR-4).
 - **AC-5** — Leg 1 accepts at most two planned steps; a third tap appends nothing; tapping a planned
   step removes it and the steps after it (covers FR-5).
 - **AC-6** — One GO press in leg 1 moves the walker exactly two cells to flag 1 and does **not**
   report completion; the walker's cell index is 2 afterwards and the leg's plan is empty (covers
   FR-6, FR-7).
-- **AC-7** — Leg 2 plans from the cell the walker reached, and one GO press moves him the last two
-  cells to flag 2 and reports completion exactly once (covers FR-6, FR-7).
+- **AC-7** — Leg 2 plans `right, up` from the cell the walker reached, and one GO press moves him the
+  last two cells to flag 2 and reports completion exactly once (covers FR-5, FR-6, FR-7).
 - **AC-8** — A plan in either leg that does not follow the road leaves the walker where the road stops
   and reports no completion; the leg is still editable (covers FR-8).
 - **AC-9** — After completing lessons 1, 2 and 3 and remounting, the store reports three stars and
@@ -140,7 +140,7 @@ Out of scope:
 - **D2 — Palette vs plan** → `cards` is the palette; `solution` is the whole road, and may be longer
   than the palette. That is the smallest contract change that lets four steps be drawn from two
   arrows.
-- **D3 — The road and the flags** → `up, right, up, right` from `(0,0)`, flags at plan positions 2
+- **D3 — The road and the flags** → `up, right, right, up` from `(0,0)`, flags at plan positions 2
   and 4, so the walk stops at `(1,-1)` and finishes at `(2,-2)`. Neither flag is reachable from the
   start by a single arrow, so the adjacency problem the grid review found cannot recur, and the
   midpoint is a real place rather than a marker at the end.
@@ -158,6 +158,12 @@ Out of scope:
   vocabulary.
 - **D9 — Star and unlock** → no store change. Lesson 3's star is earned at the last flag only, and
   node 4 opens by the existing selector rule.
+- **D10 — The second leg uses the same two arrows in the opposite order.** The road runs up, right,
+  right, up, so leg 1 is `up, right` and leg 2 is `right, up`. Same palette, no new sprite — but the
+  child cannot replay the first plan from muscle memory: the second plan has to be read off the
+  board he is now standing on. A road that turned the same way twice (`up, right, up, right`) would
+  let the same two taps win the lesson twice and would teach nothing the first leg had not already
+  taught.
 
 ## Edge Cases and Failure Modes
 
