@@ -39,7 +39,8 @@
 .node[data-state="locked"] {
   border-style: dashed;
   background: var(--colour-lock);
-  color: var(--colour-ink-muted);
+  /* Ink, not muted ink: this is text on a mid-tone, and 4.5:1 needs it (NFR-2). */
+  color: var(--colour-ink);
 }
 
 .node[data-state="done"] {
