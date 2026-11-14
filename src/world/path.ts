@@ -28,6 +28,18 @@ export function isStep(id: PictureId): id is StepId {
 }
 
 /**
+ * The cell one step lands in.
+ *
+ * A run checks a plan against the road one step at a time with this, so "where would this arrow put
+ * me" and "where does the road go" are answered by the same geometry the road was drawn from.
+ */
+export function after(cell: Cell, step: StepId): Cell {
+  const delta = DELTA[step];
+
+  return { col: cell.col + delta.col, row: cell.row + delta.row };
+}
+
+/**
  * The cells a run of steps visits, starting cell first.
  *
  * The list *is* the road: consecutive cells are connected, so drawing every cell of the route shows

@@ -1,0 +1,74 @@
+.go {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--tap-target) * 1.5);
+  height: calc(var(--tap-target) * 1.5);
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--colour-sun);
+  color: var(--colour-ink);
+  box-shadow: inset 0 0 0 var(--stroke-width) var(--colour-outline);
+  transition: transform var(--duration-tap) var(--ease-tap);
+}
+
+.go:active {
+  transform: scale(0.94);
+}
+
+.go[disabled] {
+  opacity: 0.5;
+}
+
+/* A run is in flight. The pad breathes so the child sees his press being carried out, instead of
+   pressing again to find out whether it worked. */
+.go[data-running="true"] {
+  animation: press 600ms var(--ease-tap) infinite;
+}
+
+/* The run stopped short of the flag: the pad, not a sentence, says the plan needs another look. */
+.go[data-stuck="true"] {
+  background: var(--colour-berry);
+  animation: nudge var(--duration-settle) var(--ease-tap);
+}
+
+.mark {
+  width: 45%;
+  height: 45%;
+}
+
+@keyframes press {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.94);
+  }
+}
+
+@keyframes nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+/* Reduced motion: the same three states, carried by colour instead of movement. */
+@media (prefers-reduced-motion: reduce) {
+  .go[data-running="true"],
+  .go[data-stuck="true"] {
+    animation: none;
+  }
+
+  .go[data-running="true"] {
+    background: var(--colour-sky);
+  }
+}

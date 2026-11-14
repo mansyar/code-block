@@ -4,6 +4,7 @@ import { pictureRegistry } from '../ui/pictures/registry';
 import { Walker } from '../ui/pictures/Walker';
 import { Goal } from './Goal';
 import type { Cell } from './path';
+import { at, ribbon } from './ribbon';
 import styles from './Track.module.css';
 
 type TrackProps = {
@@ -11,8 +12,32 @@ type TrackProps = {
   readonly route: readonly Cell[];
   /** The cell the walker stands in — his index along the route, not a coordinate. */
   readonly position: number;
-  /** The steps already taken, in order. The step at index `i` is drawn in cell `i`. */
-  readonly placed: readonly PictureId[];
+  /**
+   * The steps on the road, by the cell they leave from: the step at index `i` is drawn in cell `i`.
+   *
+   * Holes are real — a plan written for the second leg of a road starts further along, so the cells
+   * behind it carry nothing.
+   */
+  readonly placed: readonly (PictureId | undefined)[];
+  /**
+   * Where the flags stand, as indices along the route: one per leg.
+   *
+   * Defaults to the last cell, which is the single-leg case every lesson before this one has. A
+   * two-leg lesson passes both boundaries, so the child sees two places to reach rather than one.
+   */
+  readonly goals?: readonly number[] | undefined;
+  /**
+   * When given, a step already on the road becomes a control: tapping it removes it and the steps
+   * after it, so the plan the child sees is the plan he can edit.
+   */
+  readonly onClear?: ((index: number) => void) | undefined;
+  /**
+   * The route index of the flag that is waving: the one he has just reached.
+   *
+   * Absent on every frame except a beat, so a lesson that reaches a flag can say so with the flag
+   * itself instead of with a word.
+   */
+  readonly wave?: number | undefined;
   /** True while the arrival is being celebrated: the walker hops, the flag waves, sparks fly. */
   readonly celebrating?: boolean | undefined;
 };
@@ -20,65 +45,24 @@ type TrackProps = {
 /** Where the arrival's sparks fly. Six of them, one every 60°, so the burst reads as a burst. */
 const SPARK_ANGLES = [0, 60, 120, 180, 240, 300] as const;
 
-type Segment = {
-  readonly key: string;
-  readonly vertical: boolean;
-  readonly style: CSSProperties;
-};
-
-/** Where a cell's corner sits on one axis, one cell plus one gap per step. */
-function at(index: number): string {
-  return `calc(${index} * (var(--cell) + var(--gap)))`;
-}
-
-/**
- * The ribbon between consecutive cells: it, and only it, says which cells are joined.
- *
- * A tiled block of four cells reads as an open arena — from the start, the flag looked one step to
- * the right, and nothing on screen contradicted it. Drawing the road only where the walker can
- * actually go removes that reading: the straight line to the flag is simply not drawn.
- */
-function ribbon(route: readonly Cell[], minCol: number, minRow: number): readonly Segment[] {
-  const segments: Segment[] = [];
-
-  for (let index = 1; index < route.length; index += 1) {
-    const from = route[index - 1] as Cell;
-    const to = route[index] as Cell;
-    const col = Math.min(from.col, to.col) - minCol;
-    const row = Math.min(from.row, to.row) - minRow;
-    const vertical = from.col === to.col;
-
-    segments.push({
-      key: `${index}:${from.col}:${from.row}-${to.col}:${to.row}`,
-      vertical,
-      style: vertical
-        ? {
-            left: `calc(${at(col)} + var(--cell) / 2 - var(--road) / 2)`,
-            top: `calc(${at(row)} + var(--cell))`,
-            width: 'var(--road)',
-            height: 'var(--gap)',
-          }
-        : {
-            left: `calc(${at(col)} + var(--cell))`,
-            top: `calc(${at(row)} + var(--cell) / 2 - var(--road) / 2)`,
-            width: 'var(--gap)',
-            height: 'var(--road)',
-          },
-    });
-  }
-
-  return segments;
-}
-
 /**
  * The road every lesson is played along: a ribbon joining the cells the walker can actually walk,
- * his own cell, and a flag where the road ends.
+ * his own cell, and a flag wherever a leg of the plan ends — one flag for a single-leg lesson, two
+ * for a lesson written in two legs.
  *
  * The start is a pad and the finish is a pad, drawn differently from the road between them, so a
  * child sees two places rather than four interchangeable tiles. The ribbon is the instruction:
  * where it runs, he may go; where it does not, he may not. No sentence says so and none is spoken.
  */
-export function Track({ route, position, placed, celebrating = false }: TrackProps) {
+export function Track({
+  route,
+  position,
+  placed,
+  goals,
+  onClear,
+  wave,
+  celebrating = false,
+}: TrackProps) {
   const columns = route.map((cell) => cell.col);
   const rows = route.map((cell) => cell.row);
   const minCol = Math.min(...columns);
@@ -87,8 +71,11 @@ export function Track({ route, position, placed, celebrating = false }: TrackPro
   const maxRow = Math.max(...rows);
   const width = maxCol - minCol + 1;
   const height = maxRow - minRow + 1;
-  const goal = route.length - 1;
-  const finish = route[goal] as Cell;
+  // Every leg ends at a flag; a lesson that declares no legs has exactly one, at the end.
+  const flags = goals ?? [route.length - 1];
+  // The arrival the celebration belongs to: the last flag, never the intermediate one.
+  const lastFlag = flags[flags.length - 1] ?? route.length - 1;
+  const finish = route[lastFlag] as Cell;
   // Big enough to read on a tablet, never so big that the widest lesson overflows the panel.
   const cell = `min(calc(var(--tap-target) * 1.75), calc((26rem - 2 * var(--space-3) - ${width - 1} * var(--space-3)) / ${width}))`;
 
@@ -152,10 +139,22 @@ export function Track({ route, position, placed, celebrating = false }: TrackPro
               data-start={index === 0 ? 'true' : 'false'}
               data-walker={hasWalker ? 'true' : 'false'}
               data-step={step ?? 'none'}
-              data-goal={index === goal ? 'true' : 'false'}
+              data-goal={flags.includes(index) ? 'true' : 'false'}
+              data-wave={index === wave ? 'true' : 'false'}
             >
-              {Step === undefined ? null : <Step className={styles.step} />}
-              {index === goal ? <Goal className={styles.goal} /> : null}
+              {Step === undefined ? null : onClear === undefined ? (
+                <Step className={styles.step} />
+              ) : (
+                <button
+                  type="button"
+                  className={styles.unplan}
+                  aria-label={`${step}, planned`}
+                  onClick={() => onClear(index)}
+                >
+                  <Step className={styles.step} />
+                </button>
+              )}
+              {flags.includes(index) ? <Goal className={styles.goal} /> : null}
               {hasWalker ? <Walker className={styles.walker} /> : null}
             </span>
           );

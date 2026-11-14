@@ -1,10 +1,11 @@
 import type { PictureProps } from '../ui/pictures/picture';
 
 /**
- * Where the road ends: a flag on the last cell of the route.
+ * Where a leg of the road ends: a flag on the last cell of that leg.
  *
  * It exists so the walk has a destination a child can see — without it the path is a row of empty
- * cells and "why keep tapping" has no answer on screen. Deliberately not a `PictureId`: it is
+ * cells and "why keep tapping" has no answer on screen. A lesson written in two legs draws two of
+ * them, which is how a stop halfway becomes a place rather than an ending. Deliberately not a `PictureId`: it is
  * scenery, never a card, so the picture registry still holds exactly the four things a lesson may
  * name.
  */
