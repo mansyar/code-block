@@ -3,7 +3,7 @@
 > **Branch:** `feat/20261114-lesson-three-make-it-move`
 > **Base:** `main` @ `ab08c1a`
 > **Autonomy:** ready
-> **Decisions:** D1, D2, D3, D4, D5, D6, D7, D8, D9
+> **Decisions:** D1, D2, D3, D4, D5, D6, D7, D8, D9, D10
 > **Effort:** 3
 
 Every phase ends in `bun run verify` — typecheck → lint → build → test — which is the only command
@@ -97,6 +97,9 @@ its star and the docs adopt it (phase 4).
   - [ ] **P3.T3.2:** an intermediate arrival waves the flag, clears the plan, keeps the walker and
     leaves him editable; a wrong plan halts where the road stops and reports nothing; unmounting
     mid-run cancels the timers
+  - [ ] **P3.T3.3:** leg 2 is planned and run from the cell the walker stands on, so a test that
+    reuses leg 1's plan (`up, right`) halts at once instead of finishing — the legs are read from
+    the road, not replayed from the first plan
 - [ ] **P3.T4: register the kind** — covers: FR-6
   - [ ] **P3.T4.1:** one entry in `games/registry.ts` mapping `plan` to the component; `GameKind`
     gains `'plan'` (structure rule 5 reads the registry)
@@ -113,14 +116,14 @@ its star and the docs adopt it (phase 4).
 - **Touches:** `src/content/lessons/`, `src/App*.test.tsx`, `src/MAP.md`,
   `conductor/tech-stack.md`, `conductor/product.md`
 - **Dependencies:** none
-- **Decisions:** D3, D8, D9
+- **Decisions:** D3, D8, D9, D10
 - **Verification:** `bun run verify`
 - **Status:** pending
 
 - [ ] **P4.T1: the lesson data** — covers: FR-1, D3, D8
   - [ ] **P4.T1.1:** `0003-cause.ts` — id `cause` (structure rule 4 ties id to filename), order 3,
     title "Make it move", `gameKind: 'plan'`, palette `['step-up','step-right']`, plan
-    `['step-up','step-right','step-up','step-right']`, `flags: [2, 4]`, concept clip id `concept-cause`
+    `['step-up','step-right','step-right','step-up']`, `flags: [2, 4]`, concept clip id `concept-cause`
   - [ ] **P4.T1.2:** the concept line is D8's sentence, with no abstraction in it
 - [ ] **P4.T2: it joins the curriculum** — covers: FR-1, FR-9
   - [ ] **P4.T2.1:** added to `lessons` in `content/lessons/index.ts`; the `LessonCard` for `cause`

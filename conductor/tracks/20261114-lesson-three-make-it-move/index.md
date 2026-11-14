@@ -13,7 +13,7 @@
 
 ## Artifacts
 
-- [spec.md](./spec.md) — eleven requirements, ten acceptance criteria, decisions D1–D9
+- [spec.md](./spec.md) — eleven requirements, ten acceptance criteria, decisions D1–D10
 - [plan.md](./plan.md) — four phases, each proved by `bun run verify`
 - [mission.md](./mission.md) — the goal to paste into `/mission`
 
@@ -24,7 +24,9 @@ first part of the road, presses **GO**, and the walker marches to flag 1 and sto
 plans the second part from where the walker stands, presses GO again, and finishes at flag 2.
 
 That gives two matched cause-and-effect pairs instead of one long run, a win in the middle of the
-lesson, and a second plan that has to start from a world his first plan changed. A wrong plan runs
+lesson, and a second plan that has to start from a world his first plan changed. The two legs are not
+copies: the road turns up, right, right, up, so leg 1 is `up, right` and leg 2 is `right, up` — the
+same two arrows, and he still has to read the board again before tapping (D10). A wrong plan runs
 until the road stops and halts there, honestly, so he edits it and presses again.
 
 The stop already exists on the map as `{ id: 'cause', title: 'Make it move', order: 3 }` and is
@@ -56,6 +58,10 @@ every shipped lesson through the curriculum list — a later lesson cannot quiet
 The flags sit at plan positions 2 and 4 (D3): the walk stops at `(1,-1)` and finishes at `(2,-2)`.
 Neither is reachable from the start by a single arrow, so the adjacency problem the grid review found
 in lesson 1 cannot recur, and a plan is unavoidable rather than optional.
+
+The road turns twice: up, then right twice, then up again. Leg 2's plan is the first leg's plan in
+the opposite order, which costs no new sprite and stops the child from winning the second leg with the
+first leg's muscle memory.
 
 A leg's plan is cleared when the leg ends; the walker is not. That is the difference between two
 causes and one long programme (D4), and it is the single rule an implementation must not "improve".
