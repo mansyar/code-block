@@ -8,7 +8,7 @@
     "20261114-lesson-three-make-it-move"
   ],
   "created_at": "2026-11-14T23:05:00Z",
-  "updated_at": "2026-11-14T23:34:10Z",
+  "updated_at": "2026-11-14T23:35:58Z",
   "spec": "spec.md",
   "plan": "plan.md",
   "mission": "mission.md",
@@ -24,9 +24,9 @@
     "tasks_done": 14
   },
   "last_checkpoint": "a2a5d22",
-  "review_verdict": null,
-  "review_rounds": 0,
-  "reviewed_head_sha": null,
+  "review_verdict": "pass",
+  "review_rounds": 1,
+  "reviewed_head_sha": "a2a5d22",
   "doc_sync": "done",
   "pr_url": "https://github.com/mansyar/code-block/pull/8",
   "pr_state": "open",
