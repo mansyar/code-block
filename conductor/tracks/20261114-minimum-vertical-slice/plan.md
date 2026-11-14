@@ -25,8 +25,9 @@ continues — it never adds a package that is not named in the phase.
 - **Touches:** `package.json`, `bun.lock`, `tsconfig.json`, `vite.config.ts`, `index.html`,
   `biome.json`, `.gitignore`, `src/main.tsx`, `src/App.tsx`, `src/styles/`, `src/MAP.md`,
   `src/structure.test.ts`, `src/vite-env.d.ts`
-- **Dependencies:** `react`, `react-dom`, `vite`, `@vitejs/plugin-react`, `typescript`,
-  `@biomejs/biome`, `vitest`, `jsdom`, `@testing-library/react`, `@testing-library/jest-dom`
+- **Dependencies:** `react`, `react-dom`, `@types/react`, `@types/react-dom`, `vite`,
+  `@vitejs/plugin-react`, `typescript`, `@biomejs/biome`, `vitest`, `jsdom`,
+  `@testing-library/react`, `@testing-library/jest-dom`
 - **Decisions:** none
 - **Verification:** `bun run verify`
 - **Status:** verified
