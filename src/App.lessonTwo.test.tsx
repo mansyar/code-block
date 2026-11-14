@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { App } from './App';
 import { curriculum, findLesson, firstLesson } from './content/lessons/index';
 import { PROGRESS_KEY } from './progress/schema';
-import { STEP_MS } from './world/walk';
+import { CELEBRATE_MS, STEP_MS } from './world/walk';
 
 /**
  * The second stop, played through the real app: its star, the stop it opens, and both surviving a
@@ -27,6 +27,9 @@ function solveLessonOne() {
 
 function playLessonOne() {
   solveLessonOne();
+  act(() => {
+    vi.advanceTimersByTime(CELEBRATE_MS);
+  });
   fireEvent.click(screen.getByRole('button', { name: /^done$/i }));
 }
 
@@ -40,6 +43,9 @@ function playLessonTwo() {
   fireEvent.click(screen.getByRole('button', { name: /^go$/i }));
   act(() => {
     vi.advanceTimersByTime(STEP_MS * 3);
+  });
+  act(() => {
+    vi.advanceTimersByTime(CELEBRATE_MS);
   });
   fireEvent.click(screen.getByRole('button', { name: /^done$/i }));
 }

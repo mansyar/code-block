@@ -16,7 +16,7 @@ const WRONG_FLASH_MS = 500;
  * there is no road that way — with no penalty and no lost progress (FR-4, FR-9). Completion is
  * reported once, however many times the last card is tapped.
  */
-export function SequenceGame({ lesson, onComplete }: GameProps) {
+export function SequenceGame({ lesson, onComplete, celebrating }: GameProps) {
   const [placed, setPlaced] = useState<readonly PictureId[]>([]);
   const [wrong, setWrong] = useState<PictureId | null>(null);
   const finished = useRef(false);
@@ -56,7 +56,7 @@ export function SequenceGame({ lesson, onComplete }: GameProps) {
 
   return (
     <div className={styles.game}>
-      <Track route={route} position={placed.length} placed={placed} />
+      <Track route={route} position={placed.length} placed={placed} celebrating={celebrating} />
 
       <ol className={styles.tray} aria-label="Cards to tap">
         {cards.map((card) => {

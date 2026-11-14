@@ -102,3 +102,84 @@
     animation: none;
   }
 }
+
+/* ---- The arrival ----
+   He reached the end of a road he worked out himself. The screen holds still for this beat so the
+   child sees that he arrived, instead of being cut to the next screen on the same frame. */
+
+.track[data-celebrate="true"] .walker {
+  animation: hop 600ms var(--ease-tap) 2;
+}
+
+.track[data-celebrate="true"] .goal {
+  animation: wave 500ms var(--ease-tap) 2;
+  transform-origin: 50% 90%;
+}
+
+@keyframes hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-14px);
+  }
+  70% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  35% {
+    transform: rotate(-12deg);
+  }
+  70% {
+    transform: rotate(9deg);
+  }
+}
+
+.sparks {
+  position: absolute;
+  z-index: 2;
+  width: 0;
+  height: 0;
+}
+
+.spark {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 999px;
+  background: var(--colour-berry);
+  animation: spark 700ms var(--ease-tap) forwards;
+}
+
+@keyframes spark {
+  from {
+    transform: rotate(var(--angle)) translateY(4px) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: rotate(var(--angle)) translateY(-38px) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* Reduced motion: nothing travels. The goal pad brightens and the sparks simply appear. */
+@media (prefers-reduced-motion: reduce) {
+  .track[data-celebrate="true"] .walker,
+  .track[data-celebrate="true"] .goal {
+    animation: none;
+  }
+
+  .spark {
+    animation: none;
+    transform: rotate(var(--angle)) translateY(-20px);
+    opacity: 0.9;
+  }
+}

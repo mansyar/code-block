@@ -57,4 +57,19 @@ describe('the road', () => {
     expect(walker).toHaveAttribute('data-col', '1');
     expect(walker).toHaveAttribute('data-row', '-1');
   });
+
+  it('celebrates only when the arrival is being celebrated', () => {
+    const placed = lessonOne.game.solution;
+    const quiet = render(<Track route={routeFor(lessonOne)} position={3} placed={placed} />);
+
+    expect(quiet.container.querySelector('[data-celebrate="true"]')).toBeNull();
+    quiet.unmount();
+
+    const loud = render(
+      <Track route={routeFor(lessonOne)} position={3} placed={placed} celebrating />,
+    );
+
+    expect(loud.container.querySelector('[data-celebrate="true"]')).not.toBeNull();
+    expect(loud.container.querySelectorAll('[data-sparks] span')).toHaveLength(6);
+  });
 });

@@ -13,7 +13,12 @@ type TrackProps = {
   readonly position: number;
   /** The steps already taken, in order. The step at index `i` is drawn in cell `i`. */
   readonly placed: readonly PictureId[];
+  /** True while the arrival is being celebrated: the walker hops, the flag waves, sparks fly. */
+  readonly celebrating?: boolean | undefined;
 };
+
+/** Where the arrival's sparks fly. Six of them, one every 60°, so the burst reads as a burst. */
+const SPARK_ANGLES = [0, 60, 120, 180, 240, 300] as const;
 
 type Segment = {
   readonly key: string;
@@ -73,7 +78,7 @@ function ribbon(route: readonly Cell[], minCol: number, minRow: number): readonl
  * child sees two places rather than four interchangeable tiles. The ribbon is the instruction:
  * where it runs, he may go; where it does not, he may not. No sentence says so and none is spoken.
  */
-export function Track({ route, position, placed }: TrackProps) {
+export function Track({ route, position, placed, celebrating = false }: TrackProps) {
   const columns = route.map((cell) => cell.col);
   const rows = route.map((cell) => cell.row);
   const minCol = Math.min(...columns);
@@ -83,6 +88,7 @@ export function Track({ route, position, placed }: TrackProps) {
   const width = maxCol - minCol + 1;
   const height = maxRow - minRow + 1;
   const goal = route.length - 1;
+  const finish = route[goal] as Cell;
   // Big enough to read on a tablet, never so big that the widest lesson overflows the panel.
   const cell = `min(calc(var(--tap-target) * 1.75), calc((26rem - 2 * var(--space-3) - ${width - 1} * var(--space-3)) / ${width}))`;
 
@@ -92,6 +98,7 @@ export function Track({ route, position, placed }: TrackProps) {
         className={styles.track}
         data-columns={width}
         data-rows={height}
+        data-celebrate={celebrating ? 'true' : 'false'}
         style={
           {
             '--cell': cell,
@@ -108,6 +115,26 @@ export function Track({ route, position, placed }: TrackProps) {
             style={segment.style}
           />
         ))}
+
+        {celebrating ? (
+          <span
+            className={styles.sparks}
+            aria-hidden="true"
+            data-sparks="true"
+            style={{
+              left: `calc(${at(finish.col - minCol)} + var(--cell) / 2)`,
+              top: `calc(${at(finish.row - minRow)} + var(--cell) / 2)`,
+            }}
+          >
+            {SPARK_ANGLES.map((angle) => (
+              <span
+                key={angle}
+                className={styles.spark}
+                style={{ '--angle': `${angle}deg` } as CSSProperties}
+              />
+            ))}
+          </span>
+        ) : null}
 
         {route.map((cell, index) => {
           const step = placed[index];

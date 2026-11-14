@@ -1,9 +1,10 @@
 import '@testing-library/jest-dom/vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { App } from './App';
 import { curriculum, findLesson, firstLesson } from './content/lessons/index';
 import { PROGRESS_KEY } from './progress/schema';
+import { CELEBRATE_MS } from './world/walk';
 
 function solveLessonOne() {
   const lesson = findLesson(firstLesson.id);
@@ -19,14 +20,23 @@ function solveLessonOne() {
   }
 }
 
+/** Solve the lesson, let the arrival celebrate, then leave by the done control. */
 function playLessonOne() {
   solveLessonOne();
+  act(() => {
+    vi.advanceTimersByTime(CELEBRATE_MS);
+  });
   fireEvent.click(screen.getByRole('button', { name: /^done$/i }));
 }
 
 describe('App', () => {
   beforeEach(() => {
     window.localStorage.clear();
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it('opens on the journey map with every node and no lesson screen', () => {

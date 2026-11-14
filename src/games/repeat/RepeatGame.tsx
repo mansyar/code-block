@@ -22,7 +22,7 @@ const REPEAT_STEPS = 3;
  * A second tap while he is walking changes nothing: the game has already been given its
  * instruction, and completion is reported exactly once (FR-4).
  */
-export function RepeatGame({ lesson, onComplete }: GameProps) {
+export function RepeatGame({ lesson, onComplete, celebrating }: GameProps) {
   const card = lesson.game.solution[0];
   const [walked, setWalked] = useState(0);
   const [walking, setWalking] = useState(false);
@@ -69,7 +69,7 @@ export function RepeatGame({ lesson, onComplete }: GameProps) {
 
   return (
     <div className={styles.game}>
-      <Track route={route} position={walked} placed={taken} />
+      <Track route={route} position={walked} placed={taken} celebrating={celebrating} />
 
       <button
         type="button"

@@ -34,7 +34,7 @@ lines are never removed.
 
 ## Current focus
 
-[20261114-one-world-lesson-two](./archive/20261114-one-world-lesson-two/index.md) — one world for the
+[20261114-one-world-lesson-two](./tracks/20261114-one-world-lesson-two/index.md) — one world for the
 whole curriculum (a walker, arrows, a path), lesson 1 rebuilt inside it, and lesson 2 as one tap
 that walks the walker three times.
 

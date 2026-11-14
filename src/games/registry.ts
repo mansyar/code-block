@@ -6,6 +6,8 @@ import { SequenceGame } from './sequence/SequenceGame';
 export type GameProps = {
   readonly lesson: Lesson;
   readonly onComplete: () => void;
+  /** True while the screen is holding on the arrival, so the road can celebrate it. */
+  readonly celebrating?: boolean | undefined;
 };
 
 /**

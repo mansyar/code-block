@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ScriptLine } from '../content/lesson';
 import { lessonTwo } from '../content/lessons/0002-repeat';
 import type { Narration } from '../narration/port';
-import { STEP_MS } from '../world/walk';
+import { CELEBRATE_MS, STEP_MS } from '../world/walk';
 import { LessonScreen } from './LessonScreen';
 
 function fakeNarration() {
@@ -24,11 +24,15 @@ function renderLesson(narration: Narration = fakeNarration()) {
   return { container, narration };
 }
 
-/** One tap, then the three timed steps the repeat game owns. */
+/** One tap, the three timed steps the repeat game owns, then the arrival celebration. */
 function playTheGame() {
   fireEvent.click(screen.getByRole('button', { name: /^go$/i }));
   act(() => {
     vi.advanceTimersByTime(STEP_MS * 3);
+  });
+  // The celebration timer is scheduled once the arrival has rendered, so it needs its own tick.
+  act(() => {
+    vi.advanceTimersByTime(CELEBRATE_MS);
   });
 }
 

@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Lesson } from '../content/lesson';
 import { findGame } from '../games/registry';
 import { createNarration } from '../narration/index';
 import type { Narration } from '../narration/port';
 import { pictureRegistry } from '../ui/pictures/registry';
+import { CELEBRATE_MS } from '../world/walk';
 import { ConceptScreen } from './ConceptScreen';
 import styles from './LessonScreen.module.css';
 import { useLessonFlow } from './useLessonFlow';
@@ -17,25 +18,45 @@ type LessonScreenProps = {
 };
 
 /**
- * The lesson screen: play the game, then hear the concept.
+ * The lesson screen: play the game, see the arrival celebrated, then hear the concept.
  *
- * The game reports completion into the flow, which opens the concept beat and speaks its line.
- * The lesson is reported to the shell at that same moment, so the star is earned by finishing the
- * game however the child leaves — by "done" or by the back control (FR-6, FR-7). "Done" only
- * leaves the screen. Until a lesson names a registered game, the cards are shown in their display
- * order instead of a blank screen.
+ * The star is earned the moment the walker reaches the end, because that is the moment the child
+ * finished — but the screen does not cut away on that same frame. It holds for `CELEBRATE_MS` while
+ * the road celebrates, and only then opens the concept beat, which is also when the line is spoken.
+ * Cutting straight to the next screen threw away the walk the child had just worked out.
+ *
+ * The lesson is reported to the shell at arrival, so the star is earned however the child leaves —
+ * by "done" or by the back control (FR-6, FR-7). Closing during the celebration earns the star and
+ * skips the concept, because he left before it. "Done" only leaves the screen. Until a lesson names
+ * a registered game, the cards are shown in their display order instead of a blank screen.
  */
 export function LessonScreen({ lesson, onClose, onComplete, narration }: LessonScreenProps) {
   const [fallbackNarration] = useState<Narration>(() => createNarration());
   const flow = useLessonFlow(lesson, narration ?? fallbackNarration);
+  const [celebrating, setCelebrating] = useState(false);
+  const { complete } = flow;
 
   const gameKind = lesson.game.gameKind;
   const Game = gameKind === undefined ? undefined : findGame(gameKind);
 
+  /** Arrival: earn the star now, and let the road celebrate before anything else happens. */
   const finishGame = () => {
-    flow.complete();
     onComplete();
+    setCelebrating(true);
   };
+
+  useEffect(() => {
+    if (!celebrating) {
+      return undefined;
+    }
+
+    const timer = setTimeout(() => {
+      setCelebrating(false);
+      complete();
+    }, CELEBRATE_MS);
+
+    return () => clearTimeout(timer);
+  }, [celebrating, complete]);
 
   return (
     <section className={styles.lesson} aria-labelledby="lesson-title">
@@ -56,7 +77,7 @@ export function LessonScreen({ lesson, onClose, onComplete, narration }: LessonS
       ) : Game === undefined ? (
         <GamePending lesson={lesson} />
       ) : (
-        <Game lesson={lesson} onComplete={finishGame} />
+        <Game lesson={lesson} onComplete={finishGame} celebrating={celebrating} />
       )}
     </section>
   );
