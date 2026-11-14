@@ -4,6 +4,9 @@
     "clientKind": "git",
     "useIgnoreFile": true
   },
+  "files": {
+    "includes": ["**", "!conductor", "!.conductor", "!dist", "!node_modules", "!README.md"]
+  },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
@@ -18,7 +21,7 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "preset": "recommended"
     }
   }
 }
