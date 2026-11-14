@@ -45,13 +45,13 @@ Evidence files land in `verification/phase-<n>.md`. Phase 1 is recorded in
 
 ## Delivery
 
-The branch `feat/20261114-minimum-vertical-slice` is pushed at `9a768a7` and review round 2
-returned PASS, pinned at `0f1526f`. The pull request could not be opened from the sandbox: `gh`
-has no credentials, an unauthenticated `POST /repos/mansyar/code-block/pulls` returns **401
-Requires authentication**, shell git cannot authenticate for a push, `cloud_git` exposes only
-fetch/pull/push, and the cloud browser has no signed-in GitHub session. The exact invocations and
-responses are recorded in `.conductor/evidence/pr-creation-attempts.md`.
+The pull request is open: [https://github.com/mansyar/code-block/pull/1](https://github.com/mansyar/code-block/pull/1) — base `main`, head
+`feat/20261114-minimum-vertical-slice`, review round 2 PASS pinned at `0f1526f`, `pr.md` as the
+body. It is left open for a human to merge.
 
-`pr.md` is the PR body. Open it at
-<https://github.com/mansyar/code-block/pull/new/feat/20261114-minimum-vertical-slice>, or add a
-`GH_TOKEN` project secret and the next turn opens it with the same body.
+The sandbox initially had no way to create it: `gh` was unauthenticated, an unauthenticated
+`POST /repos/mansyar/code-block/pulls` returned 401, shell git could not authenticate a push,
+`cloud_git` exposes only fetch/pull/push, and the cloud browser had no GitHub session. Those
+attempts are recorded in `.conductor/evidence/pr-creation-attempts.md`. A `GH_TOKEN` project secret
+resolved it; `gh` picked the token up from the environment and created the PR without it ever
+touching a file or the transcript.

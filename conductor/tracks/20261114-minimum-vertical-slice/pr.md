@@ -74,9 +74,3 @@ structural rules enforced by tests.
   so an installed tablet is not pinned to a stale build without an update prompt.
 - Manual check for the parent: serve the build over HTTPS, add it to the home screen, finish lesson
   1, then turn Wi-Fi off and relaunch — the map should show the star.
-
----
-
-Open this PR at
-https://github.com/mansyar/code-block/pull/new/feat/20261114-minimum-vertical-slice — the branch is
-pushed and this file is its body.
