@@ -148,24 +148,27 @@ continues — it never adds a package that is not named in the phase.
 - **Dependencies:** none
 - **Decisions:** D1, D2, D3
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** d276c67
+**Evidence:** conductor/tracks/20261114-minimum-vertical-slice/verification/phase-4.md
 
-- [ ] **P4.T1: the narration port and its silent adapter** — covers: FR-5
-  - [ ] **P4.T1.1:** `narration/port.ts` — `speak(line: ScriptLine): void`, `stop(): void`
-  - [ ] **P4.T1.2:** `narration/silence-narration.ts` recording calls for tests
-- [ ] **P4.T2: the system-voice adapter** — covers: FR-5, NFR-3
-  - [ ] **P4.T2.1:** `narration/system-narration.ts` per D3, cancelling before speaking and
+- [x] **P4.T1: the narration port and its silent adapter** — covers: FR-5
+  - [x] **P4.T1.1:** `narration/port.ts` — `speak(line: ScriptLine): void`, `stop(): void`
+  - [x] **P4.T1.2:** `narration/silence-narration.ts` recording calls for tests
+- [x] **P4.T2: the system-voice adapter** — covers: FR-5, NFR-3
+  - [x] **P4.T2.1:** `narration/system-narration.ts` per D3, cancelling before speaking and
     no-oping when `speechSynthesis` is absent
-- [ ] **P4.T3: the adapter factory** — covers: FR-5, D2
-  - [ ] **P4.T3.1:** `narration/index.ts` choosing a file clip when `findClip` returns one, else
+- [x] **P4.T3: the adapter factory** — covers: FR-5, D2
+  - [x] **P4.T3.1:** `narration/index.ts` choosing a file clip when `findClip` returns one, else
     the system voice
-- [ ] **P4.T4: the lesson flow reaches the concept beat** — covers: FR-5
-  - [ ] **P4.T4.1:** `lesson/useLessonFlow.ts` with `playing` → `concept` phases, speaking on entry
-- [ ] **P4.T5: the concept screen** — covers: FR-5, AC-5
-  - [ ] **P4.T5.1:** finished picture, concept line as quiet on-screen text, and a 72 px replay
+- [x] **P4.T4: the lesson flow reaches the concept beat** — covers: FR-5
+  - [x] **P4.T4.1:** `lesson/useLessonFlow.ts` with `playing` → `concept` phases, speaking on entry
+- [x] **P4.T5: the concept screen** — covers: FR-5, AC-5
+  - [x] **P4.T5.1:** finished picture, concept line as quiet on-screen text, and a 72 px replay
     control that re-speaks from the start
-- [ ] **P4.T6: narration tests** — covers: AC-5, NFR-3
-  - [ ] **P4.T6.1:** the port receives the concept line exactly once on completion; replay adds
+- [x] **P4.T6: narration tests** — covers: AC-5, NFR-3
+  - [x] **P4.T6.1:** the port receives the concept line exactly once on completion; replay adds
     one more call; a port that throws leaves the lesson completable
 
 ## Phase 5: Progress, the star and the way back
