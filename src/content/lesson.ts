@@ -112,11 +112,15 @@ function assertFlags(
 
   for (const position of flags) {
     if (!Number.isInteger(position) || position <= previous) {
-      throw new Error(`${lesson.id}: the flags must be strictly increasing, got ${flags.join(', ')}`);
+      throw new Error(
+        `${lesson.id}: the flags must be strictly increasing, got ${flags.join(', ')}`,
+      );
     }
 
     if (position > planLength) {
-      throw new Error(`${lesson.id}: flag ${position} is past the end of a ${planLength}-step plan`);
+      throw new Error(
+        `${lesson.id}: flag ${position} is past the end of a ${planLength}-step plan`,
+      );
     }
 
     previous = position;
