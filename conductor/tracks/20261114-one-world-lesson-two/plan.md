@@ -120,21 +120,24 @@ vocabulary change and lesson 1's rewrite cannot be separated without leaving the
 - **Dependencies:** none
 - **Decisions:** D6, D7, D8, D9
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** 8b180f0
+**Evidence:** conductor/tracks/20261114-one-world-lesson-two/verification/phase-4.md
 
-- [ ] **P4.T1: the lesson data** — covers: FR-4, D6
-  - [ ] **P4.T1.1:** `content/lessons/0002-repeat.ts` — id `repeat`, title "Do it again", order 2,
+- [x] **P4.T1: the lesson data** — covers: FR-4, D6
+  - [x] **P4.T1.1:** `content/lessons/0002-repeat.ts` — id `repeat`, title "Do it again", order 2,
     `gameKind: 'repeat'`, one card, concept clip id `concept-repeat`
-  - [ ] **P4.T1.2:** the concept line is the two sentences from D9, with no abstraction in it
-- [ ] **P4.T2: it joins the curriculum** — covers: FR-6
-  - [ ] **P4.T2.1:** added to `lessons` in `content/lessons/index.ts`; its `LessonCard` already
+  - [x] **P4.T1.2:** the concept line is the two sentences from D9, with no abstraction in it
+- [x] **P4.T2: it joins the curriculum** — covers: FR-6
+  - [x] **P4.T2.1:** added to `lessons` in `content/lessons/index.ts`; its `LessonCard` already
     exists at order 2 and is not duplicated
-- [ ] **P4.T3: the concept beat** — covers: FR-5, AC-5
-  - [ ] **P4.T3.1:** completing lesson 2 speaks `concept-repeat` once through the port and replay
+- [x] **P4.T3: the concept beat** — covers: FR-5, AC-5
+  - [x] **P4.T3.1:** completing lesson 2 speaks `concept-repeat` once through the port and replay
     speaks it once more
-- [ ] **P4.T4: star and unlock across a remount** — covers: FR-6, AC-6, NFR-5
-  - [ ] **P4.T4.1:** play lesson 1 then lesson 2 → two stars, node 3 activatable, after a remount
-  - [ ] **P4.T4.2:** a narration port that throws still lets lesson 2 complete and award its star
+- [x] **P4.T4: star and unlock across a remount** — covers: FR-6, AC-6, NFR-5
+  - [x] **P4.T4.1:** play lesson 1 then lesson 2 → two stars, node 3 activatable, after a remount
+  - [x] **P4.T4.2:** a narration port that throws still lets lesson 2 complete and award its star
 
 ## Phase 5: The docs catch up with the world
 
