@@ -29,21 +29,24 @@ extra cells — while every lesson that names none is byte-for-byte what it is t
 - **Verification:** `bun run verify`
 - **Status:** pending
 
-- [ ] **P1.T1: the field and the kind** — `GameSpec.twice?: readonly number[]` documented as plan
+- [x] **P1.T1: the field and the kind** — `GameSpec.twice?: readonly number[]` documented as plan
   positions counted from 1 (the same convention as `flags`), absent meaning no step repeats;
   `GameKind` gains `'condition'`. — covers: FR-2
-- [ ] **P1.T2: validate it at import time** — `assertTwice` rejects an empty list, a position below 1,
+- [x] **P1.T2: validate it at import time** — `assertTwice` rejects an empty list, a position below 1,
   a position past the end of the plan, a duplicate and a descending pair, each with the lesson's id;
   a lesson with no `twice` is accepted unchanged. — covers: FR-4
-- [ ] **P1.T3: the road expands** — `routeFor` inserts the extra cell for every repeated position, in
+- [x] **P1.T3: the road expands** — `routeFor` inserts the extra cell for every repeated position, in
   that step's own direction, so a plan of `n` steps with `k` repeats has `n + 1 + k` cells; `tracePath`
   and the step geometry are reused rather than duplicated. — covers: FR-3, D3
-- [ ] **P1.T4: tests for the rule and for the lessons already shipped** — route length and each extra
+- [x] **P1.T4: tests for the rule and for the lessons already shipped** — route length and each extra
   cell's direction for a doubled plan, two adjacent repeats on one arrow, a repeat on the last step,
   and the assertion that lessons 1–3 still produce exactly `plan.length + 1` cells. — covers: AC-2,
   AC-3, AC-9
 
-**Status:** pending
+**Status:** verified
+**Result:** verified
+**Checkpoint:** 7708862
+**Evidence:** conductor/tracks/20261114-lesson-four-if-it-is-red/verification/phase-1.md
 
 ---
 
