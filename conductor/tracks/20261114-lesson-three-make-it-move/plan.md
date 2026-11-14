@@ -84,33 +84,36 @@ its star and the docs adopt it (phase 4).
 - **Dependencies:** none
 - **Decisions:** D1, D4, D5, D6, D7
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** eef4d84
+**Evidence:** conductor/tracks/20261114-lesson-three-make-it-move/verification/phase-3.md
 
-- [ ] **P3.T1: the engine** — covers: FR-6, FR-8, D1
-  - [ ] **P3.T1.1:** `world/run.ts` — `runPlan(route, plan, { from, to, onStep, onStuck, onArrive })`
+- [x] **P3.T1: the engine** — covers: FR-6, FR-8, D1
+  - [x] **P3.T1.1:** `world/run.ts` — `runPlan(route, plan, { from, to, onStep, onStuck, onArrive })`
     walks while the plan's next step is the road's next cell, stops at `to`, at the end of the plan,
     or where the road does not continue
-  - [ ] **P3.T1.2:** the engine returns a cancel function that clears its timers, and never calls
+  - [x] **P3.T1.2:** the engine returns a cancel function that clears its timers, and never calls
     `onArrive` twice
-- [ ] **P3.T2: the game** — covers: FR-5, FR-7, D6, D7
-  - [ ] **P3.T2.1:** `games/plan/PlanGame.tsx` renders the road with its flags, the palette, the GO
+- [x] **P3.T2: the game** — covers: FR-5, FR-7, D6, D7
+  - [x] **P3.T2.1:** `games/plan/PlanGame.tsx` renders the road with its flags, the palette, the GO
     pad, and the current leg's plan on the road ahead of the walker
-  - [ ] **P3.T2.2:** appending and removing are capped at the current leg's length; the walker's index
+  - [x] **P3.T2.2:** appending and removing are capped at the current leg's length; the walker's index
     survives a leg change and the plan does not
-- [ ] **P3.T3: running a leg** — covers: FR-6, FR-7, FR-8
-  - [ ] **P3.T3.1:** GO runs the leg, is disabled while running, ignores a second press, and reports
+- [x] **P3.T3: running a leg** — covers: FR-6, FR-7, FR-8
+  - [x] **P3.T3.1:** GO runs the leg, is disabled while running, ignores a second press, and reports
     completion only from the last leg
-  - [ ] **P3.T3.2:** an intermediate arrival waves the flag, clears the plan, keeps the walker and
+  - [x] **P3.T3.2:** an intermediate arrival waves the flag, clears the plan, keeps the walker and
     leaves him editable; a wrong plan halts where the road stops and reports nothing; unmounting
     mid-run cancels the timers
-  - [ ] **P3.T3.3:** leg 2 is planned and run from the cell the walker stands on, so a test that
+  - [x] **P3.T3.3:** leg 2 is planned and run from the cell the walker stands on, so a test that
     reuses leg 1's plan (`up, right`) halts at once instead of finishing — the legs are read from
     the road, not replayed from the first plan
-- [ ] **P3.T4: register the kind** — covers: FR-6
-  - [ ] **P3.T4.1:** one entry in `games/registry.ts` mapping `plan` to the component; `GameKind`
+- [x] **P3.T4: register the kind** — covers: FR-6
+  - [x] **P3.T4.1:** one entry in `games/registry.ts` mapping `plan` to the component; `GameKind`
     gains `'plan'` (structure rule 5 reads the registry)
-- [ ] **P3.T5: styles and motion** — covers: NFR-1
-  - [ ] **P3.T5.1:** GO and the palette use `--tap-target`; both runs respect
+- [x] **P3.T5: styles and motion** — covers: NFR-1
+  - [x] **P3.T5.1:** GO and the palette use `--tap-target`; both runs respect
     `prefers-reduced-motion: reduce` with a per-cell colour flash
 
 ## Phase 4: Lesson 3, its star, the unlock and the docs
