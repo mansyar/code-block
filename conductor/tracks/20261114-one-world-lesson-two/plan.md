@@ -92,20 +92,23 @@ vocabulary change and lesson 1's rewrite cannot be separated without leaving the
 - **Dependencies:** none
 - **Decisions:** D3, D5
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** 32c825f
+**Evidence:** conductor/tracks/20261114-one-world-lesson-two/verification/phase-3.md
 
-- [ ] **P3.T1: the game** — covers: FR-4
-  - [ ] **P3.T1.1:** `games/repeat/RepeatGame.tsx` with one tappable arrow and the track from
+- [x] **P3.T1: the game** — covers: FR-4
+  - [x] **P3.T1.1:** `games/repeat/RepeatGame.tsx` with one tappable arrow and the track from
     Phase 2; a tap runs three steps of `STEP_MS` each, then calls `onComplete`
-  - [ ] **P3.T1.2:** taps during the walk and after it are ignored; timers are cleared on unmount
-- [ ] **P3.T2: its styles** — covers: NFR-1
-  - [ ] **P3.T2.1:** the arrow is at least 72 px from the `--tap-target` token, and the walk is
+  - [x] **P3.T1.2:** taps during the walk and after it are ignored; timers are cleared on unmount
+- [x] **P3.T2: its styles** — covers: NFR-1
+  - [x] **P3.T2.1:** the arrow is at least 72 px from the `--tap-target` token, and the walk is
     replaced by a per-cell colour flash under `prefers-reduced-motion: reduce`
-- [ ] **P3.T3: register the kind** — covers: FR-4
-  - [ ] **P3.T3.1:** one entry in `games/registry.ts` mapping `repeat` to the component
+- [x] **P3.T3: register the kind** — covers: FR-4
+  - [x] **P3.T3.1:** one entry in `games/registry.ts` mapping `repeat` to the component
     (structure rule 5 reads it)
-- [ ] **P3.T4: tests** — covers: AC-4, NFR-4
-  - [ ] **P3.T4.1:** fake timers: one tap → three steps → exactly one `onComplete`; a second tap
+- [x] **P3.T4: tests** — covers: AC-4, NFR-4
+  - [x] **P3.T4.1:** fake timers: one tap → three steps → exactly one `onComplete`; a second tap
     adds nothing; no new dependency in `package.json`
 
 ## Phase 4: Lesson 2, its star and the unlock
