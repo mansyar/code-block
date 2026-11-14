@@ -34,7 +34,8 @@ Nothing yet — every directory named in the architecture exists.
 
 - **Add a lesson** — create `src/content/lessons/<number>-<slug>.ts`, add it to
   `src/content/lessons/index.ts`, and add a `LessonCard` for it if the stop is new. Nothing else.
-- **Add a game kind** — create `src/games/<kind>/`, then add one entry to `src/games/registry.ts`.
+- **Add a game kind** — create `src/games/<kind>/`, render it on the shared `src/world/Track.tsx`
+  path instead of drawing its own, then add one entry to `src/games/registry.ts`.
 - **Add a screen** — extend the union in `src/app/screen.ts` and render it in `src/App.tsx`.
 - **Change how the app speaks** — only `src/narration/`. The port is `port.ts`; the choice of
   adapter is `index.ts`.

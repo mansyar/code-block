@@ -74,6 +74,13 @@ Out of scope for v1:
   effect/event, if-then/condition, spotting the wrong step/debugging, and "a box that
   remembers"/variable — because each maps to one visual game a four-year-old can play with
   pictures, and six gives the journey map something to show.
+- **One world** → decided: all six lessons share a single visual world — one walker, arrow steps and
+  a path — rather than new objects per lesson. Shipped so far: lesson 1 "Walk the path" (three
+  arrow steps put in order, the walker moving one cell per correct tap) and lesson 2 "Do it again"
+  (one arrow, tapped once, and the walker takes that step three times). Lessons 3–6 are designed to
+  reuse the same actor and path, so a lesson adds a mechanic rather than art.
+- **Concept wording** → decided: the spoken line names the idea in the child's words and never the
+  discipline's. Repetition is "again and again", not "loop"; "loop" is the parent's word for it.
 - **Lesson shape** → assumed *game first, then the concept*, one game and one explanation per
   lesson, because that is the stated journey and it keeps a lesson inside two minutes.
 - **Language and voice** → assumed English, one narrator voice for every lesson — because a

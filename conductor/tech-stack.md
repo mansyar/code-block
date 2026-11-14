@@ -70,7 +70,8 @@ src/
   lesson/LessonScreen.tsx     game → beat → narration → star
   narration/                  port.ts, audio-narration.ts, silence-narration.ts
   progress/                   schema.ts, store.ts, selectors.ts
-  ui/                         dumb components: Button, Star
+  ui/                         pictures/ — one SVG per PictureId, plus its registry
+  world/                      Track.tsx + walk.ts: the one path every lesson is played on
   styles/tokens.css           every colour, space and --tap-target
 ```
 
@@ -83,6 +84,7 @@ src/
 | Narration port | `narration/port.ts` | how the app speaks (audio files today, anything later) |
 | Progress port | `progress/store.ts` | how progress is read and written |
 | Screen reducer | `app/screen.ts` | which screens exist and how they follow each other |
+| The world | `world/Track.tsx` | how the path and the walker are drawn, and how long a step takes |
 | Design tokens | `styles/tokens.css` | every visual value |
 
 Ports carry two adapters each: the real one and a silent or in-memory one. Tests use the dummy
@@ -91,7 +93,7 @@ behind an unchanged interface.
 
 ### Dependency direction
 
-`main.tsx → App.tsx → lesson/ → games/ → {content/, ui/, narration/, progress/} → styles/`.
+`main.tsx → App.tsx → lesson/ → games/ → {content/, ui/, narration/, progress/, world/} → styles/`.
 One way only. `content/` imports nothing but its own types; nothing imports from `app/` or
 `lesson/` except `App.tsx`.
 
@@ -210,3 +212,8 @@ setup deliberately did not invent a scaffold.
   plus Prettier, so there is a single config file (`biome.json`) and a single `bun run lint`.
   Biome does not peer-range against TypeScript's major, which removes the upgrade friction that
   the ESLint plugin stack carries.
+- **D-TS10 — One world for the whole curriculum** → every lesson is played by the same actor on the
+  same path: `PictureId` is one walker plus the three arrows it can obey, and `world/` owns the
+  cells and the step timing. A lesson therefore adds data and a mechanic, never art — which keeps
+  the sixth lesson as cheap as the second. A lesson that needs a new sprite is a recorded decision
+  here, not something a phase improvises.
