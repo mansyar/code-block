@@ -127,23 +127,26 @@ its star and the docs adopt it (phase 4).
 - **Dependencies:** none
 - **Decisions:** D3, D8, D9, D10
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** a1e2144
+**Evidence:** conductor/tracks/20261114-lesson-three-make-it-move/verification/phase-4.md
 
-- [ ] **P4.T1: the lesson data** — covers: FR-1, D3, D8
-  - [ ] **P4.T1.1:** `0003-cause.ts` — id `cause` (structure rule 4 ties id to filename), order 3,
+- [x] **P4.T1: the lesson data** — covers: FR-1, D3, D8
+  - [x] **P4.T1.1:** `0003-cause.ts` — id `cause` (structure rule 4 ties id to filename), order 3,
     title "Make it move", `gameKind: 'plan'`, palette `['step-up','step-right']`, plan
     `['step-up','step-right','step-right','step-up']`, `flags: [2, 4]`, concept clip id `concept-cause`
-  - [ ] **P4.T1.2:** the concept line is D8's sentence, with no abstraction in it
-- [ ] **P4.T2: it joins the curriculum** — covers: FR-1, FR-9
-  - [ ] **P4.T2.1:** added to `lessons` in `content/lessons/index.ts`; the `LessonCard` for `cause`
+  - [x] **P4.T1.2:** the concept line is D8's sentence, with no abstraction in it
+- [x] **P4.T2: it joins the curriculum** — covers: FR-1, FR-9
+  - [x] **P4.T2.1:** added to `lessons` in `content/lessons/index.ts`; the `LessonCard` for `cause`
     already exists at order 3 and is left untouched, and the curriculum still holds six stops
-- [ ] **P4.T3: star, unlock and the celebration** — covers: FR-9, FR-10, AC-9, AC-10
-  - [ ] **P4.T3.1:** completing the last leg records the star, keeps the other two, unlocks node 4
+- [x] **P4.T3: star, unlock and the celebration** — covers: FR-9, FR-10, AC-9, AC-10
+  - [x] **P4.T3.1:** completing the last leg records the star, keeps the other two, unlocks node 4
     and survives a remount
-  - [ ] **P4.T3.2:** the last arrival is celebrated before the concept beat, which speaks
+  - [x] **P4.T3.2:** the last arrival is celebrated before the concept beat, which speaks
     `concept-cause` once and once more on replay; flag 1 gets the flag wave only
-- [ ] **P4.T4: nothing is printed, and the docs agree** — covers: FR-11, AC-10, NFR-4, NFR-5
-  - [ ] **P4.T4.1:** the lesson subtree's text contains neither `step-` nor `walker`; GO is a button
+- [x] **P4.T4: nothing is printed, and the docs agree** — covers: FR-11, AC-10, NFR-4, NFR-5
+  - [x] **P4.T4.1:** the lesson subtree's text contains neither `step-` nor `walker`; GO is a button
     with an accessible name and no visible text
-  - [ ] **P4.T4.2:** `src/MAP.md`, `tech-stack.md` and `product.md` describe plan-then-run in legs,
+  - [x] **P4.T4.2:** `src/MAP.md`, `tech-stack.md` and `product.md` describe plan-then-run in legs,
     the palette/plan split and the GO control
