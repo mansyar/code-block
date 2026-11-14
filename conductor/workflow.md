@@ -79,10 +79,13 @@ authorization:
 
 ```text
 bun run typecheck   → tsc --noEmit
-bun run lint        → eslint .
-bun run test        → vitest run
+bun run lint        → biome check .
 bun run build       → vite build
+bun run test        → vitest run
 ```
+
+Build runs before test deliberately: one test asserts the contents of `dist/` (the web manifest
+and service worker), so a stale build would make it lie.
 
 It must stay fast, hermetic and free of manual steps: no browser, no network beyond installed
 dependencies, no GPU, no audio rendering, no deploy. A phase cites exactly this command in

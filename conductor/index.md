@@ -27,7 +27,13 @@ conductor/archive/<track-id>/    completed or reverted tracks
 
 Run state, raw reports and evidence binaries live under `.conductor/`, which is gitignored.
 
+## Tracks
+
+Active and archived tracks are registered in [tracks.md](./tracks.md). One line per track, and
+lines are never removed.
+
 ## Current focus
 
-No tracks exist yet. The first track is the minimum vertical slice: one lesson the child can
-complete end to end — open the app, play a game, hear the concept explained, keep a star.
+[20261114-minimum-vertical-slice](./tracks/20261114-minimum-vertical-slice/index.md) — the minimum
+vertical slice: one lesson the child can complete end to end — open the app, play a game, hear the
+concept explained, keep a star.

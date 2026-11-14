@@ -12,7 +12,7 @@ narration is pre-rendered to static audio files, so the deployed product is HTML
 |---|---|
 | Language | TypeScript, `strict: true`, no `any` in committed code |
 | Runtime target | Evergreen browsers: iPad Safari 16+, Android Chrome, desktop Chrome/Firefox/Safari |
-| Build | Vite 6 with the React plugin |
+| Build | Vite (latest stable) with the React plugin |
 | Package manager | bun (`bun.lock`) |
 | Node | not a runtime dependency; bun runs the toolchain |
 
@@ -26,11 +26,16 @@ narration is pre-rendered to static audio files, so the deployed product is HTML
 | State | React state + one `localStorage`-backed store module | The whole app state is "which lesson, how many stars, streak". No state library |
 | Audio | HTML `Audio` elements with a tiny preloader | Cached files, no Web Audio graph to maintain |
 | Tests | Vitest + `@testing-library/react` + jsdom | Same transform as the app; fast enough to run every phase |
-| Lint / format | ESLint (flat config, `typescript-eslint`) + Prettier | Static layer of verification |
+| Lint / format | Biome (`biome check`, `biome format`) | One tool for lint, format and import order; no ESLint/Prettier pair to keep in sync |
 
 No component library, no animation library, no router dependency unless a track's plan shows
 that the map and lesson screens cannot be handled by a simple state machine. Any addition is
 recorded here before the implementation depends on it.
+
+**Versions are the current stable release at install time**, resolved once and frozen by
+`bun.lock`. No hand-picked older majors and no dependency-update bot: a phase installs what
+`latest` gives it and records the resolved version in `bun.lock`. A major bump that changes an
+API the code uses is a stack change recorded here, not something a phase improvises.
 
 ## Data
 
@@ -198,3 +203,10 @@ setup deliberately did not invent a scaffold.
 - **D-TS7 — Lessons are TypeScript data files** → typed, compile-checked against the game
   registry and the audio manifest, with comments allowed. JSON would need a hand-written
   validation layer that the compiler already provides.
+- **D-TS8 — Latest stable dependencies** → install the current stable release of every package
+  and freeze it in `bun.lock`, rather than pinning known-good older majors. Reproducibility
+  comes from the lockfile, not from the manifest.
+- **D-TS9 — Biome for lint and format** → one binary replaces ESLint plus `typescript-eslint`
+  plus Prettier, so there is a single config file (`biome.json`) and a single `bun run lint`.
+  Biome does not peer-range against TypeScript's major, which removes the upgrade friction that
+  the ESLint plugin stack carries.
