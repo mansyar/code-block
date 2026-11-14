@@ -1,0 +1,85 @@
+.game {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  align-items: center;
+}
+
+.plate {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 26rem;
+  min-height: calc(var(--tap-target) + var(--space-4));
+  margin: 0;
+  padding: var(--space-3);
+  border: var(--stroke-width) dashed var(--colour-outline);
+  border-radius: var(--radius-lg);
+  background: var(--colour-surface);
+  list-style: none;
+}
+
+.placedCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tray {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--tap-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: calc(var(--tap-target) * 1.25);
+  min-height: calc(var(--tap-target) * 1.25);
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  background: var(--colour-surface-raised);
+}
+
+.card[data-placed="true"] {
+  border-style: dashed;
+  background: var(--colour-grass);
+}
+
+.card[data-wrong="true"] {
+  animation: wobble var(--duration-settle) var(--ease-tap);
+}
+
+.picture {
+  width: 3.25rem;
+  height: 3.25rem;
+}
+
+@keyframes wobble {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+/* Reduced motion: the same feedback, carried by colour instead of movement. */
+@media (prefers-reduced-motion: reduce) {
+  .card[data-wrong="true"] {
+    animation: none;
+    background: var(--colour-berry);
+  }
+}

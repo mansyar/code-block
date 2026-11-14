@@ -1,0 +1,17 @@
+node_modules/
+dist/
+dev-dist/
+coverage/
+
+# Conductor run state and evidence binaries
+.conductor/runs/
+.conductor/evidence/
+
+# Local environment
+.env
+.env.*
+!.env.example
+*.local
+
+.DS_Store
+*.log
