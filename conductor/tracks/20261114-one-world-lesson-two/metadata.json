@@ -2,11 +2,13 @@
   "id": "20261114-one-world-lesson-two",
   "title": "One world, lesson two",
   "type": "feature",
-  "status": "new",
+  "status": "in_progress",
   "priority": "high",
-  "depends_on": ["20261114-minimum-vertical-slice"],
+  "depends_on": [
+    "20261114-minimum-vertical-slice"
+  ],
   "created_at": "2026-11-14T12:10:00Z",
-  "updated_at": "2026-11-14T12:10:00Z",
+  "updated_at": "2026-11-14T12:55:00Z",
   "spec": "spec.md",
   "plan": "plan.md",
   "mission": "mission.md",
@@ -15,8 +17,13 @@
   "base_sha": "c1b2b1c",
   "autonomy": "ready",
   "effort": 3,
-  "progress": { "phases_total": 5, "tasks_total": 20, "phases_verified": 0, "tasks_done": 0 },
-  "last_checkpoint": null,
+  "progress": {
+    "phases_total": 5,
+    "tasks_total": 20,
+    "phases_verified": 1,
+    "tasks_done": 5
+  },
+  "last_checkpoint": "7149e4f",
   "review_verdict": null,
   "review_rounds": 0,
   "reviewed_head_sha": null,

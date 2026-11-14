@@ -23,30 +23,33 @@ vocabulary change and lesson 1's rewrite cannot be separated without leaving the
 - **Dependencies:** none
 - **Decisions:** D1, D2, D9
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** 7149e4f
+**Evidence:** conductor/tracks/20261114-one-world-lesson-two/verification/phase-1.md
 
-- [ ] **P1.T1: the four sprites** — covers: FR-1
-  - [ ] **P1.T1.1:** `ui/pictures/Walker.tsx`, `StepUp.tsx`, `StepRight.tsx`, `StepDown.tsx` as
+- [x] **P1.T1: the four sprites** — covers: FR-1
+  - [x] **P1.T1.1:** `ui/pictures/Walker.tsx`, `StepUp.tsx`, `StepRight.tsx`, `StepDown.tsx` as
     inline SVG using `currentColor`, no emoji and no external asset
-  - [ ] **P1.T1.2:** the walker reads as an actor (rounded body, two feet) at 72 px, and each step
+  - [x] **P1.T1.2:** the walker reads as an actor (rounded body, two feet) at 72 px, and each step
     reads as an arrow by silhouette, not by colour alone
-- [ ] **P1.T2: the vocabulary in the contract** — covers: FR-1
-  - [ ] **P1.T2.1:** `PictureId` becomes `'walker' | 'step-up' | 'step-right' | 'step-down'`;
+- [x] **P1.T2: the vocabulary in the contract** — covers: FR-1
+  - [x] **P1.T2.1:** `PictureId` becomes `'walker' | 'step-up' | 'step-right' | 'step-down'`;
     `Bread.tsx`, `Cheese.tsx`, `TopSlice.tsx` are deleted and the registry updated
-- [ ] **P1.T3: lesson 1 on the path** — covers: FR-2
-  - [ ] **P1.T3.1:** title "Walk the path"; cards `step-down, step-up, step-right`; solution
+- [x] **P1.T3: lesson 1 on the path** — covers: FR-2
+  - [x] **P1.T3.1:** title "Walk the path"; cards `step-down, step-up, step-right`; solution
     `step-up, step-right, step-down` per D2
-  - [ ] **P1.T3.2:** concept line names the walker and the order in his words; the clip id stays
+  - [x] **P1.T3.2:** concept line names the walker and the order in his words; the clip id stays
     `concept-order` so a later render does not orphan it
-- [ ] **P1.T4: nothing in a lesson is printed as an id** — covers: FR-7
-  - [ ] **P1.T4.1:** `ConceptScreen`'s finished-list label becomes world-neutral instead of
+- [x] **P1.T4: nothing in a lesson is printed as an id** — covers: FR-7
+  - [x] **P1.T4.1:** `ConceptScreen`'s finished-list label becomes world-neutral instead of
     "Your sandwich"
-  - [ ] **P1.T4.2:** the pending state in `LessonScreen.tsx` renders each card's picture instead of
+  - [x] **P1.T4.2:** the pending state in `LessonScreen.tsx` renders each card's picture instead of
     the raw id
-- [ ] **P1.T5: tests for the vocabulary** — covers: AC-1, AC-2, AC-7
-  - [ ] **P1.T5.1:** the registry test asserts one component per `PictureId`, and lesson 1's
+- [x] **P1.T5: tests for the vocabulary** — covers: AC-1, AC-2, AC-7
+  - [x] **P1.T5.1:** the registry test asserts one component per `PictureId`, and lesson 1's
     display order differs from its solution
-  - [ ] **P1.T5.2:** a rendered lesson subtree's text contains neither `step-` nor `walker`
+  - [x] **P1.T5.2:** a rendered lesson subtree's text contains neither `step-` nor `walker`
 
 ## Phase 2: The track and the walker
 
