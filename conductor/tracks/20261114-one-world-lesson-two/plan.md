@@ -177,7 +177,7 @@ vocabulary change and lesson 1's rewrite cannot be separated without leaving the
 - **Verification:** `bun run verify`
 - **Status:** verified
 **Result:** verified
-**Checkpoint:** d7bea90
+**Checkpoint:** f6fd6fa
 **Evidence:** conductor/tracks/20261114-one-world-lesson-two/verification/phase-6.md
 
 - [x] **P6.T1: the grid** — covers: FR-9

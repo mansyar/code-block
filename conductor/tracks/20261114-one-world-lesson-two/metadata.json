@@ -8,7 +8,7 @@
     "20261114-minimum-vertical-slice"
   ],
   "created_at": "2026-11-14T12:10:00Z",
-  "updated_at": "2026-11-14T17:40:00Z",
+  "updated_at": "2026-11-14T17:55:00Z",
   "spec": "spec.md",
   "plan": "plan.md",
   "mission": "mission.md",
@@ -23,10 +23,10 @@
     "phases_verified": 6,
     "tasks_done": 25
   },
-  "last_checkpoint": "d7bea90",
+  "last_checkpoint": "f6fd6fa",
   "review_verdict": "pass",
-  "review_rounds": 2,
-  "reviewed_head_sha": "bcd3c3fc17159dc5a1de685734a9f553c4e303f3",
+  "review_rounds": 3,
+  "reviewed_head_sha": "f6fd6fac08d055866ea258b2c3d9142c2831e069",
   "doc_sync": "done",
   "pr_url": "https://github.com/mansyar/code-block/pull/4",
   "pr_state": "open",

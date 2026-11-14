@@ -4,15 +4,20 @@
 
 The curriculum now has a single visual world and its second playable lesson.
 
-- **One world.** `PictureId` is one walker plus the three arrows it can obey. The walker, the
-  arrows and the path replace the bread, cheese and top slice, and the same three sprites will
-  serve lessons 3–6.
+- **One world, and the arrows do not lie.** `PictureId` is one walker plus the three arrows it can
+  obey, and each arrow means the direction it points: `up` moves him up, `right` right, `down` down,
+  in every lesson. The road is drawn in full before the first tap — its route is the lesson's own
+  solution read as directions — with a flag where it ends, so the *shape* of the road is the
+  instruction. No sentence to read, none spoken: the child copies what he can see.
 - **Lesson 1 rebuilt inside it.** Same id and file, new words: "Walk the path". Cards are shown
   `step-down, step-up, step-right` and solved `step-up, step-right, step-down`, so the display
-  order is still never the solution order. Every correct tap walks the walker one cell forward;
-  a wrong tap still wobbles and moves nothing.
-- **Lesson 2 shipped.** "Do it again" is one arrow and one tap: the walker takes that same step
-  three times, the three arrows stay on the path behind him, and the narrator says *"You said it
+  order is still never the solution order. The road goes up, then right, then down, and starts and
+  ends on the same row — so a child who confuses up with down ends visibly in the wrong place. Each
+  correct tap walks him one cell *in that arrow's direction*; a tap with no road that way wobbles
+  and moves nothing.
+- **Lesson 2 shipped, on the same grid.** "Do it again" is one arrow and one tap: its road runs
+  three cells in that arrow's own direction, the walker walks all three, the three arrows stay on
+  the road behind him, and the narrator says *"You said it
   once, and it hopped again and again. Three times!"* One instruction, three repeats — a loop
   shown as a picture, with the word left to the parent.
 - **Progress unchanged.** `code-block.progress.v1` already held a list of completed lessons, so a
@@ -24,20 +29,21 @@ The slice shipped one lesson with its own objects, which gave lessons 2–6 noth
 every new concept would have needed its own art and its own world. A single actor on a single path
 makes the child's screen familiar, so the only new thing at each node is the concept itself — and
 it makes each later lesson cost a mechanic instead of a sprite set. See
-[spec.md](./conductor/archive/20261114-one-world-lesson-two/spec.md) and
-[the plan](./conductor/archive/20261114-one-world-lesson-two/plan.md).
+[spec.md](./conductor/tracks/20261114-one-world-lesson-two/spec.md) and
+[the plan](./conductor/tracks/20261114-one-world-lesson-two/plan.md).
 
 ## Evidence
 
-- Phase reports: [phase-1](./conductor/archive/20261114-one-world-lesson-two/verification/phase-1.md)
-  · [phase-2](./conductor/archive/20261114-one-world-lesson-two/verification/phase-2.md)
-  · [phase-3](./conductor/archive/20261114-one-world-lesson-two/verification/phase-3.md)
-  · [phase-4](./conductor/archive/20261114-one-world-lesson-two/verification/phase-4.md)
-  · [phase-5](./conductor/archive/20261114-one-world-lesson-two/verification/phase-5.md)
-- Review: [review.md](./conductor/archive/20261114-one-world-lesson-two/review.md) — verdict **PASS**,
-  independence cold-read, pinned to `bcd3c3f` (round 2 re-pin after the pre-merge archive).
-- Integrated verification: `bun run verify` exit 0 — typecheck, Biome, build, **110 tests in 17
-  files** (92 before this track). Build `232.00 kB / 72.73 kB gzip`.
+- Phase reports: [phase-1](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-1.md)
+  · [phase-2](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-2.md)
+  · [phase-3](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-3.md)
+  · [phase-4](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-4.md)
+  · [phase-5](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-5.md)
+  · [phase-6](./conductor/tracks/20261114-one-world-lesson-two/verification/phase-6.md)
+- Review: [review.md](./conductor/tracks/20261114-one-world-lesson-two/review.md) — verdict **PASS**,
+  pinned to `f6fd6fa` (round 3, after the grid world; rounds 1 and 2 are kept in the file).
+- Integrated verification: `bun run verify` exit 0 — typecheck, Biome (70 files), build, **119 tests
+  in 18 files** (92 before this track). Build `233.28 kB / 73.15 kB gzip`, under the 200 kB budget.
 - Visual: none. No browser is in the phase path; the reduced-motion behaviour was checked in the
   built stylesheet instead (`._walker_…{animation:none}` and `data-walker` colour flash are present).
 
@@ -55,12 +61,15 @@ it makes each later lesson cost a mechanic instead of a sprite set. See
 | FR-8 docs | structure rule 6 inside `bun run test` | phase-5 |
 | NFR-1 motion | built stylesheet rule, quoted in phase-2 and phase-3 evidence | phases 2, 3 |
 | NFR-4 no dependency | `git diff` on `package.json`/`bun.lock`: 0 lines | all phases |
-| AC-1…AC-8 | the eight rows above, one per criterion | all phases |
+| FR-9 an arrow is its direction | `src/world/path.test.ts`, `SequenceGame.test.tsx` | phase-6 |
+| FR-10 the road is visible, with a goal | `SequenceGame.test.tsx` (coordinates, goal, arrival) | phase-6 |
+| FR-11 lesson 2 on the same grid | `RepeatGame.test.tsx` (one row, `col` 0–3) | phase-6 |
+| AC-1…AC-11 | the rows above, one per criterion | all phases |
 
 ## Debt and follow-ups
 
 Three Low findings from the review, none blocking, all recorded in
-[review.md](./conductor/archive/20261114-one-world-lesson-two/review.md):
+[review.md](./conductor/tracks/20261114-one-world-lesson-two/review.md):
 
 - **R1-1** — the concept screen draws `lesson.game.solution`, so lesson 2's payoff shows one arrow
   for a walk that took three. Fixing it honestly means the game reports what it did, which is a
@@ -83,6 +92,10 @@ Three Low findings from the review, none blocking, all recorded in
 | D8 | No progress schema change | spec D8 |
 | D9 | "…hopped again and again. Three times!" — no abstractions in the spoken line | spec D9 |
 | D10 | Node labels come from curriculum data | spec D10 |
+| D11 | A grid, not a lane: `world/path.ts` owns `Cell {col,row}` and the three deltas | spec D11 |
+| D12 | The route is derived from the lesson's solution, so road and answer cannot disagree | spec D12 |
+| D13 | A wrong direction moves him nowhere — no dead end, no reset | spec D13 |
+| D14 | The goal flag is scenery in `world/Goal.tsx`, never a `PictureId` | spec D14 |
 
 ## Notes
 

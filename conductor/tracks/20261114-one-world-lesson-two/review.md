@@ -1,17 +1,18 @@
 # Review — 20261114-one-world-lesson-two
 
-- Round: 2
-- Base / Head: c1b2b1c / bcd3c3f
-- Reviewed SHA: bcd3c3fc17159dc5a1de685734a9f553c4e303f3
-- Round 1: PASS at `44c4e18` — kept below, unchanged
-- Independence: cold-read
+- Round: 3
+- Base / Head: c1b2b1c / f6fd6fa
+- Reviewed SHA: f6fd6fac08d055866ea258b2c3d9142c2831e069
+- Rounds 1–2: PASS at `44c4e18` and `bcd3c3f` — kept below, unchanged
+- Independence: cold-read for rounds 1–2; round 3 reviews a mechanic the same agent implemented in
+  the same session, and says so rather than claiming independence it does not have
 - Verdict: PASS
 
 ## Mechanical
 
 | Check | Result |
 |---|---|
-| Commands pass on a clean run | pass — round 2, re-run on `bcd3c3f`: `bun run verify` exit 0, typecheck, Biome (67 files), build `dist/assets/index-DhfsC7ck.js` `232.00 kB / 72.73 kB` gzip — **the same asset hash as the round-1 build** — **110 tests in 17 files**. Log: `.conductor/evidence/20261114-one-world-lesson-two/review-r2-verify.log`. Worktree clean afterwards |
+| Commands pass on a clean run | pass — round 3, re-run on `f6fd6fa`: `bun run verify` exit 0, typecheck, Biome (70 files), build `dist/assets/index-m0LuHt_d.js` `233.28 kB / 73.15 kB` gzip, **119 tests in 18 files**. Log: `.conductor/evidence/20261114-one-world-lesson-two/phase-6-verify.log` |
 | Evidence exists | pass — `verification/phase-1.md` … `phase-5.md` present for all five verified phases |
 | State honest | pass — plan `Result: verified` ×5, checkpoints `7149e4f, 3aaa4f1, 32c825f, 8b180f0, fb30e5f`; `metadata.json` reports 5/5 phases, 20/20 tasks, `last_checkpoint: fb30e5f` |
 | Decisions authorized | pass — every `## Decisions` row in the evidence files names a `D<n>` that exists in `spec.md` (D1–D10 all present) |
@@ -67,7 +68,7 @@ Two edges were checked rather than assumed:
 1. **A double tap on the repeat arrow.** `react.md` requires a play call to be safe twice. A throwaway probe (two `fireEvent.click` in the same tick, then all timers advanced) showed exactly one completion, the walker on cell 3 and three steps on the path. The probe was deleted; the tree was clean before and after.
 2. **The "Coming soon" branch in `App.tsx`** prints a sentence for a lesson id with no content. It is unreachable in this track — nodes 3–6 are locked — and this track did not change it. Noted so the next track that unlocks node 3 remembers node 3 has no lesson yet.
 
-`metadata.json` carries `review_verdict: pass`, `review_rounds: 2` and this SHA.
+`metadata.json` carries `review_verdict: pass`, `review_rounds: 3` and this SHA.
 
 ## Round 2 — re-pin after the pre-merge archive
 
@@ -100,3 +101,45 @@ opened. Nothing was weakened or deleted to reach this verdict.
 
 **Pin.** `Reviewed SHA: bcd3c3fc17159dc5a1de685734a9f553c4e303f3`. The commit that carries this file is state only — review, metadata and
 the archive bookkeeping — so `git diff bcd3c3f..HEAD -- src` is empty.
+
+## Round 3 — the grid world (Phase 6)
+
+**Why this round exists.** After round 2 the parent played lesson 1 and rejected the mechanic, not
+the implementation: the arrows were ordinals on a straight lane, so nothing on screen said which
+arrow came next and nothing said where the walker was going. The world was changed so that a step
+*is* its direction and the road is visible. That is new behaviour with new code, so it gets a review
+of its own rather than an amended verdict.
+
+**What changed.** `src/world/path.ts` (new) owns the grid — `Cell {col,row}`, the three deltas,
+`tracePath`, `routeFor(lesson)`, `repeatRoute`. `src/world/Goal.tsx` (new) marks the last cell.
+`Track.tsx` and its stylesheet were rewritten to lay the route out on a CSS grid. Both games now
+draw `routeFor(lesson)` / `repeatRoute(card, 3)`. `walk.ts` lost `cellsFor`, whose only consumer was
+the sequence game. Spec gained FR-9–11, AC-9–11 and D11–D14; `MAP.md`, `tech-stack.md` and
+`product.md` describe the grid.
+
+**Verification, re-run at `f6fd6fa`.** `bun run verify` exit 0: 70 files linted, 119 tests in 18
+files, build `233.28 kB / 73.15 kB` gzip — 73.15 kB against a 200 kB budget.
+
+**Requirements traced.** FR-9 (an arrow is its direction) and FR-10 (the road is visible and has a
+goal) are asserted on the DOM in `SequenceGame.test.tsx`: the four cells carry `data-col`/`data-row`
+`(0,0) (0,-1) (1,-1) (1,0)`, exactly one is `data-goal="true"`, and the walker's coordinates follow
+his index along that route. FR-11 is asserted in `RepeatGame.test.tsx`: `row` 0 and `col` 0–3, one
+goal, three cells from one tap. FR-7 still holds — the road is drawn, never described; the repeat
+game's subtree is asserted to have empty `textContent` before, during and after the walk.
+
+**Tests were not weakened.** The suite went 110 → 119. One assertion was *replaced*, not deleted:
+`expect(cellsFor(lessonOne)).toBe(solution.length + 1)` became
+`expect(routeFor(lessonOne)).toHaveLength(solution.length + 1)` plus the explicit coordinate list,
+which is strictly stronger. No `skip`, `only` or `todo` was added.
+
+**Findings.** No new finding. R1-1, R1-2 and R1-3 remain open Low debt, unchanged — Phase 6 did not
+touch the concept screen or the tap-target rule. The nearest thing to a new observation is
+cosmetic: the goal flag sits at the corner of its cell so that it is still visible when the walker
+stands on it, which means the flag is slightly outside the cell's box. Not recorded as debt.
+
+**Not checked.** No browser was used, so the grid's *appearance* — spacing, whether the zigzag reads
+clearly at 72 px, whether the flag is legible under the walker — is unverified by this review. The
+DOM structure and the stylesheet's rules are what was reviewed. This is the same limitation R1-2
+records.
+
+**Pin.** `Reviewed SHA: f6fd6fac08d055866ea258b2c3d9142c2831e069`.
