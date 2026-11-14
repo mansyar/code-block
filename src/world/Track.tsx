@@ -134,7 +134,16 @@ export function Track({
               data-wave={index === wave ? 'true' : 'false'}
             >
               {links(route, index).map((link) => (
-                <span key={link} className={styles.link} data-link={link} aria-hidden="true" />
+                <span
+                  key={link}
+                  className={styles.link}
+                  data-link={link}
+                  aria-hidden="true"
+                  /* The band is the topmost element over the cell's own control, so it must decline
+                     the tap that belongs to it (review R1-1). Set here rather than in the stylesheet
+                     so a test can hold it: a stylesheet is not reachable from jsdom. */
+                  style={{ pointerEvents: 'none' }}
+                />
               ))}
               {Step === undefined ? null : onClear === undefined ? (
                 <Step className={styles.step} />
