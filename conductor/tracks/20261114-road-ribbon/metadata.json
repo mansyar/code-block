@@ -8,7 +8,7 @@
     "20261114-lesson-three-make-it-move"
   ],
   "created_at": "2026-11-14T23:05:00Z",
-  "updated_at": "2026-11-14T23:40:00Z",
+  "updated_at": "2026-11-15T00:05:00Z",
   "spec": "spec.md",
   "plan": "plan.md",
   "mission": "mission.md",
@@ -20,14 +20,14 @@
   "progress": {
     "phases_total": 2,
     "tasks_total": 10,
-    "phases_verified": 1,
-    "tasks_done": 5
+    "phases_verified": 2,
+    "tasks_done": 10
   },
   "last_checkpoint": null,
   "review_verdict": null,
   "review_rounds": 0,
   "reviewed_head_sha": null,
-  "doc_sync": "pending",
+  "doc_sync": "done",
   "pr_url": null,
   "pr_state": null,
   "decisions_open": 0,

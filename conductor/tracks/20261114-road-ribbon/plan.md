@@ -50,20 +50,20 @@ pictures, so consecutive cells are joined by an unbroken band.
 **Decisions:** D2, D3, D5
 **Verification:** `bun run verify`
 
-- [ ] **P2.T1: Measure the band on all three lessons** — for every consecutive pair, the band's
+- [x] **P2.T1: Measure the band on all three lessons** — for every consecutive pair, the band's
   painted extent and thickness, and the painting order between band and sprites; screenshots taken
   and kept as evidence. — covers: AC-1, AC-2, AC-3
-- [ ] **P2.T2: Confirm the screens did not change otherwise** — visible text per lesson is still `←`
+- [x] **P2.T2: Confirm the screens did not change otherwise** — visible text per lesson is still `←`
   and the title, the road is absent from the accessibility tree, and reduced motion still behaves. —
   covers: FR-7, NFR-2, AC-7
-- [ ] **P2.T3: Tune only if a measurement fails** — `--road` may move between 10 and 12 px; the final
+- [x] **P2.T3: Tune only if a measurement fails** — `--road` may move between 10 and 12 px; the final
   value and the reason go in the evidence file. — covers: FR-3, AC-3
-- [ ] **P2.T4: Update the docs** — `product-guidelines.md` states the road-through-the-tiles rule and
+- [x] **P2.T4: Update the docs** — `product-guidelines.md` states the road-through-the-tiles rule and
   `MAP.md` describes per-cell connections instead of a global ribbon. — covers: FR-1
-- [ ] **P2.T5: Write the evidence file** — `verification/phase-2.md` holds the measurement table for
+- [x] **P2.T5: Write the evidence file** — `verification/phase-2.md` holds the measurement table for
   all three lessons, the screenshot paths and the files changed. — covers: AC-1, AC-2, AC-3
 
-**Status:** pending
+**Status:** verified
 
 ---
 
