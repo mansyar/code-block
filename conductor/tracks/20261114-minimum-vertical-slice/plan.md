@@ -71,37 +71,40 @@ continues — it never adds a package that is not named in the phase.
 - **Dependencies:** none
 - **Decisions:** D4, D6
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** 7474416
+**Evidence:** conductor/tracks/20261114-minimum-vertical-slice/verification/phase-2.md
 
-- [ ] **P2.T1: the `Lesson` contract** — covers: FR-3
-  - [ ] **P2.T1.1:** `Lesson`, `ScriptLine`, `GameSpec`, `PictureId` types in `content/lesson.ts`
-  - [ ] **P2.T1.2:** `assertLesson` rejecting a lesson whose solution order does not name every
+- [x] **P2.T1: the `Lesson` contract** — covers: FR-3
+  - [x] **P2.T1.1:** `Lesson`, `ScriptLine`, `GameSpec`, `PictureId` types in `content/lesson.ts`
+  - [x] **P2.T1.2:** `assertLesson` rejecting a lesson whose solution order does not name every
     card exactly once
-- [ ] **P2.T2: lesson 1 and the ordered list** — covers: FR-2, FR-3
-  - [ ] **P2.T2.1:** `content/lessons/0001-order.ts` — sandwich, three cards, concept line,
+- [x] **P2.T2: lesson 1 and the ordered list** — covers: FR-2, FR-3
+  - [x] **P2.T2.1:** `content/lessons/0001-order.ts` — sandwich, three cards, concept line,
     deterministic display order
-  - [ ] **P2.T2.2:** `content/lessons/index.ts` as the single ordered list
-- [ ] **P2.T3: audio manifest stub and clip lookup** — covers: FR-5
-  - [ ] **P2.T3.1:** `content/audio-manifest.ts` exporting an empty clip map and `findClip(id)`
+  - [x] **P2.T2.2:** `content/lessons/index.ts` as the single ordered list
+- [x] **P2.T3: audio manifest stub and clip lookup** — covers: FR-5
+  - [x] **P2.T3.1:** `content/audio-manifest.ts` exporting an empty clip map and `findClip(id)`
     returning `undefined` for every id
-- [ ] **P2.T4: progress schema and selectors** — covers: FR-2, FR-9
-  - [ ] **P2.T4.1:** `progress/schema.ts` — `parseProgress` returning `Progress | null` per D4
-  - [ ] **P2.T4.2:** `progress/selectors.ts` — `starsFor`, `isUnlocked`, `nextLesson`
-- [ ] **P2.T5: the screen reducer** — covers: FR-1, D6
-  - [ ] **P2.T5.1:** `app/screen.ts` with `{ kind: "map" } | { kind: "lesson"; lessonId }` and
+- [x] **P2.T4: progress schema and selectors** — covers: FR-2, FR-9
+  - [x] **P2.T4.1:** `progress/schema.ts` — `parseProgress` returning `Progress | null` per D4
+  - [x] **P2.T4.2:** `progress/selectors.ts` — `starsFor`, `isUnlocked`, `nextLesson`
+- [x] **P2.T5: the screen reducer** — covers: FR-1, D6
+  - [x] **P2.T5.1:** `app/screen.ts` with `{ kind: "map" } | { kind: "lesson"; lessonId }` and
     transitions `openLesson`, `closeLesson`
-- [ ] **P2.T6: the journey map** — covers: FR-2, AC-2
-  - [ ] **P2.T6.1:** `journey/JourneyMap.tsx` rendering six nodes with number, star and lock
-  - [ ] **P2.T6.2:** locked nodes are `aria-disabled`, non-activatable, and use a lock silhouette
+- [x] **P2.T6: the journey map** — covers: FR-2, AC-2
+  - [x] **P2.T6.1:** `journey/JourneyMap.tsx` rendering six nodes with number, star and lock
+  - [x] **P2.T6.2:** locked nodes are `aria-disabled`, non-activatable, and use a lock silhouette
     rather than only a colour change
-  - [ ] **P2.T6.3:** node 1 activates the lesson screen
-- [ ] **P2.T7: the lesson screen shell** — covers: FR-3
-  - [ ] **P2.T7.1:** `lesson/LessonScreen.tsx` resolving the lesson's game kind through
+  - [x] **P2.T6.3:** node 1 activates the lesson screen
+- [x] **P2.T7: the lesson screen shell** — covers: FR-3
+  - [x] **P2.T7.1:** `lesson/LessonScreen.tsx` resolving the lesson's game kind through
     `games/registry.ts` and rendering a "not built yet" fallback while the registry is empty
-  - [ ] **P2.T7.2:** a back control returning to the map
-- [ ] **P2.T8: tests for the contract, selectors, reducer and map** — covers: AC-1, AC-2, AC-3, AC-9
-  - [ ] **P2.T8.1:** `parseProgress` rejects `"{"`, unknown versions and wrong types
-  - [ ] **P2.T8.2:** unlock logic across empty, mid and complete profiles
+  - [x] **P2.T7.2:** a back control returning to the map
+- [x] **P2.T8: tests for the contract, selectors, reducer and map** — covers: AC-1, AC-2, AC-3, AC-9
+  - [x] **P2.T8.1:** `parseProgress` rejects `"{"`, unknown versions and wrong types
+  - [x] **P2.T8.2:** unlock logic across empty, mid and complete profiles
 
 ## Phase 3: The order game
 
