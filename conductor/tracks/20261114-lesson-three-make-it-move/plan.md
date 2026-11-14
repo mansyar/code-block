@@ -150,3 +150,22 @@ its star and the docs adopt it (phase 4).
     with an accessible name and no visible text
   - [x] **P4.T4.2:** `src/MAP.md`, `tech-stack.md` and `product.md` describe plan-then-run in legs,
     the palette/plan split and the GO control
+
+## Phase 5: Review Fixes (R1)
+
+- **Goal:** reaching flag 1 is a beat rather than an instant: the flag he reached waves, the screen holds briefly, and only then does the plan clear and the next leg open.
+- **Depends on:** Phase 4
+- **Covers:** FR-7, R1-1
+- **Touches:** `src/world/walk.ts`, `src/world/Track.tsx`, `src/world/Track.module.css`,
+  `src/world/Track.test.tsx`, `src/games/plan/PlanGame.tsx`, `src/games/plan/PlanGame.legs.test.tsx`,
+  `src/games/plan/PlanGame.test.tsx`, `src/App.lessonThree.test.tsx`
+- **Dependencies:** none
+- **Decisions:** none — this implements FR-7 as written
+- **Verification:** `bun run verify`
+- **Status:** pending
+
+- [ ] **P5.T1: a flag, and a beat, at the intermediate arrival** — covers: R1-1
+  - [ ] **P5.T1.1:** `Track` takes the route index of the flag that is waving, and shakes only that flag; a track that names none shakes nothing
+  - [ ] **P5.T1.2:** `FLAG_BEAT_MS` joins `walk.ts` beside `STEP_MS` and `CELEBRATE_MS`, because the world owns its timings
+  - [ ] **P5.T1.3:** at flag 1 the plan stays on the road, the palette and GO stay inert, and the beat ends by clearing the plan and opening leg 2; the walker never moves
+  - [ ] **P5.T1.4:** tests assert the beat (plan still shown, palette inert) and the wave, and that the last flag still uses the celebration instead
