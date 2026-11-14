@@ -9,7 +9,7 @@
 export type PictureId = 'walker' | 'step-up' | 'step-right' | 'step-down';
 
 /** Game kinds are registered in `src/games/registry.ts`; a lesson without one is not playable yet. */
-export type GameKind = 'sequence';
+export type GameKind = 'sequence' | 'repeat';
 
 /** One spoken line. `id` is also the key the audio manifest uses for a pre-rendered clip. */
 export type ScriptLine = {
