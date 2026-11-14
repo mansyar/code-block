@@ -61,14 +61,17 @@ its star and the docs adopt it (phase 4).
 - **Dependencies:** none
 - **Decisions:** D3
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** c84a19d33a7dad829117401d8140c66ee30bd4cd
+**Evidence:** conductor/tracks/20261114-lesson-three-make-it-move/verification/phase-2.md
 
-- [ ] **P2.T1: the flags prop** — covers: FR-4
-  - [ ] **P2.T1.1:** `Track` takes `goals?: readonly number[]` (default: the last cell) and marks each
+- [x] **P2.T1: the flags prop** — covers: FR-4
+  - [x] **P2.T1.1:** `Track` takes `goals?: readonly number[]` (default: the last cell) and marks each
     as `data-goal="true"`; the goal pad styling stays as it is, so two flags read as two places
-  - [ ] **P2.T1.2:** the celebration spark burst stays anchored to the **last** flag, not to the first
-- [ ] **P2.T2: tests** — covers: AC-4
-  - [ ] **P2.T2.1:** five cells for lesson 3's road with exactly two `data-goal` cells at index 2 and
+  - [x] **P2.T1.2:** the celebration spark burst stays anchored to the **last** flag, not to the first
+- [x] **P2.T2: tests** — covers: AC-4
+  - [x] **P2.T2.1:** five cells for lesson 3's road with exactly two `data-goal` cells at index 2 and
     4; a lesson without goals still renders exactly one, at the end
 
 ## Phase 3: The engine and the game, a leg at a time
