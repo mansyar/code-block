@@ -15,6 +15,8 @@ later phases add.
 - `src/journey/` — the journey map screen.
 - `src/lesson/` — the lesson screen shell: resolves the lesson's game, hosts it, owns the back
   control.
+- `src/narration/` — the narration port (`port.ts`), its adapters (silent, system voice) and the
+  factory in `index.ts` that prefers a rendered clip over the voice (plan D2).
 - `src/progress/` — `schema.ts` (shape and defensive parse) and `selectors.ts` (stars, unlock).
 - `src/ui/` — shared presentation: `pictures/` holds one SVG per `PictureId` and the registry that
   maps ids to components.
@@ -23,7 +25,7 @@ later phases add.
 
 ## Planned
 
-- `src/narration/` — the narration port and its adapters (silent, system voice, later audio files).
+Nothing yet — every directory named in the architecture exists.
 
 ## Recipes
 

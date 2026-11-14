@@ -76,13 +76,35 @@ describe('structure rule 2 — no oversized source files', () => {
   });
 });
 
+/**
+ * A barrel is a file that only re-exports. `narration/index.ts` is the narration factory — a module
+ * that happens to be named `index` — so the rule is about barrelling, not about the filename.
+ */
+function isBarrel(text: string): boolean {
+  const withoutComments = text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  const rest = withoutComments.replace(
+    /export\s+(?:type\s+)?(?:\*(?:\s+as\s+\w+)?|\{[\s\S]*?\})\s+from\s+['"][^'"]+['"];?/g,
+    '',
+  );
+
+  return rest.trim() === '';
+}
+
 describe('structure rule 3 — no barrels except the lesson order list', () => {
-  it('has no index.ts outside the allowlist', () => {
+  it('has no re-export barrel outside the allowlist', () => {
     const offenders = files
       .filter((file) => file.path.endsWith('/index.ts') && !ALLOWED_BARRELS.has(file.path))
+      .filter((file) => isBarrel(file.text))
       .map((file) => file.path);
 
     expect(offenders).toEqual([]);
+  });
+
+  it('recognises a barrel when it sees one', () => {
+    expect(isBarrel("export { a } from './a';\nexport * from './b';\n")).toBe(true);
+    expect(isBarrel("import { a } from './a';\nexport function b() {\n  return a;\n}\n")).toBe(
+      false,
+    );
   });
 
   it('keeps content independent of the app, games and screens', () => {
