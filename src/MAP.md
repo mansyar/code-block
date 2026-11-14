@@ -7,27 +7,27 @@ later phases add.
 
 ## Directories
 
+- `src/app/` — the screen reducer: which screen is showing and how screens follow each other.
+- `src/content/` — lesson data. `lesson.ts` is the data contract, `lessons/` holds one file per
+  lesson plus the ordered list, `audio-manifest.ts` is the generated narration clip map.
+- `src/games/` — `registry.ts`, mapping a game kind to its component. Generated games land in
+  subdirectories here.
+- `src/journey/` — the journey map screen.
+- `src/lesson/` — the lesson screen shell: resolves the lesson's game, hosts it, owns the back
+  control.
+- `src/progress/` — `schema.ts` (shape and defensive parse) and `selectors.ts` (stars, unlock).
 - `src/styles/` — design tokens (`tokens.css`, every colour, space, radius, timing and
   `--tap-target`) and element-level base styles. To restyle the app, edit `tokens.css`.
 
 ## Planned
 
-- `src/app/` — the screen reducer: which screen is showing and how screens follow each other.
-- `src/content/` — lesson data. One file per lesson under `lessons/`, plus `lesson.ts` (the
-  data contract) and `audio-manifest.ts` (generated).
-- `src/games/` — one directory per game kind, plus `registry.ts` mapping a game kind to its
-  component.
-- `src/journey/` — the journey map screen.
-- `src/lesson/` — the lesson screen: game → concept beat → star.
 - `src/narration/` — the narration port and its adapters (silent, system voice, later audio files).
-- `src/progress/` — progress schema, store and selectors.
 - `src/ui/` — small shared components and the picture registry.
 
 ## Recipes
 
 - **Add a lesson** — create `src/content/lessons/<number>-<slug>.ts`, add it to
-  `src/content/lessons/index.ts`. Nothing else. If it needs a new picture, add it under
-  `src/ui/pictures/` and register the id.
+  `src/content/lessons/index.ts`, and add a `LessonCard` for it if the stop is new. Nothing else.
 - **Add a game kind** — create `src/games/<kind>/`, then add one entry to `src/games/registry.ts`.
 - **Add a screen** — extend the union in `src/app/screen.ts` and render it in `src/App.tsx`.
 - **Change how the app speaks** — only `src/narration/`. The port is `port.ts`; the choice of

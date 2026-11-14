@@ -7,7 +7,12 @@ import { describe, expect, it } from 'vitest';
  * Files are read through Vite's glob rather than `node:fs`, so this test needs no node types
  * and sees exactly the files the app bundle would see.
  */
-const sources = import.meta.glob<string>('./**/*.{ts,tsx,css,md}', {
+/**
+ * CSS modules are excluded: Vite hands back the module's export object rather than text for
+ * `*.module.css` even under `?raw`. The guard below fails loudly if any other file is not text,
+ * so nothing is skipped silently.
+ */
+const sources = import.meta.glob<string>(['./**/*.{ts,tsx,css,md}', '!./**/*.module.css'], {
   query: '?raw',
   import: 'default',
   eager: true,
@@ -40,6 +45,16 @@ function section(markdown: string, heading: string): string {
   const end = rest.search(/^## /m);
   return end === -1 ? rest : rest.slice(0, end);
 }
+
+describe('structure scan', () => {
+  it('reads every scanned file as text, so no rule silently skips a file', () => {
+    const nonText = Object.entries(sources as Record<string, unknown>)
+      .filter(([, value]) => typeof value !== 'string')
+      .map(([key]) => key);
+
+    expect(nonText).toEqual([]);
+  });
+});
 
 describe('structure rule 1 — no catch-all filenames', () => {
   it('has no utils, helpers, common, shared or misc modules', () => {
@@ -83,7 +98,9 @@ describe('structure rule 3 — no barrels except the lesson order list', () => {
 
 describe('structure rule 4 — lesson ids and audio', () => {
   it('names every lesson file after its id and resolves every clip', () => {
-    const lessons = files.filter((file) => /^src\/content\/lessons\/[^/]+\.ts$/.test(file.path));
+    const lessons = files.filter((file) =>
+      /^src\/content\/lessons\/(?!index\.ts$)[^/]+\.ts$/.test(file.path),
+    );
     const manifest = files.find((file) => file.path === 'src/content/audio-manifest.ts');
 
     for (const lesson of lessons) {
