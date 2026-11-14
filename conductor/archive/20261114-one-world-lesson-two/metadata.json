@@ -2,13 +2,13 @@
   "id": "20261114-one-world-lesson-two",
   "title": "One world, lesson two",
   "type": "feature",
-  "status": "in_review",
+  "status": "complete",
   "priority": "high",
   "depends_on": [
     "20261114-minimum-vertical-slice"
   ],
   "created_at": "2026-11-14T12:10:00Z",
-  "updated_at": "2026-11-14T15:50:00Z",
+  "updated_at": "2026-11-14T16:05:00Z",
   "spec": "spec.md",
   "plan": "plan.md",
   "mission": "mission.md",
@@ -35,6 +35,6 @@
   "reverted_at": null,
   "revert_commit": null,
   "revert_pr_url": null,
-  "archived_at": null,
-  "archive_path": null
+  "archived_at": "2026-11-14T16:05:00Z",
+  "archive_path": "conductor/archive/20261114-one-world-lesson-two"
 }

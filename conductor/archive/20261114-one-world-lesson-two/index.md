@@ -9,7 +9,7 @@
 | Base | `main` @ `c1b2b1c` |
 | Effort | 3 |
 | Autonomy | ready |
-| Status | new — planned, not started |
+| Status | complete — five phases verified, review PASS, PR open for merge |
 
 ## Artifacts
 
@@ -29,13 +29,24 @@ they need before their mechanics are designed.
 
 | Phase | Name | Status |
 |---|---|---|
-| 1 | The world's pictures, and lesson 1 rebuilt in them | pending |
-| 2 | The track and the walker | pending |
-| 3 | The repeat game | pending |
-| 4 | Lesson 2, its star and the unlock | pending |
-| 5 | The docs catch up with the world | pending |
+| 1 | The world's pictures, and lesson 1 rebuilt in them | verified — `7149e4f` |
+| 2 | The track and the walker | verified — `3aaa4f1` |
+| 3 | The repeat game | verified — `32c825f` |
+| 4 | Lesson 2, its star and the unlock | verified — `8b180f0` |
+| 5 | The docs catch up with the world | verified — `fb30e5f` |
 
-Evidence files land in `verification/phase-<n>.md` as each phase is accepted.
+Each phase's evidence is in [`verification/phase-<n>.md`](./verification), and the whole track was
+reviewed cold in [review.md](./review.md) — verdict **PASS**, pinned to `44c4e18`.
+
+## Delivery
+
+[PR #4](https://github.com/mansyar/code-block/pull/4) is open against `main`, with `pr.md` as its
+body. **The parent merges it** — this project never merges its own track.
+
+The track was archived **before** that merge, at the parent's request, so that merging ends the
+work with no follow-up commit through a second PR. That is the only thing unusual here: the code
+is reviewed and pushed, not yet on `main`, and `metadata.json` records both facts — `status:
+complete`, `archived_at` set, and `pr_state: open` with the PR URL.
 
 ## Notes for the run
 
