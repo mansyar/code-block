@@ -2,6 +2,7 @@ import '@testing-library/jest-dom/vitest';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Lesson } from '../../content/lesson';
+import { repeatRoute } from '../../world/path';
 import { STEP_MS } from '../../world/walk';
 import { RepeatGame } from './RepeatGame';
 
@@ -60,6 +61,22 @@ describe('RepeatGame', () => {
     expect(container.querySelectorAll('[data-cell]')).toHaveLength(STEPS + 1);
     expect(walkerCell()).toBe(0);
     expect(placedSteps()).toEqual([]);
+  });
+
+  it("lays the road three cells in the arrow's own direction", () => {
+    const { container } = renderGame();
+
+    expect(repeatRoute('step-right', STEPS)).toEqual([
+      { col: 0, row: 0 },
+      { col: 1, row: 0 },
+      { col: 2, row: 0 },
+      { col: 3, row: 0 },
+    ]);
+
+    const cells = Array.from(container.querySelectorAll('[data-cell]'));
+    expect(cells.map((cell) => cell.getAttribute('data-col'))).toEqual(['0', '1', '2', '3']);
+    expect(cells.map((cell) => cell.getAttribute('data-row'))).toEqual(['0', '0', '0', '0']);
+    expect(container.querySelectorAll('[data-goal="true"]')).toHaveLength(1);
   });
 
   it('prints no words at all — the arrow is the instruction', () => {

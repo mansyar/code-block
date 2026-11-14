@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { PictureId } from '../../content/lesson';
 import { pictureRegistry } from '../../ui/pictures/registry';
+import { isStep, repeatRoute, tracePath } from '../../world/path';
 import { Track } from '../../world/Track';
 import { STEP_MS } from '../../world/walk';
 import type { GameProps } from '../registry';
@@ -13,8 +14,10 @@ const REPEAT_STEPS = 3;
  * The repeat game: one arrow, tapped once, and the walker takes the same step three times.
  *
  * The child gives one instruction and watches it happen again and again, which is a loop shown as
- * a picture rather than explained in a word. The steps he has taken stay on the path behind him,
- * so the repetition is visible after the fact as well as during it.
+ * a picture rather than explained in a word. The road runs three cells in the arrow's own direction
+ * — right means right — so repetition is the only new thing on screen (FR-10). The steps he has
+ * taken stay on the road behind him, so the repetition is visible after the fact as well as during
+ * it.
  *
  * A second tap while he is walking changes nothing: the game has already been given its
  * instruction, and completion is reported exactly once (FR-4).
@@ -60,11 +63,13 @@ export function RepeatGame({ lesson, onComplete }: GameProps) {
 
   const taken: PictureId[] = card === undefined ? [] : Array.from({ length: walked }, () => card);
   const Instruction = card === undefined ? undefined : pictureRegistry[card];
+  const route =
+    card !== undefined && isStep(card) ? repeatRoute(card, REPEAT_STEPS) : tracePath([]);
   const done = walked === REPEAT_STEPS;
 
   return (
     <div className={styles.game}>
-      <Track cells={REPEAT_STEPS + 1} position={walked} placed={taken} />
+      <Track route={route} position={walked} placed={taken} />
 
       <button
         type="button"

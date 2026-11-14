@@ -1,7 +1,5 @@
 .track {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
   gap: var(--space-2);
   width: 100%;
   max-width: 26rem;
@@ -12,35 +10,56 @@
 }
 
 .cell {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1 1 0;
-  min-width: calc(var(--tap-target) * 0.75);
+  min-width: calc(var(--tap-target) * 0.85);
+  min-height: calc(var(--tap-target) * 0.85);
   aspect-ratio: 1;
   border-radius: var(--radius-md);
+  background: var(--colour-grass);
+}
+
+/* A cell the child has already walked: the step he took stays on the road behind him. */
+.cell[data-step]:not([data-step="none"]) {
   background: var(--colour-surface-raised);
 }
 
 /* The cell the walker stands in is marked by shape as well as colour: it is where he is. */
 .cell[data-walker="true"] {
-  background: var(--colour-grass);
+  background: var(--colour-sun);
+}
+
+/* The end of the road, at a corner of its cell so it never hides the walker who arrives. */
+.goal {
+  position: absolute;
+  top: -0.35rem;
+  right: -0.2rem;
+  width: 1.75rem;
+  height: 1.75rem;
 }
 
 .step,
 .walker {
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
-/* He arrives from the cell behind, which is the whole point of the game. */
+.walker {
+  position: relative;
+  z-index: 1;
+}
+
+/* He arrives from wherever he was, which is the whole point of the game. Direction-neutral on
+   purpose: a sideways travel animation would contradict a step up or down. */
 .walker {
   animation: arrive var(--duration-settle) var(--ease-tap);
 }
 
 @keyframes arrive {
   from {
-    transform: translateX(-45%);
+    transform: scale(0.7);
     opacity: 0.4;
   }
   to {
@@ -49,13 +68,9 @@
   }
 }
 
-/* Reduced motion: the cell changes colour, he does not travel into it. */
+/* Reduced motion: the cell changes colour, he does not animate into it. */
 @media (prefers-reduced-motion: reduce) {
   .walker {
     animation: none;
-  }
-
-  .cell[data-walker="true"] {
-    background: var(--colour-sun);
   }
 }

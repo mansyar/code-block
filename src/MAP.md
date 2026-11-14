@@ -20,8 +20,9 @@ later phases add.
 - `src/progress/` — `schema.ts` (shape and defensive parse) and `selectors.ts` (stars, unlock).
 - `src/ui/` — shared presentation: `pictures/` holds one SVG per `PictureId` and the registry that
   maps ids to components.
-- `src/world/` — the one world every lesson is played in: `Track.tsx` draws the path and the
-  walker, `walk.ts` owns the cell count and the per-cell timing. A new game reuses this instead of
+- `src/world/` — the one world every lesson is played in. `path.ts` owns the grid and turns a step
+  into the direction it names, `Track.tsx` draws the road, the walker and the goal flag,
+  `Goal.tsx` is that flag, `walk.ts` owns the per-cell timing. A new game reuses this instead of
   drawing its own path.
 - `src/styles/` — design tokens (`tokens.css`, every colour, space, radius, timing and
   `--tap-target`) and element-level base styles. To restyle the app, edit `tokens.css`.
@@ -35,7 +36,8 @@ Nothing yet — every directory named in the architecture exists.
 - **Add a lesson** — create `src/content/lessons/<number>-<slug>.ts`, add it to
   `src/content/lessons/index.ts`, and add a `LessonCard` for it if the stop is new. Nothing else.
 - **Add a game kind** — create `src/games/<kind>/`, render it on the shared `src/world/Track.tsx`
-  path instead of drawing its own, then add one entry to `src/games/registry.ts`.
+  road instead of drawing its own, give it a route from `src/world/path.ts`, then add one entry to
+  `src/games/registry.ts`.
 - **Add a screen** — extend the union in `src/app/screen.ts` and render it in `src/App.tsx`.
 - **Change how the app speaks** — only `src/narration/`. The port is `port.ts`; the choice of
   adapter is `index.ts`.

@@ -9,7 +9,7 @@
 | Base | `main` @ `c1b2b1c` |
 | Effort | 3 |
 | Autonomy | ready |
-| Status | complete — five phases verified, review PASS, PR open for merge |
+| Status | in progress — phase 6 (the grid world) being verified |
 
 ## Artifacts
 
@@ -34,6 +34,7 @@ they need before their mechanics are designed.
 | 3 | The repeat game | verified — `32c825f` |
 | 4 | Lesson 2, its star and the unlock | verified — `8b180f0` |
 | 5 | The docs catch up with the world | verified — `fb30e5f` |
+| 6 | The world becomes a grid, so an arrow can be true | verified — `d7bea90` |
 
 Each phase's evidence is in [`verification/phase-<n>.md`](./verification), and the whole track was
 reviewed cold in [review.md](./review.md) — verdict **PASS**, pinned to `bcd3c3f` (round 2).

@@ -71,7 +71,8 @@ src/
   narration/                  port.ts, audio-narration.ts, silence-narration.ts
   progress/                   schema.ts, store.ts, selectors.ts
   ui/                         pictures/ — one SVG per PictureId, plus its registry
-  world/                      Track.tsx + walk.ts: the one path every lesson is played on
+  world/                      path.ts + Track.tsx + walk.ts: the one grid every lesson is
+                              played on — steps are directions, the route is the road
   styles/tokens.css           every colour, space and --tap-target
 ```
 
@@ -84,7 +85,7 @@ src/
 | Narration port | `narration/port.ts` | how the app speaks (audio files today, anything later) |
 | Progress port | `progress/store.ts` | how progress is read and written |
 | Screen reducer | `app/screen.ts` | which screens exist and how they follow each other |
-| The world | `world/Track.tsx` | how the path and the walker are drawn, and how long a step takes |
+| The world | `world/path.ts` | where a step points, the route a lesson is played along, and how long a step takes (`world/Track.tsx` draws it) |
 | Design tokens | `styles/tokens.css` | every visual value |
 
 Ports carry two adapters each: the real one and a silent or in-memory one. Tests use the dummy
@@ -213,7 +214,9 @@ setup deliberately did not invent a scaffold.
   Biome does not peer-range against TypeScript's major, which removes the upgrade friction that
   the ESLint plugin stack carries.
 - **D-TS10 — One world for the whole curriculum** → every lesson is played by the same actor on the
-  same path: `PictureId` is one walker plus the three arrows it can obey, and `world/` owns the
-  cells and the step timing. A lesson therefore adds data and a mechanic, never art — which keeps
-  the sixth lesson as cheap as the second. A lesson that needs a new sprite is a recorded decision
-  here, not something a phase improvises.
+  same grid: `PictureId` is one walker plus the three arrows it can obey, each arrow means the
+  direction it points — up, right, down — and never an abstract "first/second/third", and
+  `world/` owns the route and the step timing. A lesson therefore adds data and a mechanic, never
+  art, which keeps the sixth lesson as cheap as the second. A lesson that needs a new sprite, or an
+  arrow that lies about its direction, is a recorded decision here, not something a phase
+  improvises.

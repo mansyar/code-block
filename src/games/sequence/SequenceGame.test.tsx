@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/vitest';
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { lessonOne } from '../../content/lessons/0001-order';
-import { cellsFor } from '../../world/walk';
+import { routeFor } from '../../world/path';
 import { SequenceGame } from './SequenceGame';
 
 function renderGame() {
@@ -42,10 +42,56 @@ describe('SequenceGame', () => {
   it('draws one cell per step plus the start, and begins with the walker on the start', () => {
     const { container, walkerCell, placedSteps } = renderGame();
 
-    expect(container.querySelectorAll('[data-cell]')).toHaveLength(cellsFor(lessonOne));
-    expect(cellsFor(lessonOne)).toBe(lessonOne.game.solution.length + 1);
+    expect(container.querySelectorAll('[data-cell]')).toHaveLength(routeFor(lessonOne).length);
+    expect(routeFor(lessonOne)).toHaveLength(lessonOne.game.solution.length + 1);
     expect(walkerCell()).toBe(0);
     expect(placedSteps()).toEqual([]);
+  });
+
+  it('puts each cell where its arrow points: up, then right, then down', () => {
+    const { container } = renderGame();
+
+    expect(routeFor(lessonOne)).toEqual([
+      { col: 0, row: 0 },
+      { col: 0, row: -1 },
+      { col: 1, row: -1 },
+      { col: 1, row: 0 },
+    ]);
+
+    const coords = Array.from(container.querySelectorAll('[data-cell]')).map((cell) => [
+      cell.getAttribute('data-col'),
+      cell.getAttribute('data-row'),
+    ]);
+
+    expect(coords).toEqual([
+      ['0', '0'],
+      ['0', '-1'],
+      ['1', '-1'],
+      ['1', '0'],
+    ]);
+  });
+
+  it('shows the whole road and a goal at its end before the child taps anything', () => {
+    const { container } = renderGame();
+
+    const goals = container.querySelectorAll('[data-goal="true"]');
+    expect(goals).toHaveLength(1);
+    expect(goals[0]).toHaveAttribute('data-cell', String(lessonOne.game.solution.length));
+  });
+
+  it('walks him onto the goal cell, and only by the direction of each arrow', () => {
+    const { card, walkerCell, container, onComplete } = renderGame();
+
+    for (const step of lessonOne.game.solution) {
+      fireEvent.click(card(step));
+
+      expect(container.querySelector('[data-walker="true"]')?.getAttribute('data-col')).toBe(
+        String(routeFor(lessonOne)[walkerCell()]?.col),
+      );
+    }
+
+    expect(onComplete).toHaveBeenCalledTimes(1);
+    expect(container.querySelector('[data-goal="true"]')).toHaveAttribute('data-walker', 'true');
   });
 
   it('moves the walker exactly one cell for each correct tap', () => {

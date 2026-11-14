@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import type { PictureId } from '../../content/lesson';
 import { pictureRegistry } from '../../ui/pictures/registry';
+import { routeFor } from '../../world/path';
 import { Track } from '../../world/Track';
-import { cellsFor } from '../../world/walk';
 import type { GameProps } from '../registry';
 import styles from './SequenceGame.module.css';
 
@@ -11,15 +11,17 @@ const WRONG_FLASH_MS = 500;
 /**
  * The order game: tap the cards in the lesson's solution order.
  *
- * A correct tap moves the walker one cell along the path and locks the card he obeyed. A wrong tap
- * wobbles the card and moves nothing — no penalty, no lost progress (FR-4). Completion is reported
- * once, however many times the last card is tapped.
+ * Each card is a direction, so a correct tap moves the walker one cell *that way* along the road he
+ * can already see, and locks the card he obeyed. A wrong tap wobbles the card and moves nothing —
+ * there is no road that way — with no penalty and no lost progress (FR-4, FR-9). Completion is
+ * reported once, however many times the last card is tapped.
  */
 export function SequenceGame({ lesson, onComplete }: GameProps) {
   const [placed, setPlaced] = useState<readonly PictureId[]>([]);
   const [wrong, setWrong] = useState<PictureId | null>(null);
   const finished = useRef(false);
   const { cards, solution } = lesson.game;
+  const route = routeFor(lesson);
   const expected = solution[placed.length];
 
   useEffect(() => {
@@ -54,7 +56,7 @@ export function SequenceGame({ lesson, onComplete }: GameProps) {
 
   return (
     <div className={styles.game}>
-      <Track cells={cellsFor(lesson)} position={placed.length} placed={placed} />
+      <Track route={route} position={placed.length} placed={placed} />
 
       <ol className={styles.tray} aria-label="Cards to tap">
         {cards.map((card) => {

@@ -26,7 +26,7 @@ vocabulary change and lesson 1's rewrite cannot be separated without leaving the
 - **Status:** verified
 **Result:** verified
 **Checkpoint:** 7149e4f
-**Evidence:** conductor/archive/20261114-one-world-lesson-two/verification/phase-1.md
+**Evidence:** conductor/tracks/20261114-one-world-lesson-two/verification/phase-1.md
 
 - [x] **P1.T1: the four sprites** — covers: FR-1
   - [x] **P1.T1.1:** `ui/pictures/Walker.tsx`, `StepUp.tsx`, `StepRight.tsx`, `StepDown.tsx` as
@@ -64,7 +64,7 @@ vocabulary change and lesson 1's rewrite cannot be separated without leaving the
 - **Status:** verified
 **Result:** verified
 **Checkpoint:** 3aaa4f1
-**Evidence:** conductor/archive/20261114-one-world-lesson-two/verification/phase-2.md
+**Evidence:** conductor/tracks/20261114-one-world-lesson-two/verification/phase-2.md
 
 - [x] **P2.T1: the track** — covers: FR-3
   - [x] **P2.T1.1:** `world/Track.tsx` rendering `solution.length + 1` cells and the walker at a
@@ -95,7 +95,7 @@ vocabulary change and lesson 1's rewrite cannot be separated without leaving the
 - **Status:** verified
 **Result:** verified
 **Checkpoint:** 32c825f
-**Evidence:** conductor/archive/20261114-one-world-lesson-two/verification/phase-3.md
+**Evidence:** conductor/tracks/20261114-one-world-lesson-two/verification/phase-3.md
 
 - [x] **P3.T1: the game** — covers: FR-4
   - [x] **P3.T1.1:** `games/repeat/RepeatGame.tsx` with one tappable arrow and the track from
@@ -123,7 +123,7 @@ vocabulary change and lesson 1's rewrite cannot be separated without leaving the
 - **Status:** verified
 **Result:** verified
 **Checkpoint:** 8b180f0
-**Evidence:** conductor/archive/20261114-one-world-lesson-two/verification/phase-4.md
+**Evidence:** conductor/tracks/20261114-one-world-lesson-two/verification/phase-4.md
 
 - [x] **P4.T1: the lesson data** — covers: FR-4, D6
   - [x] **P4.T1.1:** `content/lessons/0002-repeat.ts` — id `repeat`, title "Do it again", order 2,
@@ -152,7 +152,7 @@ vocabulary change and lesson 1's rewrite cannot be separated without leaving the
 - **Status:** verified
 **Result:** verified
 **Checkpoint:** fb30e5f
-**Evidence:** conductor/archive/20261114-one-world-lesson-two/verification/phase-5.md
+**Evidence:** conductor/tracks/20261114-one-world-lesson-two/verification/phase-5.md
 
 - [x] **P5.T1: the stack document** — covers: FR-8
   - [x] **P5.T1.1:** the layout block gains `src/world/`, and a recorded decision states the one
@@ -163,3 +163,35 @@ vocabulary change and lesson 1's rewrite cannot be separated without leaving the
 - [x] **P5.T3: the map's recipes** — covers: FR-8
   - [x] **P5.T3.1:** "add a game kind" mentions the track it reuses, so the next game starts from
     `src/world/` instead of inventing its own path
+
+## Phase 6: The world becomes a grid, so an arrow can be true
+
+- **Goal:** every arrow moves the walker one cell in the direction it points, the whole road and its
+  flag are visible before the first tap, and both lessons play on that grid.
+- **Depends on:** Phase 5
+- **Covers:** FR-9, FR-10, FR-11, AC-9, AC-10, AC-11, NFR-1
+- **Touches:** `src/world/`, `src/games/sequence/`, `src/games/repeat/`, `src/MAP.md`,
+  `conductor/tech-stack.md`, `conductor/product.md`
+- **Dependencies:** none
+- **Decisions:** D11, D12, D13, D14
+- **Verification:** `bun run verify`
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** d7bea90
+**Evidence:** conductor/tracks/20261114-one-world-lesson-two/verification/phase-6.md
+
+- [x] **P6.T1: the grid** — covers: FR-9
+  - [x] **P6.T1.1:** `world/path.ts` with `Cell`, the three deltas, `tracePath`, `repeatRoute`
+  - [x] **P6.T1.2:** a `walker` named as a route step throws with the lesson's id
+- [x] **P6.T2: the route comes from the lesson** — covers: FR-10
+  - [x] **P6.T2.1:** `routeFor(lesson)` traces the solution as directions
+  - [x] **P6.T2.2:** lesson 1's route is `(0,0) (0,-1) (1,-1) (1,0)`, asserted twice
+- [x] **P6.T3: the road is visible, and it ends somewhere** — covers: FR-10, AC-9
+  - [x] **P6.T3.1:** every route cell drawn from the first render, one carrying the goal flag
+  - [x] **P6.T3.2:** a tap whose direction is not next moves nothing and still wobbles
+- [x] **P6.T4: lesson 2 on the same grid** — covers: FR-11, AC-11, NFR-1
+  - [x] **P6.T4.1:** `repeatRoute(card, 3)` runs the road three cells in the arrow's direction
+  - [x] **P6.T4.2:** the arrival animation is direction-neutral; reduced motion swaps it for colour
+- [x] **P6.T5: tests and docs** — covers: AC-9, AC-10, AC-11
+  - [x] **P6.T5.1:** 9 new tests across the grid, the sequence game and the repeat road
+  - [x] **P6.T5.2:** `MAP.md`, `tech-stack.md` and `product.md` describe the grid

@@ -189,3 +189,44 @@ Out of scope:
 - `conductor/workflow.md` — `bun run verify` as the one proving command.
 - `conductor/archive/20261114-minimum-vertical-slice/spec.md` — D1–D8 of the slice, whose
   narration and progress decisions this track keeps unchanged.
+
+## Revision R2 — arrows that mean what they say (Phase 6)
+
+The parent played lesson 1 and named the gap this spec left open: a child could not know the order.
+The three arrows were abstract "first, second, third" steps on a straight lane, and nothing on
+screen said where the walker was going. An instruction would have explained it — and instruction is
+the one thing this product does not do. So the world had to carry the meaning instead.
+
+### Requirements added
+
+- **FR-9** — A step means the direction it points. `step-up` moves the walker one cell up,
+  `step-right` one cell right, `step-down` one cell down — in every lesson, in every game kind. A
+  tap whose direction is not the next cell of the route moves him nowhere and wobbles the card:
+  the arrow is not lying, there is no road that way.
+- **FR-10** — The whole route is on screen before the first tap, and its last cell carries a goal
+  flag. Lesson 1's route is its own solution read as directions — up, right, down — starting and
+  ending on the same row, so a child who confuses up with down ends visibly in the wrong place.
+- **FR-11** — Lesson 2 plays on the same grid: its road runs three cells in its single arrow's own
+  direction, and one tap still walks all three.
+
+### Acceptance criteria added
+
+- **AC-9** — Lesson 1 renders four cells at `(0,0) (0,-1) (1,-1) (1,0)`, exactly one marked as the
+  goal, and the walker's cell follows his index along that route (covers FR-9, FR-10).
+- **AC-10** — The road's cells are in the DOM before any tap, and a card whose direction is not next
+  leaves the walker's cell unchanged and is marked wrong (covers FR-9, FR-10).
+- **AC-11** — Lesson 2 renders four cells in one row (`row` 0, `col` 0–3) with one goal, and one tap
+  walks three cells and completes exactly once (covers FR-11).
+
+### Decisions added
+
+- **D11 — Geometry** → a grid, not a lane. `world/path.ts` owns `Cell = { col, row }`, rows grow
+  downwards as the screen does, and the three deltas are the arrows' own directions.
+- **D12 — Where the route comes from** → derived from the lesson's `solution`, never stored twice,
+  so the road and the answer cannot disagree. A `walker` named as a route step throws with the
+  lesson's id rather than guessing a direction.
+- **D13 — A wrong direction** → he does not move. The product forbids dead ends, and a reset or a
+  dead end would punish a four-year-old's mistake; a wobble with the walker standing still reads as
+  a wall.
+- **D14 — The goal flag** → `world/Goal.tsx`, deliberately not a `PictureId`: it is scenery, never a
+  card, so the picture registry still holds exactly the four things a lesson may name.
