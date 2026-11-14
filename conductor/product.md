@@ -82,8 +82,10 @@ Out of scope for v1:
   down — its own three steps put in that order), lesson 2 "Do it again" (one arrow, tapped once, and
   the walker takes that step three times along a road that runs three cells right) and lesson 3
   "Make it move" (plan a leg from two arrows, press GO once and watch it run to a flag, then plan the
-  next leg from where he stopped — two presses, two marchers, one cause each). Lessons 4–6 are
-  designed to reuse the same actor, arrows and grid, so a lesson adds a mechanic rather than art.
+  next leg from where he stopped — two presses, two marchers, one cause each) and lesson 4 "If it is
+  red" (the same four arrows, on a road with one red pad: that arrow takes him one cell further, so
+  the outcome depends on where he is rather than on what he tapped). Lessons 5 and 6 are designed to
+  reuse the same actor, arrows and grid, so a lesson adds a mechanic rather than art.
 - **Concept wording** → decided: the spoken line names the idea in the child's words and never the
   discipline's. Repetition is "again and again", not "loop"; "loop" is the parent's word for it.
 - **Lesson shape** → assumed *game first, then the concept*, one game and one explanation per

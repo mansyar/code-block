@@ -23,9 +23,10 @@ later phases add.
 - `src/world/` — the one world every lesson is played in. `path.ts` owns the grid and turns a step
   into the direction it names, `ribbon.ts` answers which sides of a cell the route leaves by (each
   cell draws its own half of the road, so the band runs through the tiles rather than only in the
-  gaps), `Track.tsx` draws the road, the walker and a flag at every leg boundary, `Goal.tsx` is that
-  flag, `run.ts` walks one leg of a plan a cell at a time, `walk.ts` owns the per-cell timing. A new
-  game reuses this instead of drawing its own path.
+  gaps), `Track.tsx` draws the road, the walker, a flag at every leg boundary and the pad a repeated step
+  lands on, `Goal.tsx` is that flag, `run.ts` walks a leg of a plan (`runPlan`) or a road already
+  read (`runRoad`) a cell at a time, `walk.ts` owns the per-cell timing. A new game reuses this
+  instead of drawing its own path.
 - `src/styles/` — design tokens (`tokens.css`, every colour, space, radius, timing and
   `--tap-target`) and element-level base styles. To restyle the app, edit `tokens.css`.
 
@@ -36,7 +37,9 @@ Nothing yet — every directory named in the architecture exists.
 ## Recipes
 
 - **Add a lesson** — create `src/content/lessons/<number>-<slug>.ts`, add it to
-  `src/content/lessons/index.ts`, and add a `LessonCard` for it if the stop is new. Nothing else.
+  `src/content/lessons/index.ts`, and add a `LessonCard` for it if the stop is new. Nothing else. A
+  lesson whose road repeats a step names it in `twice` (plan positions from 1); `routeFor` expands the
+  road, so the drawn path and the walk stay one list.
 - **Add a game kind** — create `src/games/<kind>/`, render it on the shared `src/world/Track.tsx`
   road instead of drawing its own, give it a route from `src/world/path.ts`, then add one entry to
   `src/games/registry.ts`.

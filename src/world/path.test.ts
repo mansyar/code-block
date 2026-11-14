@@ -48,7 +48,11 @@ describe('the world grid', () => {
   });
 
   it('leaves every lesson that names no repeat with one cell per step', () => {
-    for (const lesson of lessons) {
+    const plain = lessons.filter((lesson) => lesson.game.twice === undefined);
+
+    expect(plain.length).toBeGreaterThan(0);
+
+    for (const lesson of plain) {
       expect(routeFor(lesson), `${lesson.id} lost a cell`).toHaveLength(
         lesson.game.solution.length + 1,
       );
