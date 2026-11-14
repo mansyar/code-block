@@ -34,9 +34,13 @@ lines are never removed.
 
 ## Current focus
 
+[20261114-lesson-three-make-it-move](./tracks/20261114-lesson-three-make-it-move/index.md) — the
+cause-and-effect lesson: a plan of arrows built on the road, run in full by one press of GO.
+
+Shipped and archived:
 [20261114-one-world-lesson-two](./archive/20261114-one-world-lesson-two/index.md) — one world for the
-whole curriculum (a walker, arrows, a path), lesson 1 rebuilt inside it, and lesson 2 as one tap
-that walks the walker three times.
+whole curriculum (a walker, arrows on a grid), lessons 1 and 2, the ribbon road and the arrival
+celebration.
 
 The slice that came before is archived:
 [20261114-minimum-vertical-slice](./archive/20261114-minimum-vertical-slice/index.md).
