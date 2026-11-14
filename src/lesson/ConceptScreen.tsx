@@ -1,6 +1,26 @@
-import type { Lesson } from '../content/lesson';
+import type { Lesson, PictureId } from '../content/lesson';
 import { pictureRegistry } from '../ui/pictures/registry';
 import styles from './ConceptScreen.module.css';
+
+type FinishedStep = { readonly key: string; readonly card: PictureId };
+
+/**
+ * Each step of the plan, with a key that is unique even when the plan repeats an arrow.
+ *
+ * Lesson 3 plans `up, right, right, up`, so a card id is not a key. Counting how many times each
+ * arrow has already appeared gives a key that depends only on the plan itself — the same plan always
+ * produces the same keys, and the list never needs a position to identify an item.
+ */
+function finishedSteps(steps: readonly PictureId[]): readonly FinishedStep[] {
+  const seen = new Map<PictureId, number>();
+
+  return steps.map((card) => {
+    const ordinal = seen.get(card) ?? 0;
+    seen.set(card, ordinal + 1);
+
+    return { key: `${card}#${ordinal}`, card };
+  });
+}
 
 type ConceptScreenProps = {
   readonly lesson: Lesson;
@@ -16,11 +36,11 @@ export function ConceptScreen({ lesson, onReplay, onDone }: ConceptScreenProps) 
   return (
     <div className={styles.concept}>
       <ol className={styles.finished} aria-label="The steps you placed">
-        {lesson.game.solution.map((card) => {
-          const Picture = pictureRegistry[card];
+        {finishedSteps(lesson.game.solution).map((step) => {
+          const Picture = pictureRegistry[step.card];
 
           return (
-            <li key={card} data-finished-card={card}>
+            <li key={step.key} data-finished-card={step.card}>
               <Picture className={styles.picture} />
             </li>
           );

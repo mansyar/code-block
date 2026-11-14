@@ -77,10 +77,12 @@ Out of scope for v1:
 - **One world** → decided: all six lessons share a single visual world — one walker, arrow steps and
   a grid road — rather than new objects per lesson. An arrow is a **direction**, not an ordinal:
   `up` moves the walker up, `right` moves him right, `down` moves him down, in every lesson. The
-  road is drawn in full, with a flag where it ends, so the child reads the route from its shape and
-  never from an instruction. Shipped so far: lesson 1 "Walk the path" (a road of up, right, down —
-  its own three steps put in that order) and lesson 2 "Do it again" (one arrow, tapped once, and the
-  walker takes that step three times along a road that runs three cells right). Lessons 3–6 are
+  road is drawn in full, with a flag wherever a leg of it ends, so the child reads the route from its
+  shape and never from an instruction. Shipped so far: lesson 1 "Walk the path" (a road of up, right,
+  down — its own three steps put in that order), lesson 2 "Do it again" (one arrow, tapped once, and
+  the walker takes that step three times along a road that runs three cells right) and lesson 3
+  "Make it move" (plan a leg from two arrows, press GO once and watch it run to a flag, then plan the
+  next leg from where he stopped — two presses, two marchers, one cause each). Lessons 4–6 are
   designed to reuse the same actor, arrows and grid, so a lesson adds a mechanic rather than art.
 - **Concept wording** → decided: the spoken line names the idea in the child's words and never the
   discipline's. Repetition is "again and again", not "loop"; "loop" is the parent's word for it.

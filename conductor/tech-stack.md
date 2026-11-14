@@ -67,12 +67,15 @@ src/
   games/
     registry.ts               gameKind → component: the one place a game is added
     sequence/                 SequenceGame.tsx, .module.css, .test.tsx
+    repeat/                   RepeatGame.tsx, .module.css, .test.tsx
+    plan/                     PlanGame.tsx + GoPad.tsx: write a leg, press GO, run to its flag
   lesson/LessonScreen.tsx     game → beat → narration → star
   narration/                  port.ts, audio-narration.ts, silence-narration.ts
   progress/                   schema.ts, store.ts, selectors.ts
   ui/                         pictures/ — one SVG per PictureId, plus its registry
-  world/                      path.ts + Track.tsx + walk.ts: the one grid every lesson is
-                              played on — steps are directions, the route is the road
+  world/                      path.ts + Track.tsx + run.ts + walk.ts: the one grid every lesson is
+                              played on — steps are directions, the route is the road, a flag marks
+                              where a leg ends, and a run walks one leg a cell at a time
   styles/tokens.css           every colour, space and --tap-target
 ```
 

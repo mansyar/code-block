@@ -21,8 +21,9 @@ later phases add.
 - `src/ui/` — shared presentation: `pictures/` holds one SVG per `PictureId` and the registry that
   maps ids to components.
 - `src/world/` — the one world every lesson is played in. `path.ts` owns the grid and turns a step
-  into the direction it names, `Track.tsx` draws the road, the walker and the goal flag,
-  `Goal.tsx` is that flag, `walk.ts` owns the per-cell timing. A new game reuses this instead of
+  into the direction it names, `ribbon.ts` works out the road's geometry, `Track.tsx` draws the road,
+  the walker and a flag at every leg boundary, `Goal.tsx` is that flag, `run.ts` walks one leg of a
+  plan a cell at a time, `walk.ts` owns the per-cell timing. A new game reuses this instead of
   drawing its own path.
 - `src/styles/` — design tokens (`tokens.css`, every colour, space, radius, timing and
   `--tap-target`) and element-level base styles. To restyle the app, edit `tokens.css`.
