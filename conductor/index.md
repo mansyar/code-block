@@ -34,6 +34,9 @@ lines are never removed.
 
 ## Current focus
 
-[20261114-minimum-vertical-slice](./archive/20261114-minimum-vertical-slice/index.md) — the minimum
-vertical slice: one lesson the child can complete end to end — open the app, play a game, hear the
-concept explained, keep a star.
+[20261114-one-world-lesson-two](./tracks/20261114-one-world-lesson-two/index.md) — one world for the
+whole curriculum (a walker, arrows, a path), lesson 1 rebuilt inside it, and lesson 2 as one tap
+that walks the walker three times.
+
+The slice that came before is archived:
+[20261114-minimum-vertical-slice](./archive/20261114-minimum-vertical-slice/index.md).
