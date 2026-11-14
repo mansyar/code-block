@@ -149,14 +149,17 @@ vocabulary change and lesson 1's rewrite cannot be separated without leaving the
 - **Dependencies:** none
 - **Decisions:** D1, D3, D10
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** fb30e5f
+**Evidence:** conductor/tracks/20261114-one-world-lesson-two/verification/phase-5.md
 
-- [ ] **P5.T1: the stack document** — covers: FR-8
-  - [ ] **P5.T1.1:** the layout block gains `src/world/`, and a recorded decision states the one
+- [x] **P5.T1: the stack document** — covers: FR-8
+  - [x] **P5.T1.1:** the layout block gains `src/world/`, and a recorded decision states the one
     world (actor + arrows + path) and why deviation needs a new decision
-- [ ] **P5.T2: the product document** — covers: FR-8
-  - [ ] **P5.T2.1:** the curriculum assumption names the re-themed lesson 1 and lesson 2 as
+- [x] **P5.T2: the product document** — covers: FR-8
+  - [x] **P5.T2.1:** the curriculum assumption names the re-themed lesson 1 and lesson 2 as
     shipped, and the six lessons' shared world
-- [ ] **P5.T3: the map's recipes** — covers: FR-8
-  - [ ] **P5.T3.1:** "add a game kind" mentions the track it reuses, so the next game starts from
+- [x] **P5.T3: the map's recipes** — covers: FR-8
+  - [x] **P5.T3.1:** "add a game kind" mentions the track it reuses, so the next game starts from
     `src/world/` instead of inventing its own path
