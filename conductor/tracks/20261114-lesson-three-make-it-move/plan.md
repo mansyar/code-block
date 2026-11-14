@@ -162,10 +162,13 @@ its star and the docs adopt it (phase 4).
 - **Dependencies:** none
 - **Decisions:** none — this implements FR-7 as written
 - **Verification:** `bun run verify`
-- **Status:** pending
+- **Status:** verified
+**Result:** verified
+**Checkpoint:** 43a4614
+**Evidence:** conductor/tracks/20261114-lesson-three-make-it-move/verification/phase-5.md
 
-- [ ] **P5.T1: a flag, and a beat, at the intermediate arrival** — covers: R1-1
-  - [ ] **P5.T1.1:** `Track` takes the route index of the flag that is waving, and shakes only that flag; a track that names none shakes nothing
-  - [ ] **P5.T1.2:** `FLAG_BEAT_MS` joins `walk.ts` beside `STEP_MS` and `CELEBRATE_MS`, because the world owns its timings
-  - [ ] **P5.T1.3:** at flag 1 the plan stays on the road, the palette and GO stay inert, and the beat ends by clearing the plan and opening leg 2; the walker never moves
-  - [ ] **P5.T1.4:** tests assert the beat (plan still shown, palette inert) and the wave, and that the last flag still uses the celebration instead
+- [x] **P5.T1: a flag, and a beat, at the intermediate arrival** — covers: R1-1
+  - [x] **P5.T1.1:** `Track` takes the route index of the flag that is waving, and shakes only that flag; a track that names none shakes nothing
+  - [x] **P5.T1.2:** `FLAG_BEAT_MS` joins `walk.ts` beside `STEP_MS` and `CELEBRATE_MS`, because the world owns its timings
+  - [x] **P5.T1.3:** at flag 1 the plan stays on the road, the palette and GO stay inert, and the beat ends by clearing the plan and opening leg 2; the walker never moves
+  - [x] **P5.T1.4:** tests assert the beat (plan still shown, palette inert) and the wave, and that the last flag still uses the celebration instead
