@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react';
 import type { GameKind, Lesson } from '../content/lesson';
+import { SequenceGame } from './sequence/SequenceGame';
 
 export type GameProps = {
   readonly lesson: Lesson;
@@ -10,7 +11,9 @@ export type GameProps = {
  * Game kind → component. This is the single place a new game is added; the lesson screen resolves
  * through `findGame` and shows a not-built-yet state while a kind is unregistered.
  */
-export const gameRegistry: Readonly<Partial<Record<GameKind, ComponentType<GameProps>>>> = {};
+export const gameRegistry: Readonly<Partial<Record<GameKind, ComponentType<GameProps>>>> = {
+  sequence: SequenceGame,
+};
 
 export function findGame(kind: GameKind): ComponentType<GameProps> | undefined {
   return gameRegistry[kind];
