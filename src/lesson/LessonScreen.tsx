@@ -1,19 +1,31 @@
+import { useState } from 'react';
 import type { Lesson } from '../content/lesson';
 import { findGame } from '../games/registry';
+import { createNarration } from '../narration/index';
+import type { Narration } from '../narration/port';
+import { ConceptScreen } from './ConceptScreen';
 import styles from './LessonScreen.module.css';
+import { useLessonFlow } from './useLessonFlow';
 
 type LessonScreenProps = {
   readonly lesson: Lesson;
   readonly onClose: () => void;
   readonly onComplete: () => void;
+  /** Supplied by tests; the app builds its own from the narration factory. */
+  readonly narration?: Narration;
 };
 
 /**
- * The lesson screen. It hosts whichever game the lesson names; until that game is registered it
- * shows the cards in their display order and says the game is on its way, so the screen is never
- * blank and the ordering is still visible.
+ * The lesson screen: play the game, then hear the concept.
+ *
+ * The game reports completion into the flow, the flow opens the concept beat and speaks its line,
+ * and the concept beat's "done" hands the lesson back to the shell. Until a lesson names a
+ * registered game, the cards are shown in their display order instead of a blank screen.
  */
-export function LessonScreen({ lesson, onClose, onComplete }: LessonScreenProps) {
+export function LessonScreen({ lesson, onClose, onComplete, narration }: LessonScreenProps) {
+  const [fallbackNarration] = useState<Narration>(() => createNarration());
+  const flow = useLessonFlow(lesson, narration ?? fallbackNarration);
+
   const gameKind = lesson.game.gameKind;
   const Game = gameKind === undefined ? undefined : findGame(gameKind);
 
@@ -31,10 +43,12 @@ export function LessonScreen({ lesson, onClose, onComplete }: LessonScreenProps)
         <h1 id="lesson-title">{lesson.title}</h1>
       </header>
 
-      {Game === undefined ? (
+      {flow.phase === 'concept' ? (
+        <ConceptScreen lesson={lesson} onReplay={flow.replay} onDone={onComplete} />
+      ) : Game === undefined ? (
         <GamePending lesson={lesson} />
       ) : (
-        <Game lesson={lesson} onComplete={onComplete} />
+        <Game lesson={lesson} onComplete={flow.complete} />
       )}
     </section>
   );
