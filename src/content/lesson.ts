@@ -2,7 +2,11 @@
  * The lesson data contract. Content is data: a lesson names its pictures, the order they must be
  * tapped, and the line the narrator says afterwards. Adding a lesson must never require code.
  */
-export type PictureId = 'bread' | 'cheese' | 'top';
+/**
+ * The world's whole vocabulary: one actor and the three steps it can be told to take. Every lesson
+ * draws from this set, so a lesson never needs art of its own.
+ */
+export type PictureId = 'walker' | 'step-up' | 'step-right' | 'step-down';
 
 /** Game kinds are registered in `src/games/registry.ts`; a lesson without one is not playable yet. */
 export type GameKind = 'sequence';

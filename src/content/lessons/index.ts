@@ -6,7 +6,7 @@ import { lessonOne } from './0001-order';
  * locked stops; only lesson 1 has content in this slice.
  */
 export const curriculum: readonly LessonCard[] = [
-  { id: 'order', title: 'Make a sandwich', order: 1 },
+  { id: 'order', title: 'Walk the path', order: 1 },
   { id: 'repeat', title: 'Do it again', order: 2 },
   { id: 'cause', title: 'Make it move', order: 3 },
   { id: 'condition', title: 'If it is red', order: 4 },

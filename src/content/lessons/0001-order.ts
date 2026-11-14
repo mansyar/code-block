@@ -1,21 +1,22 @@
 import { assertLesson, type Lesson } from '../lesson';
 
 /**
- * Lesson 1 — order. Bread, then cheese, then the top slice.
+ * Lesson 1 — order. Up, then across, then down.
  *
- * The cards are shown cheese-first so the display order is never the solution order.
+ * The cards are shown down-first so the display order is never the solution order, and each step
+ * is a different arrow so the child has three distinct things to put in a row.
  */
 export const lessonOne: Lesson = assertLesson({
   id: 'order',
-  title: 'Make a sandwich',
+  title: 'Walk the path',
   order: 1,
   game: {
     gameKind: 'sequence',
-    cards: ['cheese', 'top', 'bread'],
-    solution: ['bread', 'cheese', 'top'],
+    cards: ['step-down', 'step-up', 'step-right'],
+    solution: ['step-up', 'step-right', 'step-down'],
   },
   concept: {
     id: 'concept-order',
-    text: 'You made it! You told it the order: first the bread, then the cheese, then the top.',
+    text: 'You did it! You told it the order: up first, then across, then down.',
   },
 });
