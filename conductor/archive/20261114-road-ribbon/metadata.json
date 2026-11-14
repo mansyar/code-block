@@ -2,13 +2,13 @@
   "id": "20261114-road-ribbon",
   "title": "A road that reads as a road",
   "type": "bug",
-  "status": "in_progress",
+  "status": "complete",
   "priority": "medium",
   "depends_on": [
     "20261114-lesson-three-make-it-move"
   ],
   "created_at": "2026-11-14T23:05:00Z",
-  "updated_at": "2026-11-14T22:39:34Z",
+  "updated_at": "2026-11-14T22:42:59Z",
   "spec": "spec.md",
   "plan": "plan.md",
   "mission": "mission.md",
@@ -19,20 +19,22 @@
   "effort": 2,
   "progress": {
     "phases_total": 3,
-    "tasks_total": 10,
+    "tasks_total": 13,
     "phases_verified": 3,
     "tasks_done": 13
   },
-  "last_checkpoint": null,
+  "last_checkpoint": "bf45981",
   "review_verdict": "pass",
   "review_rounds": 2,
   "reviewed_head_sha": "41dadf5",
   "doc_sync": "done",
   "pr_url": "https://github.com/mansyar/code-block/pull/6",
-  "pr_state": "open",
+  "pr_state": "merged",
   "decisions_open": 0,
   "blocked_reason": null,
   "reverted_at": null,
   "revert_commit": null,
-  "revert_pr_url": null
+  "revert_pr_url": null,
+  "archived_at": "2026-11-14T22:42:59Z",
+  "archive_path": "conductor/archive/20261114-road-ribbon"
 }

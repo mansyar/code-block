@@ -2,13 +2,13 @@
   "id": "20261114-lesson-three-make-it-move",
   "title": "Make it move",
   "type": "feature",
-  "status": "in_progress",
+  "status": "complete",
   "priority": "high",
   "depends_on": [
     "20261114-one-world-lesson-two"
   ],
   "created_at": "2026-11-14T20:10:00Z",
-  "updated_at": "2026-11-14T22:25:00Z",
+  "updated_at": "2026-11-14T22:42:59Z",
   "spec": "spec.md",
   "plan": "plan.md",
   "mission": "mission.md",
@@ -27,12 +27,14 @@
   "review_verdict": "pass",
   "review_rounds": 2,
   "reviewed_head_sha": "e93afd8",
-  "doc_sync": "pending",
+  "doc_sync": "done",
   "pr_url": "https://github.com/mansyar/code-block/pull/5",
-  "pr_state": "open",
+  "pr_state": "merged",
   "decisions_open": 0,
   "blocked_reason": null,
   "reverted_at": null,
   "revert_commit": null,
-  "revert_pr_url": null
+  "revert_pr_url": null,
+  "archived_at": "2026-11-14T22:42:59Z",
+  "archive_path": "conductor/archive/20261114-lesson-three-make-it-move"
 }

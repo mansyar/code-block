@@ -34,14 +34,15 @@ lines are never removed.
 
 ## Current focus
 
-[20261114-road-ribbon](./tracks/20261114-road-ribbon/index.md) — the road the whole curriculum is
-read from, drawn through the tiles instead of in the gaps between them.
-
-In flight, awaiting its merge:
-[20261114-lesson-three-make-it-move](./tracks/20261114-lesson-three-make-it-move/index.md) — the
-cause-and-effect lesson: a plan of arrows built on the road, run in full by one press of GO.
+No track is in flight. The next change starts as a track in [tracks.md](./tracks.md), not as a commit.
 
 Shipped and archived:
+[20261114-road-ribbon](./archive/20261114-road-ribbon/index.md) — the road the whole curriculum is
+read from, drawn through the tiles instead of in the gaps between them.
+
+[20261114-lesson-three-make-it-move](./archive/20261114-lesson-three-make-it-move/index.md) — the
+cause-and-effect lesson: a plan of arrows built on the road, run in full by one press of GO.
+
 [20261114-one-world-lesson-two](./archive/20261114-one-world-lesson-two/index.md) — one world for the
 whole curriculum (a walker, arrows on a grid), lessons 1 and 2, the ribbon road and the arrival
 celebration.
