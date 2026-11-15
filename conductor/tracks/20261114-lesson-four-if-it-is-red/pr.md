@@ -50,22 +50,22 @@ Measured in Chromium against the dev server, with lessons 1–3 complete so stop
 | Visible text | `←If it is red` |
 | Road in the a11y tree | every band `aria-hidden="true"` |
 | Reduced motion | pad `animation-name: none`; walk unchanged, `0 → 5` in ~1.7 s |
-| Full plan | a fifth tap is refused and the card is dimmed |
+| Full plan | a fifth tap is refused: the pressed arrow is outlined in berry for 400 ms, the plan stays at four |
 
 ## Review
 
-**PASS**, round 1, pinned to `a2a5d22` — [review.md](./review.md). One Low finding recorded as debt:
-a tap on a full palette is refused with no fresh acknowledgement. It is **pre-existing** — lesson 3
-shipped the same behaviour — so fixing it here would change a shipped game this track did not
-authorise; it is written up for a shared palette-control fix.
+**PASS**, round 2, pinned to `05ab65e` — [review.md](./review.md). Round 1 recorded one Low finding:
+a tap on a full palette was refused with no acknowledgement, pre-existing in lesson 3's game. Phase
+4 closes it in both games — the pressed arrow is outlined for a beat — so R1-1 is now **closed** and
+round 2 found nothing new.
 
 ## Debt and follow-ups
 
-- R1-1 (Low) — a tap on a full palette changes nothing; the dimmed card states the state, the tap
-  itself is unacknowledged. Same in `PlanGame`.
+None open. R1-1 (Low) was closed by phase 4: `src/games/palette.ts` holds one shared cue, and both
+`PlanGame` and `ConditionGame` answer a tap the plan cannot take instead of swallowing it.
 
 ## Evidence
 
-`verification/phase-1.md` … `phase-3.md`, one per phase, each with the command output, the browser
+`verification/phase-1.md` … `phase-4.md`, one per phase, each with the command output, the browser
 measurements and the AC mapping. Screenshots of the road, the plan, the arrival and the concept are
 under `.conductor/evidence/screens/` (gitignored).

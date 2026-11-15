@@ -80,3 +80,54 @@ A fifth tap on the full plan leaves four arrows planned.
 **PASS.** No Critical or High open; every FR, NFR and AC resolves to a changed file, a test or a
 measured artifact; R1-1 is Low, pre-existing and recorded rather than silently fixed. Next:
 `conductor-implement ship`.
+
+---
+
+# Round 2 — after the R1-1 fix
+
+- Round: 2
+- Reviewed SHA: `05ab65e` (the phase-4 acceptance; the code it carries is `f93d35d`)
+- Delta under review: `a2a5d22..f93d35d` — `src/games/` and `conductor/product-guidelines.md`
+- Independence: cold-read of the delta against R1-1 and `verification/phase-4.md`, then re-measured
+  in the running app
+- **Verdict: PASS**
+
+## Mechanical
+
+| Check | Result | Note |
+|---|---|---|
+| Verification on a clean run | pass | `bun run verify` exit 0 — Biome **94 files**, build 242.36 kB / **75.89 kB gzip**, **209 tests in 30 files** (was 207) |
+| Evidence for the new phase | pass | `verification/phase-4.md`; plan shows 4/4 `Status: verified` |
+| Plan and metadata agree | pass | 4/4 phases, 16/16 tasks, `last_checkpoint: f93d35d` |
+| Scope | pass | every touched file is named in phase 4's `Touches`; no deviation |
+| Tests weakened | pass | 207 → 209; no assertion removed, skipped or loosened; the existing cap test still asserts the cap |
+| Dependencies | pass | `package.json` and `bun.lock` untouched |
+| Structure rules | pass | `palette.ts` 38, `PlanGame.tsx` 180, `ConditionGame.tsx` 158, `PlanGame.test.tsx` 194 — all under 200, no barrel, no new kind or id |
+
+## Findings
+
+| ID | Sev | Where | Note | Status |
+|---|---|---|---|---|
+| R1-1 | Low | `PlanGame.tsx`, `ConditionGame.tsx` palette | **Closed.** A tap the plan cannot take marks that one card `data-refused="true"` for 400 ms, outlined `solid 3px rgb(226, 102, 138)` at a 4 px offset; the sibling card stays `outline: none` and the plan is unchanged before, during and after the flash. One shared hook means the two games cannot drift. The cue is static, so reduced motion needs no exception, and no words are added (FR-9 holds). | closed |
+
+No new Critical, High, Medium or Low finding.
+
+## Re-measured at this SHA
+
+Both games, in Chromium against the dev server: lesson 3 with two arrows planned, lesson 4 with
+four. In each, one tap more produces `data-refused="true"` on the pressed arrow only, the computed
+outline above, and no change in the number of planned arrows (2 and 4 respectively); after 500 ms the
+outline is gone. GO still runs lesson 4's road to cell 5 and reports completion once. No console or
+page errors.
+
+## What round 2 did not establish
+
+- The full curriculum was not replayed this round; the delta touches the plan and condition games
+  only, and lessons 1–2 and 5–6 use other kinds.
+- No physical tablet, zoom or text-scaling check; the cue is a 3 px outline at a 4 px offset, which
+  was judged from its computed style and a screenshot, not from a low-vision simulation.
+
+## Verdict
+
+**PASS**, pinned to `05ab65e`. R1-1 is closed with code, tests and a browser measurement; nothing was
+weakened to close it, and no acceptance criterion changed.
