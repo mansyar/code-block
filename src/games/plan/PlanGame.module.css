@@ -32,6 +32,13 @@
   opacity: 0.55;
 }
 
+/* The leg is already as long as it gets and he tapped anyway: the arrow he pressed is outlined for
+   a beat, so the tap is answered instead of vanishing. Static, so reduced motion needs nothing. */
+.card[data-refused="true"] {
+  outline: var(--stroke-width) solid var(--colour-berry);
+  outline-offset: var(--space-1);
+}
+
 .picture {
   width: 3.25rem;
   height: 3.25rem;

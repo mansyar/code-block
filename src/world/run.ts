@@ -1,6 +1,23 @@
 import { after, type Cell, type StepId } from './path';
 import { STEP_MS } from './walk';
 
+export type RoadRunOptions = {
+  /** The road, start first. The caller has already proved the plan reaches `to`. */
+  readonly route: readonly Cell[];
+  /** The route index the walker stands on now. */
+  readonly from: number;
+  /** The route index this run ends at: the flag when the plan reached it. */
+  readonly to: number;
+  /** One cell's worth of time. Injected so a test does not wait in real time. */
+  readonly stepMs?: number;
+  /** The walker reached this route index. */
+  readonly onStep: (index: number) => void;
+  /** The run stopped short of the flag: the plan did not reach it. Never an ending. */
+  readonly onHalt: (index: number) => void;
+  /** The walker reached the end of the road. Called at most once. */
+  readonly onArrive: () => void;
+};
+
 export type RunOptions = {
   /** The road, start first. The plan is checked against this and nothing else. */
   readonly route: readonly Cell[];
@@ -98,6 +115,60 @@ export function runPlan(options: RunOptions): () => void {
       ),
     );
   }
+
+  return () => {
+    cancelled = true;
+
+    for (const timer of timers) {
+      clearTimeout(timer);
+    }
+  };
+}
+
+/**
+ * Walks a road that has already been read: one cell per `STEP_MS`, from `from` to `to`.
+ *
+ * A lesson whose road takes a step twice cannot hand its plan to `runPlan`, because one planned
+ * arrow covers two cells. The game reads the plan against the road first and hands the answer here,
+ * so the timing stays in the world and the rule about *what fits* stays with the plan.
+ *
+ * Arriving means reaching the last cell of the road; anything short of it is a halt, which is an
+ * acknowledgement rather than an ending. Cancelable like `runPlan`: no callback fires after it.
+ */
+export function runRoad(options: RoadRunOptions): () => void {
+  const { route, from, to, stepMs = STEP_MS, onStep, onHalt, onArrive } = options;
+  const last = Math.min(to, route.length - 1);
+  const cells = Math.max(0, last - from);
+  const arrives = last === route.length - 1;
+  const timers: ReturnType<typeof setTimeout>[] = [];
+  let cancelled = false;
+
+  for (let step = 1; step <= cells; step += 1) {
+    timers.push(
+      setTimeout(() => {
+        if (!cancelled) {
+          onStep(from + step);
+        }
+      }, stepMs * step),
+    );
+  }
+
+  timers.push(
+    setTimeout(
+      () => {
+        if (cancelled) {
+          return;
+        }
+
+        if (arrives) {
+          onArrive();
+        } else {
+          onHalt(last);
+        }
+      },
+      stepMs * (arrives ? cells : cells + 1),
+    ),
+  );
 
   return () => {
     cancelled = true;

@@ -115,6 +115,47 @@ describe('the lesson contract — legs', () => {
   });
 });
 
+describe('the lesson contract — steps taken twice', () => {
+  it('accepts a repeat on a real plan position', () => {
+    const lesson = sample({ cards: TWO_ARROWS, solution: FOUR_STEPS, twice: [2] });
+
+    expect(assertLesson(lesson)).toBe(lesson);
+  });
+
+  it('accepts a repeat on the last step', () => {
+    expect(() =>
+      assertLesson(sample({ cards: TWO_ARROWS, solution: FOUR_STEPS, twice: [4] })),
+    ).not.toThrow();
+  });
+
+  it('treats a lesson without twice as no repeats at all', () => {
+    const lesson = sample({ cards: TWO_ARROWS, solution: FOUR_STEPS });
+
+    expect(lesson.game.twice).toBeUndefined();
+    expect(assertLesson(lesson).game.twice).toBeUndefined();
+  });
+
+  it('rejects an empty list, which claims a rule it does not have', () => {
+    expect(() =>
+      assertLesson(sample({ cards: TWO_ARROWS, solution: FOUR_STEPS, twice: [] })),
+    ).toThrow(/sample: twice is empty; omit it when no step repeats/);
+  });
+
+  it('rejects a duplicate, a descending pair and step 0', () => {
+    for (const twice of [[2, 2], [3, 2], [0]]) {
+      expect(() =>
+        assertLesson(sample({ cards: TWO_ARROWS, solution: FOUR_STEPS, twice })),
+      ).toThrow(/sample: the twice positions must be strictly increasing/);
+    }
+  });
+
+  it('rejects a step past the end of the plan, naming both numbers', () => {
+    expect(() =>
+      assertLesson(sample({ cards: TWO_ARROWS, solution: FOUR_STEPS, twice: [5] })),
+    ).toThrow(/sample: twice names step 5, past the end of a 4-step plan/);
+  });
+});
+
 describe('the lessons that ship', () => {
   it('passes every content lesson through the contract, with a stop for each curriculum entry', () => {
     for (const lesson of lessons) {

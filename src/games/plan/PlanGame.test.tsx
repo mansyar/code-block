@@ -3,6 +3,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Lesson } from '../../content/lesson';
 import { FLAG_BEAT_MS, STEP_MS } from '../../world/walk';
+import { REFUSED_FLASH_MS } from '../palette';
 import { PlanGame } from './PlanGame';
 
 /** Lesson 3 as the content file will declare it: two arrows, four steps, two legs (D3). */
@@ -69,6 +70,25 @@ describe('PlanGame — planning', () => {
     fireEvent.click(g.palette('step-right'));
     fireEvent.click(g.palette('step-up'));
 
+    expect(g.planned()).toEqual(['step-up', 'step-right', 'none', 'none', 'none']);
+  });
+
+  it('answers a tap on a full palette, and adds nothing to the plan', () => {
+    const g = renderGame();
+
+    fireEvent.click(g.palette('step-up'));
+    fireEvent.click(g.palette('step-right'));
+    fireEvent.click(g.palette('step-right'));
+
+    // The leg is full, so the tap cannot add — but the arrow he pressed says so for a beat.
+    expect(g.palette('step-right')).toHaveAttribute('data-full', 'true');
+    expect(g.palette('step-right')).toHaveAttribute('data-refused', 'true');
+    expect(g.palette('step-up')).toHaveAttribute('data-refused', 'false');
+    expect(g.planned()).toEqual(['step-up', 'step-right', 'none', 'none', 'none']);
+
+    g.walk(REFUSED_FLASH_MS);
+
+    expect(g.palette('step-right')).toHaveAttribute('data-refused', 'false');
     expect(g.planned()).toEqual(['step-up', 'step-right', 'none', 'none', 'none']);
   });
 

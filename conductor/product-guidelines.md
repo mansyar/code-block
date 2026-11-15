@@ -9,7 +9,8 @@ The user cannot read and will not wait. Every rule below exists to protect those
 - **One decision per screen.** One goal, one obvious next tap. If a screen has two plausible
   targets of equal weight, it has one too many.
 - **Immediate feedback, always.** Every tap produces a visual and a sound within 100 ms. A tap
-  that does nothing is indistinguishable from a broken app.
+  that does nothing is indistinguishable from a broken app. That includes a tap the plan cannot
+  take: the arrow that was pressed answers by itself, outlined for a beat.
 - **No dead ends.** A wrong tap must be recoverable by tapping again. There is no "lose",
   no timer, no score that can go down, and no way to fail out of a lesson.
 - **Forgiving hit areas.** Interactive targets are at least 72×72 CSS px with at least 16 px
@@ -33,6 +34,9 @@ The user cannot read and will not wait. Every rule below exists to protect those
 - **The road is one drawn line.** A single band runs from the start pad, through every tile of the
   route, to the flag, and the pictures sit on top of it. Where it runs he may go; where it stops he
   may not. Never dots in the gaps between tiles, never dashes: its shape is the instruction.
+- **A tile that repeats a step is a raised diamond.** Where the road takes an arrow twice, the tile
+  wears a red diamond, so the rule is carried by shape as well as hue and a child who cannot tell red
+  from green still reads which tile is different. It is never a control and never a word.
 - **Large, high-contrast shapes.** Chunky rounded corners, thick outlines, flat fills. No thin
   hairlines, no gradients behind content, no transparency where a child must read a state.
 - **Colour plus shape, never colour alone.** Locked, unlocked and completed nodes differ in

@@ -1,0 +1,40 @@
+{
+  "id": "20261114-lesson-four-if-it-is-red",
+  "title": "If it is red",
+  "type": "feature",
+  "status": "in_review",
+  "priority": "high",
+  "depends_on": [
+    "20261114-lesson-three-make-it-move"
+  ],
+  "created_at": "2026-11-14T23:05:00Z",
+  "updated_at": "2026-11-15T04:31:00Z",
+  "spec": "spec.md",
+  "plan": "plan.md",
+  "mission": "mission.md",
+  "branch": "feat/20261114-lesson-four-if-it-is-red",
+  "base_branch": "main",
+  "base_sha": "d8654a8",
+  "autonomy": "ready",
+  "effort": 3,
+  "progress": {
+    "phases_total": 4,
+    "tasks_total": 16,
+    "phases_verified": 4,
+    "tasks_done": 16
+  },
+  "last_checkpoint": "f93d35d",
+  "review_verdict": "pass",
+  "review_rounds": 2,
+  "reviewed_head_sha": "05ab65e",
+  "doc_sync": "done",
+  "pr_url": "https://github.com/mansyar/code-block/pull/8",
+  "pr_state": "open",
+  "decisions_open": 0,
+  "blocked_reason": null,
+  "reverted_at": null,
+  "revert_commit": null,
+  "revert_pr_url": null,
+  "archived_at": null,
+  "archive_path": null
+}

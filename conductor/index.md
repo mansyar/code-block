@@ -34,7 +34,8 @@ lines are never removed.
 
 ## Current focus
 
-No track is in flight. The next change starts as a track in [tracks.md](./tracks.md), not as a commit.
+[20261114-lesson-four-if-it-is-red](./tracks/20261114-lesson-four-if-it-is-red/index.md) — the condition
+lesson: one red pad on the road, where the same arrow takes the walker one cell further.
 
 Shipped and archived:
 [20261114-road-ribbon](./archive/20261114-road-ribbon/index.md) — the road the whole curriculum is
