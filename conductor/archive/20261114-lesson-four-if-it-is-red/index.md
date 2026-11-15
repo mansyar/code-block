@@ -9,13 +9,15 @@
 | Base | `main` @ `d8654a8` |
 | Effort | 3 |
 | Autonomy | ready |
-| Status | new — planned, not started |
+| Status | complete — four phases verified, review PASS, PR #8 merged |
 
 ## Artifacts
 
 - [spec.md](./spec.md) — eleven requirements, ten acceptance criteria, decisions D1–D8
-- [plan.md](./plan.md) — three phases, each proved by `bun run verify`
+- [plan.md](./plan.md) — four phases, each proved by `bun run verify`
 - [mission.md](./mission.md) — the goal to paste into `/mission`
+- [review.md](./review.md) — verdict **PASS**, round 2, pinned to `05ab65e`
+- [pr.md](./pr.md) — the body of PR #8
 
 ## What this track ships
 
@@ -43,9 +45,10 @@ pre-literate child can predict before he acts.
 
 | Phase | Name | Status |
 |---|---|---|
-| 1 | The plan can say "twice", and the road grows | pending |
-| 2 | A red pad, and a walk that obeys it | pending |
-| 3 | Lesson 4, its star, and the docs | pending |
+| 1 | The plan can say "twice", and the road grows | verified — `295ae65` |
+| 2 | A red pad, and a walk that obeys it | verified — `9641556` |
+| 3 | Lesson 4, its star, and the docs | verified — `422350d` |
+| 4 | Review fixes — answer the tap that cannot add | verified — `05ab65e` |
 
 Evidence files land in `verification/phase-<n>.md` as each phase is accepted.
 
