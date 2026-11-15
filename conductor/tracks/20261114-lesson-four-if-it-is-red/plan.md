@@ -135,6 +135,40 @@ browser, and the three documents describe the rule.
 
 ---
 
+## Phase 4: Review fixes — answer the tap that cannot add
+
+**Goal:** a tap on a palette that is already full is answered on the arrow that was pressed, in both
+plan games, without changing what either game plans, walks or completes.
+
+- **Depends on:** Phase 3
+- **Covers:** R1-1, NFR-5
+- **Touches:** `src/games/palette.ts`, `src/games/plan/PlanGame.tsx`,
+  `src/games/plan/PlanGame.module.css`, `src/games/plan/PlanGame.test.tsx`,
+  `src/games/condition/ConditionGame.tsx`, `src/games/condition/ConditionGame.module.css`,
+  `src/games/condition/ConditionGame.test.tsx`, `conductor/product-guidelines.md`
+- **Dependencies:** none
+- **Decisions:** none — closing R1-1 was asked for directly after review round 1; the cue reuses the
+  berry outline the games already speak and adds no words, so no D1–D8 decision is taken or changed.
+- **Verification:** `bun run verify`
+- **Status:** pending
+
+- [x] **P4.T1: one refusal cue, shared** — `src/games/palette.ts` holds `REFUSED_FLASH_MS` (400 ms)
+  and `useRefusedArrow()`; both games call `refuseArrow(card)` when the plan is already at its
+  capacity and mark that one card `data-refused="true"`; `.card[data-refused="true"]` outlines it in
+  `--colour-berry`, static so reduced motion needs nothing; the plan, the walk and completion are
+  untouched. — covers: R1-1, NFR-5
+- [x] **P4.T2: prove it, and write it down** — a test in each game asserts the refused card, the
+  untouched sibling, and that the plan holds before and after the flash clears; the browser check
+  records the 3 px berry outline in both games and the unchanged `0 → 5` walk; the guideline's
+  feedback rule now says a refused tap still answers. — covers: R1-1
+
+**Status:** verified
+**Result:** verified
+**Checkpoint:** f93d35d
+**Evidence:** conductor/tracks/20261114-lesson-four-if-it-is-red/verification/phase-4.md
+
+---
+
 ## Acceptance map
 
 | AC | Phase | Proof |
@@ -150,4 +184,5 @@ browser, and the three documents describe the rule.
 | AC-9 | 1 | P1.T4 shipped-route assertions |
 | AC-10 | 1, 2, 3 | `bun run verify` in every phase; structure rules inside it |
 
-**Total:** 3 phases, 14 tasks.
+**Total:** 4 phases, 16 tasks. R1-1 (review round 1) is closed by phase 4, outside the AC map: no
+acceptance criterion changed, only a tap that used to be silent now answers.
