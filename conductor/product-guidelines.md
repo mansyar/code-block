@@ -9,7 +9,8 @@ The user cannot read and will not wait. Every rule below exists to protect those
 - **One decision per screen.** One goal, one obvious next tap. If a screen has two plausible
   targets of equal weight, it has one too many.
 - **Immediate feedback, always.** Every tap produces a visual and a sound within 100 ms. A tap
-  that does nothing is indistinguishable from a broken app.
+  that does nothing is indistinguishable from a broken app. That includes a tap the plan cannot
+  take: the arrow that was pressed answers by itself, outlined for a beat.
 - **No dead ends.** A wrong tap must be recoverable by tapping again. There is no "lose",
   no timer, no score that can go down, and no way to fail out of a lesson.
 - **Forgiving hit areas.** Interactive targets are at least 72×72 CSS px with at least 16 px

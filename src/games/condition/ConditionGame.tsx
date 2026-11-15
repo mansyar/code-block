@@ -4,6 +4,7 @@ import { pictureRegistry } from '../../ui/pictures/registry';
 import { isStep, routeFor, type StepId } from '../../world/path';
 import { runRoad } from '../../world/run';
 import { Track } from '../../world/Track';
+import { useRefusedArrow } from '../palette';
 import { GoPad } from '../plan/GoPad';
 import type { GameProps } from '../registry';
 import styles from './ConditionGame.module.css';
@@ -37,6 +38,7 @@ export function ConditionGame({ lesson, onComplete, celebrating }: GameProps) {
   const [done, setDone] = useState(false);
   const finished = useRef(false);
   const cancel = useRef<(() => void) | null>(null);
+  const { refusedArrow, refuseArrow } = useRefusedArrow();
 
   useEffect(() => {
     return () => {
@@ -56,7 +58,14 @@ export function ConditionGame({ lesson, onComplete, celebrating }: GameProps) {
 
   /** A palette card appends one arrow to the plan, up to the road's own length. */
   function add(card: PictureId) {
-    if (running || finished.current || !isStep(card) || plan.length >= solution.length) {
+    if (running || finished.current || !isStep(card)) {
+      return;
+    }
+
+    // A plan already as long as the road cannot take another arrow, but the tap is still answered:
+    // the card he pressed says so for a beat rather than leaving him to wonder (R1-1).
+    if (plan.length >= solution.length) {
+      refuseArrow(card);
       return;
     }
 
@@ -131,6 +140,7 @@ export function ConditionGame({ lesson, onComplete, celebrating }: GameProps) {
                 type="button"
                 className={styles.card}
                 data-full={full ? 'true' : 'false'}
+                data-refused={refusedArrow === card ? 'true' : 'false'}
                 disabled={running || done}
                 aria-label={card}
                 onClick={() => add(card)}

@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { assertLesson, type Lesson } from '../../content/lesson';
 import { lessonTwo } from '../../content/lessons/0002-repeat';
 import { STEP_MS } from '../../world/walk';
+import { REFUSED_FLASH_MS } from '../palette';
 import { RepeatGame } from '../repeat/RepeatGame';
 import { ConditionGame } from './ConditionGame';
 
@@ -110,6 +111,28 @@ describe('the condition game', () => {
     // Still editable: the plan was not cleared by the mistake.
     tap('step-right');
     expect(screen.getAllByRole('button', { name: /, planned$/ })).toHaveLength(2);
+  });
+
+  it('answers a tap on a full palette with an outline, and adds nothing', () => {
+    render(<ConditionGame lesson={lesson} onComplete={vi.fn()} />);
+    plan('step-right', 'step-up', 'step-right', 'step-right');
+
+    tap('step-up');
+
+    expect(screen.getByRole('button', { name: /^step-up$/ })).toHaveAttribute('data-full', 'true');
+    expect(screen.getByRole('button', { name: /^step-up$/ })).toHaveAttribute(
+      'data-refused',
+      'true',
+    );
+    expect(screen.getAllByRole('button', { name: /, planned$/ })).toHaveLength(4);
+
+    advance(REFUSED_FLASH_MS);
+
+    expect(screen.getByRole('button', { name: /^step-up$/ })).toHaveAttribute(
+      'data-refused',
+      'false',
+    );
+    expect(screen.getAllByRole('button', { name: /, planned$/ })).toHaveLength(4);
   });
 
   it('takes a planned arrow back, and everything planned after it', () => {

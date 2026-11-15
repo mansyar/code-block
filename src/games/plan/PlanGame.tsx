@@ -5,6 +5,7 @@ import { isStep, routeFor, type StepId } from '../../world/path';
 import { runPlan } from '../../world/run';
 import { Track } from '../../world/Track';
 import { FLAG_BEAT_MS } from '../../world/walk';
+import { useRefusedArrow } from '../palette';
 import type { GameProps } from '../registry';
 import { GoPad } from './GoPad';
 import styles from './PlanGame.module.css';
@@ -41,6 +42,7 @@ export function PlanGame({ lesson, onComplete, celebrating }: GameProps) {
   const finished = useRef(false);
   const cancel = useRef<(() => void) | null>(null);
   const beat = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { refusedArrow, refuseArrow } = useRefusedArrow();
 
   const legStart = legIndex === 0 ? 0 : (legs[legIndex - 1] as number);
   const legEnd = legs[legIndex] ?? route.length - 1;
@@ -68,7 +70,14 @@ export function PlanGame({ lesson, onComplete, celebrating }: GameProps) {
 
   /** A palette card appends to this leg's plan, up to the leg's length. */
   function add(card: PictureId) {
-    if (running || finished.current || !isStep(card) || plan.length >= capacity) {
+    if (running || finished.current || !isStep(card)) {
+      return;
+    }
+
+    // A full leg cannot take another arrow, but the tap is still answered: the card he pressed says
+    // so for a beat rather than leaving him to wonder whether he missed (R1-1).
+    if (plan.length >= capacity) {
+      refuseArrow(card);
       return;
     }
 
@@ -153,6 +162,7 @@ export function PlanGame({ lesson, onComplete, celebrating }: GameProps) {
                 type="button"
                 className={styles.card}
                 data-full={full ? 'true' : 'false'}
+                data-refused={refusedArrow === card ? 'true' : 'false'}
                 disabled={running || done}
                 aria-label={card}
                 onClick={() => add(card)}
