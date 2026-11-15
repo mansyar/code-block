@@ -34,10 +34,12 @@ lines are never removed.
 
 ## Current focus
 
-[20261114-lesson-four-if-it-is-red](./tracks/20261114-lesson-four-if-it-is-red/index.md) — the condition
-lesson: one red pad on the road, where the same arrow takes the walker one cell further.
+No track is in flight. The next change starts as a track in [tracks.md](./tracks.md), not as a commit.
 
 Shipped and archived:
+[20261114-lesson-four-if-it-is-red](./archive/20261114-lesson-four-if-it-is-red/index.md) — the
+condition lesson: one red pad on the road, where the same arrow takes the walker one cell further.
+
 [20261114-road-ribbon](./archive/20261114-road-ribbon/index.md) — the road the whole curriculum is
 read from, drawn through the tiles instead of in the gaps between them.
 
